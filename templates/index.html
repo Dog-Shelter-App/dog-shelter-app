@@ -4,22 +4,83 @@
     <title>Tornado WebSockets</title>
 </head>
 <body onload="onLoad();">
-    <strong>Message to Send:</strong>&nbsp;<input type="text" id="msg" maxlength="25" />
-    &nbsp;<input type="button" onclick="sendMsg();" value="Send" />
+    <!-- Left Side of View -->
+    <div class="container">
+      <div class="row">
+        <div class="col s12 m6">
+          <!-- Form for Messages -->
+          <form id="form" action="#" method="post">
+            <textarea id="message" placeholder="Write your message here..." required></textarea>
+            <button type="submit">Send Message</button>
+            <button type="button" id="close">Close Connection</button>
+          </form>
+        </div>
+        <div class="col 23 m6">
+          <h1>WebSockets Demo</h1>
+          <div id="status">Connecting...</div>
+          <ul id="messages"></ul>
+
+        </div>
+      </div>
+    </div>
     <script>
+        //define what we have ws = connection form = the form we use messageField = where we input data
+        //messagesList = where messages are stored message = the message we currently have entered
         var ws;
+        var form = document.getElementById('form');
+        var messageField = document.getElementById('message');
+        var messagesList = document.getElementById('messages');
+        var socketStatus = document.getElementById('status');
+        var closeBtn = document.getElementById('close');
 
         function onLoad() {
             ws = new WebSocket("ws://localhost:8080/websocket");
-
-            ws.onmessage = function(e) {
-               document.getElementById('list').innerH = alert(e.data);
+            // Triggers when message is sent
+            ws.onmessage = function(event) {
+              console.log("new message attempt");
+              // defines message as the contents of the message
+              var message = event.data;
+              // overwrites messages with new message that is received
+              messagesList.innerHTML += '<li class="received"><span>Received:</span>' + message + '</li>';
             };
-        }
-
-        function sendMsg() {
-            ws.send(document.getElementById('msg').value);
-        }
+            // Triggers on open websocket
+            ws.onopen = function(event) {
+              console.log("new connection attempt");
+              socketStatus.innerHTML = 'Connected to: ' + event.currentTarget.url;
+              socketStatus.className = 'open';
+            };
+            //Triggers on close connection
+            ws.onclose = function(event) {
+              console.log("new close attempt");
+              socketStatus.innerHTML = 'Disconnected from WebSocket.';
+              socketStatus.className = 'closed';
+            };
+            form.onsubmit = function(e) {
+              e.preventDefault();
+              console.log("new submit attempt");
+              e.preventDefault();
+              //define message field value
+              var message = messageField.value;
+              // Send the message through the WebSocket.
+              ws.send(message);
+              // overwrites messages with new message that is sent
+              messagesList.innerHTML += '<li class="sent"><span>Sent:</span>' + message + '</li>';
+              // Clear out the message field.
+              messageField.value = '';
+              //terminate function
+              return false;
+            };
+            // Close the WebSocket connection when the close button is clicked.
+            closeBtn.onclick = function(e) {
+              console.log("new close queue attempt");
+              //prevents page refresh
+              e.preventDefault();
+              // Close the WebSocket.
+              ws.close();
+              //terminate function
+              return false;
+              };
+            }
     </script>
-</body>
+  </body>
 </html>
