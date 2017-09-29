@@ -145,7 +145,7 @@
               // defines message as the contents of the message
               var message = event.data;
               // overwrites messages with new message that is received
-              messagesList.innerHTML += '<tr class="sent"><td>Sent:</td><td>' + message + '</td></tr>';
+              messagesList.innerHTML += '<tr class="sent"><td>Received:</td><td>' + message + '</td></tr>';
             };
             // Triggers on open websocket
             ws.onopen = function(event) {
@@ -169,7 +169,7 @@
               // Send the message through the WebSocket.
               ws.send(message);
               // overwrites messages with new message that is sent
-              messagesList.innerHTML += '<tr class="sent"><td>Received:</td><td>' + message + '</td></tr>';
+              messagesList.innerHTML += '<tr class="sent"><td>Sent:</td><td>' + message + '</td></tr>';
               // Clear out the message field.
               messageField.value = '';
               //terminate function
