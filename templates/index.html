@@ -2,24 +2,126 @@
 <html>
 <head>
     <title>Tornado WebSockets</title>
+    <!-- Compiled and minified CSS -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.100.2/css/materialize.min.css">
+    <!-- Compiled and minified JavaScript -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.100.2/js/materialize.min.js"></script>
+    <!--  Material Icons-->
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <style media="screen">
+      .text-center {
+        text-align: center;
+      }
+      .header {
+        background-size: cover;
+        width: 100%;
+        background-image: url("https://lh3.googleusercontent.com/-H6PacdskbPehw_P3NQvLvIix3PK3gNC82AZXhpFhYm5PVY26CqyHieUp_jifhmYY-FrcezAVQ=w640-h400-e365");
+        min-height: 400px;
+        display: flex;
+      }
+      .overlay {
+        padding: 10vh;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        background: rgba(30,30,30,.5);
+        flex-grow: 1;
+      }
+      .message-box {
+        max-width: 500px;
+        margin: 0 auto;
+        position: sticky;
+      }
+      .messages-box {
+        border: 2px solid;
+        padding: 12px 26px;
+        border: 3px solid black;
+      }
+      .text-white {
+        color: white;
+      }
+      .status-box {
+        border: 3px solid;
+      }
+      .open {
+        border: 3px solid;
+        padding: 4px 2px;
+        background: green;
+        color: white;
+        text-align: center;
+      }
+      .closed {
+        border: 3px solid;
+        padding: 4px 2px;
+        max-width: 120px;
+        background: red;
+        color: white;
+        text-align: center;
+      }
+      .sent {
+        max-height: 100px;
+        padding: 8px 4px;
+      }
+
+      .sent > td {
+        padding: 12px;
+        min-height: 36px;
+      }
+      span {
+        font-size: 16px;
+      }
+      button {
+        text-size: 8px;
+      }
+    </style>
 </head>
 <body onload="onLoad();">
     <!-- Left Side of View -->
-    <div class="container">
-      <div class="row">
-        <div class="col s12 m6">
-          <!-- Form for Messages -->
-          <form id="form" action="#" method="post">
-            <textarea id="message" placeholder="Write your message here..." required></textarea>
-            <button type="submit">Send Message</button>
-            <button type="button" id="close">Close Connection</button>
-          </form>
+    <div class="header z-depth-5">
+      <div class="section overlay">
+        <h1 class="text-center text-white">WebSockets With Python<span class="status-box" id="status" >Connecting...</span>
+</h1>
+        <div class="card message-box z-depth-5">
+          <div class="card-content">
+            <form id="form" action="#" method="post">
+              <div class="row">
+                <div class="input-field col s12">
+                  <i class="material-icons prefix">mode_edit</i>
+                  <label class="active"for="message">Add A Message</label>
+                  <input id="message" autofocus>
+                </div>
+              </div>
+              <div class="row">
+                <div class="col s12 m6">
+                  <button class="waves-effect waves-light btn btn" type="submit">Send Message</button>
+                </div>
+                <div class="col s12 m6">
+                  <button class="waves-effect waves-light btn-flat" type="button" id="close">Close Connection</button>
+                </div>
+              </div>
+              <div class="section">
+              </div>
+            </form>
+          </div>
         </div>
-        <div class="col 23 m6">
-          <h1>WebSockets Demo</h1>
-          <div id="status">Connecting...</div>
-          <ul id="messages"></ul>
+      </div>
+    </div>
+    <!-- <div class="section">
+      <div class="container">
+        <div class="row pt-5">
+          <div class="col s12">
 
+          </div>
+        </div>
+      </div>
+    </div> -->
+    <div class="section">
+      <div class="container">
+        <div class="row pt-5">
+          <table class="striped messages-box z-depth-5">
+            <tbody id="messages">
+            </tbody>
+          </table>
         </div>
       </div>
     </div>
@@ -32,31 +134,34 @@
         var messagesList = document.getElementById('messages');
         var socketStatus = document.getElementById('status');
         var closeBtn = document.getElementById('close');
+        var openBtn = document.getElementById('open');
 
         function onLoad() {
             ws = new WebSocket("ws://localhost:8080/websocket");
             // Triggers when message is sent
             ws.onmessage = function(event) {
+              setTimeout(function(){ console.log("...is it here yet."); }, 3000);
               console.log("new message attempt");
               // defines message as the contents of the message
               var message = event.data;
               // overwrites messages with new message that is received
-              messagesList.innerHTML += '<li class="received"><span>Received:</span>' + message + '</li>';
+              messagesList.innerHTML += '<tr class="sent"><td>Sent:</td><td>' + message + '</td></tr>';
             };
             // Triggers on open websocket
             ws.onopen = function(event) {
               console.log("new connection attempt");
-              socketStatus.innerHTML = 'Connected to: ' + event.currentTarget.url;
+              socketStatus.innerHTML = 'open';
               socketStatus.className = 'open';
             };
             //Triggers on close connection
             ws.onclose = function(event) {
               console.log("new close attempt");
-              socketStatus.innerHTML = 'Disconnected from WebSocket.';
+              socketStatus.innerHTML = 'closed';
               socketStatus.className = 'closed';
             };
             form.onsubmit = function(e) {
               e.preventDefault();
+              setTimeout(function(){ console.log("now...we wait.") }, 3000);
               console.log("new submit attempt");
               e.preventDefault();
               //define message field value
@@ -64,7 +169,7 @@
               // Send the message through the WebSocket.
               ws.send(message);
               // overwrites messages with new message that is sent
-              messagesList.innerHTML += '<li class="sent"><span>Sent:</span>' + message + '</li>';
+              messagesList.innerHTML += '<tr class="sent"><td>Received:</td><td>' + message + '</td></tr>';
               // Clear out the message field.
               messageField.value = '';
               //terminate function
@@ -80,6 +185,18 @@
               //terminate function
               return false;
               };
+              // Open the WebSocket connection when the open button is clicked.
+              openBtn.onclick = function(e) {
+                console.log("new open queue attempt");
+                socketStatus.innerHTML = 'Connected to: ' + event.currentTarget.url;
+                socketStatus.className = 'open';
+                //prevents page refresh
+                e.preventDefault();
+                // Close the WebSocket.
+                new WebSocket("ws://localhost:8080/websocket");
+                //terminate function
+                return false;
+                };
             }
     </script>
   </body>
