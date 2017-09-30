@@ -7,8 +7,20 @@ import tornado.ioloop
 
 import json
 import websocket
+import motor.motor_tornado
+
+# mongo pid=4690 port=27017 dbpath=/data/db 64-bit host=Macs-MacBook-Pro-3.local
+# mongo version v3.4.7
+# open ssl OpenSSL 1.0.2l
+# port 27017
 
 PORT = int(os.environ.get('PORT', '8080'))
+
+# client = motor.motor_tornado.MotorClient()
+
+client = motor.motor_tornado.MotorClient('localhost', 8080)
+
+db = motor.motor_tornado.MotorClient().test_database
 
 
 class WebSocketHandler(tornado.websocket.WebSocketHandler):
@@ -40,6 +52,7 @@ class WebSocketHandler(tornado.websocket.WebSocketHandler):
 
 class IndexPageHandler(tornado.web.RequestHandler):
     def get(self):
+        db = self.settings['db']
         self.set_header('Cache-Control','no-store, no-cache, must-revalidate, max-age=0')
         self.render("index.html")
 
@@ -54,7 +67,7 @@ class Application(tornado.web.Application):
         handlers = [
             (r'/', IndexPageHandler),
             (r'/websocket', WebSocketHandler)
-        ]
+        ], db=db
 
         settings = {
             'template_path': 'templates'
