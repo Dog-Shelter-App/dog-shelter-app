@@ -137,7 +137,7 @@
         var openBtn = document.getElementById('open');
 
         function onLoad() {
-            ws = new WebSocket("wss://aws.4dconsulting.io/websocket");
+            ws = new WebSocket("ws://aws.4dconsulting.io/websocket");
             // Triggers when message is sent
             ws.onmessage = function(event) {
               setTimeout(function(){ console.log("...is it here yet."); }, 3000);
