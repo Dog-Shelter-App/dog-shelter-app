@@ -15,6 +15,8 @@ ENV = Environment(
     autoescape = select_autoescape(['html', 'xml'])
 )
 
+PORT = int(os.environ.get('PORT', '8080'))
+
 # handler defines how a page handler will get template files and context information
 class TemplateHandler(tornado.web.RequestHandler):
   def render_template (self, tpl, context):
@@ -47,5 +49,5 @@ if __name__ == "__main__":
     # enables logging of updated files.
     tornado.log.enable_pretty_logging()
     app = make_app()
-    app.listen(8080)
+    app.listen(PORT)
     tornado.ioloop.IOLoop.current().start()
