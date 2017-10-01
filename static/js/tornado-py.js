@@ -9,7 +9,7 @@
   var closeBtn = document.getElementById('close');
 
   function onLoad() {
-      ws = new WebSocket("wss://localhost:8080/websocket");
+      ws = new WebSocket("ws://localhost:8080/websocket");
       // Triggers when message is sent
       ws.onmessage = function(event) {
         console.log("new message attempt");
