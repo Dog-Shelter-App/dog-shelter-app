@@ -1,82 +1,51 @@
 import os
 
-import tornado.web
-import tornado.websocket
-import tornado.httpserver
+# Needed to run server, event loop and basic server logging
 import tornado.ioloop
-
-import json
-import websocket
-import motor.motor_tornado
-
-# mongo pid=4690 port=27017 dbpath=/data/db 64-bit host=Macs-MacBook-Pro-3.local
-# mongo version v3.4.7
-# open ssl OpenSSL 1.0.2l
-# port 27017
-
-PORT = int(os.environ.get('PORT', '8080'))
-
-# client = motor.motor_tornado.MotorClient()
-
-client = motor.motor_tornado.MotorClient('localhost', 8080)
-
-db = motor.motor_tornado.MotorClient().test_database
+import tornado.web
+import tornado.log
+from jinja2 import \
+    Environment, PackageLoader, select_autoescape
 
 
-class WebSocketHandler(tornado.websocket.WebSocketHandler):
-    # def __init__(self):
-    #     with open('data.json') as json_data:
-    #         d = json.loads(json_data)
-    #         json_data.close()
-    #         pprint(d)
+# Environment variable. Defines location of template files, declares what MUL are interpreted
+# IMPORTANT: must include __init__.py file in top directory. in this case '/myapp'
+ENV = Environment(
+    loader = PackageLoader('myapp','templates'),
+    autoescape = select_autoescape(['html', 'xml'])
+)
 
-    def open(self):
-        print("websocket is open")
-        list = []
-        list.append(3)
-        print(list)
-        x = 'hello'
-        # with open('data.json', 'r') as fh:
-        #   data = json.load(fh)
+# handler defines how a page handler will get template files and context information
+class TemplateHandler(tornado.web.RequestHandler):
+  def render_template (self, tpl, context):
+    template = ENV.get_template(tpl)
+    self.write(template.render(**context))
 
-    def on_message(self, message):
-        # list.extend(message)
-        print(list)
-        # data = open()
-        self.write_message(u"<li>" + message + "</li>")
-
-    # def on_close(self):
-    #     print("websocket is closed")
-    #     pass
+# main handler, passes in template handler for finding template files
+class MainHandler(TemplateHandler):
+  def get(self):
+    self.set_header(
+      'Cache-Control',
+      'no-store, no-cache, must-revalidate, max-age=0')
+    self.render_template("index.html", {'name': 'World'})
 
 
-class IndexPageHandler(tornado.web.RequestHandler):
-    def get(self):
-        db = self.settings['db']
-        self.set_header('Cache-Control','no-store, no-cache, must-revalidate, max-age=0')
-        self.render("index.html")
-
-        #     d = json.loads(json_data)
-        #     print('works')
-        #     json_data.close()
-            # pprint(d)
+settings = {
+    "debug": True,
+    "static_path": os.path.join(os.path.dirname(__file__), "static")
+}
 
 
-class Application(tornado.web.Application):
-    def __init__(self):
-        handlers = [
-            (r'/', IndexPageHandler),
-            (r'/websocket', WebSocketHandler)
-        ], db=db
 
-        settings = {
-            'template_path': 'templates'
-        }
-        tornado.web.Application.__init__(self, handlers, **settings)
-
-
-if __name__ == '__main__':
-    ws_app = Application()
-    server = tornado.httpserver.HTTPServer(ws_app)
-    server.listen(PORT)
-    tornado.ioloop.IOLoop.instance().start()
+def make_app():
+    return tornado.web.Application([
+        (r"/", MainHandler),
+        (r"/(styles\.css)", tornado.web.StaticFileHandler,
+         dict(path=settings['static_path'])),
+    ], **settings, autoreload=True)
+if __name__ == "__main__":
+    # enables logging of updated files.
+    tornado.log.enable_pretty_logging()
+    app = make_app()
+    app.listen(8080)
+    tornado.ioloop.IOLoop.current().start()

@@ -7,7 +7,6 @@
   var messagesList = document.getElementById('messages');
   var socketStatus = document.getElementById('status');
   var closeBtn = document.getElementById('close');
-  var openBtn = document.getElementById('open');
 
   function onLoad() {
       ws = new WebSocket("ws://aws.4dconsulting.io/websocket");
@@ -58,16 +57,4 @@
         //terminate function
         return false;
         };
-        // Open the WebSocket connection when the open button is clicked.
-        openBtn.onclick = function(e) {
-          console.log("new open queue attempt");
-          socketStatus.innerHTML = 'Connected to: ' + event.currentTarget.url;
-          socketStatus.className = 'open';
-          //prevents page refresh
-          e.preventDefault();
-          // Close the WebSocket.
-          new WebSocket("ws://localhost:8080/websocket");
-          //terminate function
-          return false;
-          };
       }
