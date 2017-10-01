@@ -9,10 +9,9 @@
   var closeBtn = document.getElementById('close');
 
   function onLoad() {
-      ws = new WebSocket("ws://aws.4dconsulting.io/websocket");
+      ws = new WebSocket("wss://localhost:8080/websocket");
       // Triggers when message is sent
       ws.onmessage = function(event) {
-        setTimeout(function(){ console.log("...is it here yet."); }, 3000);
         console.log("new message attempt");
         // defines message as the contents of the message
         var message = event.data;
