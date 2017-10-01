@@ -4,12 +4,13 @@
     {% block head %}
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.100.2/css/materialize.min.css">
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
-    <link rel="stylesheet" href="/assets/css/master.css">
+    <link rel="stylesheet" href="/static/css/styles.css">
+
 
     <title>{% block title %}{% endblock %} - My Webpage</title>
     {% endblock %}
 </head>
-<body>
+<body onload="onLoad()">
     <div id="content">{% block content %}{% endblock %}</div>
     <div id="footer">
         {% block footer %}
@@ -17,5 +18,6 @@
         {% endblock %}
     </div>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.100.2/js/materialize.min.js"></script>
+    <script type="text/javascript" src="static/js/tornado-py.js"></script>
 </body>
 </html>
