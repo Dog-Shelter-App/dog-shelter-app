@@ -3,6 +3,7 @@ import os
 # Needed to run server, event loop and basic server logging
 import tornado.ioloop
 import tornado.web
+import tornado.httpserver
 import tornado.log
 import tornado.websocket
 # import tornado.asyncio
@@ -21,15 +22,19 @@ PORT = int(os.environ.get('PORT', '8080'))
 
 class WebSocketHandler(tornado.websocket.WebSocketHandler):
     def open(self):
-        print("WebSocket opened")
+        print("websocket is open")
+        list = []
+        list.append(3)
+        print(list)
+        x = 'hello'
+        # with open('data.json', 'r') as fh:
+        #   data = json.load(fh)
 
     def on_message(self, message):
-        self.write_message(u"You said: " + message)
-
-    def on_close(self):
-        print("WebSocket closed")
-
-
+        # list.extend(message)
+        print(list)
+        # data = open()
+        self.write_message(u"<li>" + message + "</li>")
 
 # handler defines how a page handler will get template files and context information
 class TemplateHandler(tornado.web.RequestHandler):
@@ -52,17 +57,21 @@ settings = {
 }
 
 
+class make_app(tornado.web.Application):
+    def __init__(self):
+        handlers = [
+            (r"/", MainHandler),
+            (r"/websocket", WebSocketHandler),
+            (r"/(styles\.css)", tornado.web.StaticFileHandler,
+             dict(path=settings['static_path'])),
+        ]
+        tornado.web.Application.__init__(self, handlers, autoreload=True, **settings)
 
-def make_app():
-    return tornado.web.Application([
-        (r"/", MainHandler),
-        (r"/websocket", WebSocketHandler),
-        (r"/(styles\.css)", tornado.web.StaticFileHandler,
-         dict(path=settings['static_path'])),
-    ], **settings, autoreload=True)
+
 if __name__ == "__main__":
-    # enables logging of updated files.
     tornado.log.enable_pretty_logging()
-    app = make_app()
-    app.listen(PORT)
+    ws_app = make_app()
+    server = tornado.httpserver.HTTPServer(ws_app)
+    # enables logging of updated files.
+    server.listen(PORT)
     tornado.ioloop.IOLoop.current().start()
