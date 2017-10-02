@@ -1,15 +1,21 @@
 
-  //define what we have ws = connection form = the form we use messageField = where we input data
+  //define what we have ws = connection form = the form we use messageInput = where we input data
   //messagesList = where messages are stored message = the message we currently have entered
   var ws;
   var form = document.getElementById('form');
-  var messageField = document.getElementById('message');
+  var messageInput = document.getElementById('message');
   var messagesList = document.getElementById('messages');
   var socketStatus = document.getElementById('status');
   var closeBtn = document.getElementById('close');
 
   function onLoad() {
-      ws = new WebSocket("ws://aws.4dconsulting.io/websocket");
+    // hack for localhost versus production. will fix better later.
+      var url = document.URL;
+      console.log(url);
+      ws = new WebSocket("ws://localhost:8080/websocket");
+
+
+      // ws = new WebSocket("ws://aws.4dconsulting.io/websocket");
       // Triggers when message is sent
       ws.onmessage = function(event) {
         console.log("new message attempt");
@@ -31,19 +37,18 @@
         socketStatus.className = 'closed';
       };
       form.onsubmit = function(e) {
-        e.preventDefault();
-        setTimeout(function(){ console.log("now...we wait.") }, 3000);
-        console.log("new submit attempt");
-        e.preventDefault();
+
+        // e.preventDefault();
         //define message field value
-        var message = messageField.value;
+        var message = messageInput.value;
         // Send the message through the WebSocket.
         ws.send(message);
         // overwrites messages with new message that is sent
         messagesList.innerHTML += '<tr class="sent"><td>Sent:</td><td>' + message + '</td></tr>';
         // Clear out the message field.
-        messageField.value = '';
+        messageInput.value = '';
         //terminate function
+        window.location.reload()
         return false;
       };
       // Close the WebSocket connection when the close button is clicked.

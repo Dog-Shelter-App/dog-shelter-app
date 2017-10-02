@@ -1,5 +1,6 @@
 asyncio==3.4.3
 Jinja2==2.9.6
 mongo==0.2.0
-motor==1.1
+pymongo
 tornado==4.0.2
+boto3

@@ -6,9 +6,14 @@ import tornado.web
 import tornado.httpserver
 import tornado.log
 import tornado.websocket
-# import tornado.asyncio
+
+# needed to run templating engine
 from jinja2 import \
     Environment, PackageLoader, select_autoescape
+
+# needed for database queries
+import pymongo
+from pymongo import MongoClient
 
 
 # Environment variable. Defines location of template files, declares what MUL are interpreted
@@ -17,24 +22,25 @@ ENV = Environment(
     loader = PackageLoader('myapp','templates'),
     autoescape = select_autoescape(['html', 'xml'])
 )
-
+# set default port for server env
 PORT = int(os.environ.get('PORT', '8080'))
+
+
+# open client to db that runs infinitely during the app runtime.
+client = pymongo.MongoClient("mongodb://kevin:Bettyb00p!@cluster0-shard-00-00-fqbin.mongodb.net:27017,cluster0-shard-00-01-fqbin.mongodb.net:27017,cluster0-shard-00-02-fqbin.mongodb.net:27017/test?ssl=true&replicaSet=Cluster0-shard-0&authSource=admin")
+db = client.test
 
 class WebSocketHandler(tornado.websocket.WebSocketHandler):
     def open(self):
         print("websocket is open")
-        list = []
-        list.append(3)
-        print(list)
-        x = 'hello'
-        # with open('data.json', 'r') as fh:
-        #   data = json.load(fh)
+        # db.inventory.find({
+        #     "message" : (.*)
+        # })
 
     def on_message(self, message):
         # list.extend(message)
-        print(list)
-        # data = open()
-        self.write_message(u"<li>" + message + "</li>")
+        db.messages.insert_one({"message": message})
+        print(message)
 
 # handler defines how a page handler will get template files and context information
 class TemplateHandler(tornado.web.RequestHandler):
@@ -44,12 +50,22 @@ class TemplateHandler(tornado.web.RequestHandler):
 
 # main handler, passes in template handler for finding template files
 class MainHandler(TemplateHandler):
-  def get(self):
-    self.set_header(
-      'Cache-Control',
-      'no-store, no-cache, must-revalidate, max-age=0')
-    self.render_template("index.html", {'name': 'World'})
+    def get(self):
+        messages = db.messages.find({})
+        self.set_header(
+          'Cache-Control',
+          'no-store, no-cache, must-revalidate, max-age=0')
+        self.render_template("index.html", {'messages': messages})
 
+class DeleteMessageHandler(TemplateHandler):
+    def get(self):
+        db.messages.delete_many({})
+        messages = db.messages.find({})
+        self.set_header(
+            'Cache-Control',
+            'no-store, no-cache, must-revalidate, max-age=0'
+        )
+        self.render_template("index.html", {'messages': messages})
 
 settings = {
     "debug": True,
@@ -62,6 +78,7 @@ class make_app(tornado.web.Application):
         handlers = [
             (r"/", MainHandler),
             (r"/websocket", WebSocketHandler),
+            (r"/delete", WebSocketHandler),
             (r"/(styles\.css)", tornado.web.StaticFileHandler,
              dict(path=settings['static_path'])),
         ]
