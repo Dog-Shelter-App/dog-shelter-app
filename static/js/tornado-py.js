@@ -12,7 +12,7 @@
     // hack for localhost versus production. will fix better later.
       var url = document.URL;
       console.log(url);
-      ws = new WebSocket("ws://localhost:8080/websocket");
+      ws = new WebSocket("ws://aws.4dconsulting.io/websocket");
 
 
       // ws = new WebSocket("ws://aws.4dconsulting.io/websocket");
