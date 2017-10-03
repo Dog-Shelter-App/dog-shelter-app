@@ -11,19 +11,20 @@
 <!-- Left Side of View -->
 <div class="section">
   <div class="container">
-    <form class="" action="index.html" method="post">
-      <input type="url" name="url" value="" placeholder="type in a url...">
+    <form class="" action="#" method="post" id="urlForm">
+      <input id="urlInput" type="url" name="url" value="" placeholder="type in a url...">
+      <button class="waves-effect waves-light btn btn" type="submit">Send Message</button>
     </form>
-    
+
   </div>
 </div>
 <div class="section">
   <div class="container">
     <div class="row">
-      <h1>{{url}}</h1>
+      <h3>{{url}}</h3>
     </div>
     <div class="row pt-5">
-        <p id="words">
+        <p id="words" class="word-list">
           {% for word in words %}
         <span>{{word}}</span>
         {% endfor %}

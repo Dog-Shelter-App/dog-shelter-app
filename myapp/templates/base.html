@@ -1,16 +1,26 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    {% block head %}
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.100.2/css/materialize.min.css">
-    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
-    <link rel="stylesheet" href="/static/css/styles.css">
+  <head>
+      {% block head %}
+      <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.100.2/css/materialize.min.css">
+      <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+      <link rel="stylesheet" href="/static/css/styles.css">
 
 
-    <title>{% block title %}{% endblock %} - My Webpage</title>
-    {% endblock %}
-</head>
-<body onload="onLoad()">
+      <title>{% block title %}{% endblock %} - My Webpage</title>
+      {% endblock %}
+  </head>
+  <body onload="onLoad()">
+    <nav>
+      <div class="nav-wrapper">
+        <a href="/" class="brand-logo">4d Consulting</a>
+        <ul id="nav-mobile" class="right hide-on-med-and-down">
+          <li><a href="/py-scraper?url">Web Scraping Algorithm</a></li>
+          <li><a href="/messaging">Websocket Messaging App</a></li>
+          <li><a href="https://harvey-insurance-application.firebaseapp.com/">Home Inventory Application</a></li>
+        </ul>
+      </div>
+    </nav>
     <div id="content">{% block content %}{% endblock %}</div>
     <div id="footer">
         {% block footer %}
@@ -19,5 +29,5 @@
     </div>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.100.2/js/materialize.min.js"></script>
     <script type="text/javascript" src="static/js/tornado-py.js"></script>
-</body>
+  </body>
 </html>

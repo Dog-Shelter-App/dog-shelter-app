@@ -119,13 +119,24 @@ class MainHandler(TemplateHandler):
           'no-store, no-cache, must-revalidate, max-age=0')
         self.render_template("index.html", {'messages': messages})
 
+class MessagingHandler(TemplateHandler):
+    def get(self):
+        messages = db.messages.find({})
+        self.set_header(
+          'Cache-Control',
+          'no-store, no-cache, must-revalidate, max-age=0')
+        self.render_template("messaging.html", {'messages': messages})
+
 class PyScraperHandler(TemplateHandler):
     def get(self):
         url = self.get_argument("url")
+
+        if not url:
+            url = "https://en.wikipedia.org/wiki/Chuck_Norris"
         soup = make_soup(url)
 
         p_body = soup.body
-        
+
         words = []
         check_list = []
 
@@ -165,6 +176,7 @@ class make_app(tornado.web.Application):
     def __init__(self):
         handlers = [
             (r"/", MainHandler),
+            (r"/messaging", MessagingHandler),
             (r"/websocket", WebSocketHandler),
             (r"/delete", WebSocketHandler),
             (r"/(styles\.css)", tornado.web.StaticFileHandler,

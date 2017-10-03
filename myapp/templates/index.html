@@ -8,50 +8,8 @@
     </style>
 {% endblock %}
 {% block content %}
-<!-- Left Side of View -->
-<div class="header z-depth-5" onload="myFunction()">
-  <div class="section overlay">
-    <h1 class="text-center text-white">WebSockets With Nothing<span class="status-box" id="status" >Connecting...</span>
-</h1>
-    <div class="card message-box z-depth-5">
-      <div class="card-content">
-        <form id="form" action="#" method="post">
-          <div class="row">
-            <div class="input-field col s12">
-              <i class="material-icons prefix">mode_edit</i>
-              <label class="active"for="message">Add A Message</label>
-              <input id="message" autofocus>
-            </div>
-          </div>
-          <div class="row">
-            <div class="col s12 m4">
-              <button class="waves-effect waves-light btn btn" type="submit">Send Message</button>
-            </div>
-            <div class="col s12 m4">
-              <button class="waves-effect waves-light btn-flat" type="button" id="close">Close Connection</button>
-            </div>
-            <div class="col s12 m4">
-              <a href="/delete" class="waves-effect waves-light btn-flat" type="button" id="close">Clear Messages</a>
-            </div>
-          </div>
-          <div class="section">
-          </div>
-        </form>
-      </div>
-    </div>
-  </div>
+<div class="container">
+  <h1>Hello....</h1>
 </div>
-<div class="section">
-  <div class="container">
-    <div class="row pt-5">
-      <table class="striped messages-box z-depth-5">
-        <tbody id="messages">
-          {% for message in messages %}
-        <tr><td>message</td><td>{{message.message}}</td></tr>
-        {% endfor %}
-        </tbody>
-      </table>
-    </div>
-  </div>
-</div>
+
 {% endblock %}
