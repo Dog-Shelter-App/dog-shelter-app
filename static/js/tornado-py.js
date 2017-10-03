@@ -73,7 +73,7 @@ urlForm.onsubmit = function(e) {
   var url = urlInput.value;
   // Send the message through the WebSocket.
 
-  var redirect = "http://localhost:8080/py-scraper?url=" + url
+  var redirect = "/py-scraper?url=" + url
 
   window.location.replace(redirect)
   return false;
