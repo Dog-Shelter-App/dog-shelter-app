@@ -15,6 +15,68 @@ from jinja2 import \
 import pymongo
 from pymongo import MongoClient
 
+#############################################################################################
+
+import urllib.request
+from bs4 import BeautifulSoup
+
+#html cleaner
+import lxml
+from lxml.html.clean import Cleaner
+
+# natural language processing
+import nltk
+
+
+cleaner = Cleaner()
+cleaner.javascript = True # This is True because we want to activate the javascript filter
+cleaner.style = True      # This is True because we want to activate the styles & stylesheet filter
+
+
+def print_step(input):
+    print("="*100)
+    print("{}".format(input))
+    print("="*100)
+
+
+ # request URL
+def make_soup(url):
+    print_step("Step 1. Request a url.")
+    # url = "https://en.wikipedia.org/wiki/Python"
+    # go get your html page
+    html_obj = get_ingredients(url)
+    # clean up the html page
+    html_string = (html_obj.read().decode('utf-8'))
+    # soupify
+    clean_html = cleaner.clean_html(html_string)
+    soup = BeautifulSoup(clean_html, 'lxml')
+    return soup
+
+
+def validate_url(url):
+    if "www" in url:
+        print_step("Fantastic. URL received.")
+        return True
+    else:
+        url = input("Silly human. Your URL needs a www. at the beginning...")
+
+# remove javascript and css styling from the page.
+def clean_ingredients(html):
+    p_clean = lxml.html.tostring(cleaner.clean_html(lxml.html.parse(html)))
+    # p_clean = lxml.html.parse(html)
+    # print(p_clean)
+    return p_clean
+
+# make http request
+def get_ingredients(url):
+    # create request
+    request = urllib.request.Request(url)
+    # return the response
+    response = urllib.request.urlopen(request)
+    return response
+
+############################################################################################
+
 
 # Environment variable. Defines location of template files, declares what MUL are interpreted
 # IMPORTANT: must include __init__.py file in top directory. in this case '/myapp'
@@ -40,7 +102,7 @@ class WebSocketHandler(tornado.websocket.WebSocketHandler):
     def on_message(self, message):
         # list.extend(message)
         db.messages.insert_one({"message": message})
-        print(message)
+        messages_list = db.messages.find({})
 
 # handler defines how a page handler will get template files and context information
 class TemplateHandler(tornado.web.RequestHandler):
@@ -56,6 +118,32 @@ class MainHandler(TemplateHandler):
           'Cache-Control',
           'no-store, no-cache, must-revalidate, max-age=0')
         self.render_template("index.html", {'messages': messages})
+
+class PyScraperHandler(TemplateHandler):
+    def get(self):
+        url = self.get_argument("url")
+        soup = make_soup(url)
+
+        p_body = soup.body
+        
+        words = []
+        check_list = []
+
+        for string in p_body.strings:
+            string_list = string.split(" ")
+            for word in string_list:
+                # print("{} => {} ==> {}".format(len(word),type(word),word))
+                if word in check_list:
+                    pass
+                else:
+                    words.append(word.strip())
+                    check_list.append(word.strip())
+        print(words)
+
+        self.set_header(
+          'Cache-Control',
+          'no-store, no-cache, must-revalidate, max-age=0')
+        self.render_template("py-scraper.html", {'words': words, 'url': url})
 
 class DeleteMessageHandler(TemplateHandler):
     def get(self):
@@ -81,6 +169,7 @@ class make_app(tornado.web.Application):
             (r"/delete", WebSocketHandler),
             (r"/(styles\.css)", tornado.web.StaticFileHandler,
              dict(path=settings['static_path'])),
+            (r"/py-scraper", PyScraperHandler),
         ]
         tornado.web.Application.__init__(self, handlers, autoreload=True, **settings)
 

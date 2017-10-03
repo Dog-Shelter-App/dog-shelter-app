@@ -1,0 +1,26 @@
+{% extends 'base.html' %}
+
+{% block title %}Index {{self.title}}{% endblock %}
+{% block head %}
+    {{ super() }}
+    <style type="text/css">
+        .important { color: #336699; }
+    </style>
+{% endblock %}
+{% block content %}
+<!-- Left Side of View -->
+<div class="section">
+  <div class="container">
+    <div class="ros">
+      <h1>{{url}}
+    </div>
+    <div class="row pt-5">
+        <p id="words">
+          {% for word in words %}
+        <span>{{word}}</span>
+        {% endfor %}
+        </p>
+    </div>
+  </div>
+</div>
+{% endblock %}
