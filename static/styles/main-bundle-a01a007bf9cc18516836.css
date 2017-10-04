@@ -1,0 +1,67 @@
+.text-center {
+  text-align: center; }
+
+.header {
+  background-size: cover;
+  width: 100%;
+  background-image: url("https://lh3.googleusercontent.com/-H6PacdskbPehw_P3NQvLvIix3PK3gNC82AZXhpFhYm5PVY26CqyHieUp_jifhmYY-FrcezAVQ=w640-h400-e365");
+  min-height: 400px;
+  display: flex; }
+
+.overlay {
+  padding: 10vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  background: rgba(30, 30, 30, 0.5);
+  flex-grow: 1; }
+
+.message-box {
+  max-width: 500px;
+  margin: 0 auto;
+  position: sticky; }
+
+.messages-box {
+  border: 2px solid;
+  padding: 12px 26px;
+  border: 3px solid black; }
+
+.text-white {
+  color: white; }
+
+.status-box {
+  border: 3px solid; }
+
+.open {
+  border: 3px solid;
+  padding: 4px 2px;
+  background: green;
+  color: white;
+  text-align: center; }
+
+.closed {
+  border: 3px solid;
+  padding: 4px 2px;
+  max-width: 120px;
+  background: red;
+  color: white;
+  text-align: center; }
+
+.sent {
+  max-height: 100px;
+  padding: 8px 4px; }
+
+.sent > td {
+  padding: 12px;
+  min-height: 36px; }
+
+span {
+  font-size: 16px; }
+
+button {
+  text-size: 8px; }
+
+.word-list > span {
+  background: moccasin;
+  padding: 1px 6px;
+  margin-right: 2px; }

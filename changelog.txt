@@ -1,0 +1,9 @@
+v1.0.1 (May 24rd, 2017)
+- Fixed responsiveness bug
+
+v1.0.2 (June 4th, 2017)
+- Added standalone css version
+
+v1.0.3 (TODO)
+- Many responsiveness fixes across all the pages
+- Added support for full height shuffle under transition

@@ -27,6 +27,12 @@ from lxml.html.clean import Cleaner
 # natural language processing
 import nltk
 
+# webpack modules
+import json
+from tornado.options import options, define
+from tornado.autoreload import watch
+from jinja2 import Environment, FileSystemLoader
+
 
 cleaner = Cleaner()
 cleaner.javascript = True # This is True because we want to activate the javascript filter
@@ -84,6 +90,8 @@ ENV = Environment(
     loader = PackageLoader('myapp','templates'),
     autoescape = select_autoescape(['html', 'xml'])
 )
+
+
 # set default port for server env
 PORT = int(os.environ.get('PORT', '8080'))
 
@@ -108,7 +116,9 @@ class WebSocketHandler(tornado.websocket.WebSocketHandler):
 class TemplateHandler(tornado.web.RequestHandler):
   def render_template (self, tpl, context):
     template = ENV.get_template(tpl)
-    self.write(template.render(**context))
+    self.write(template.render({
+        'assets': options.ASSETS
+    }))
 
 # main handler, passes in template handler for finding template files
 class MainHandler(TemplateHandler):
@@ -118,6 +128,7 @@ class MainHandler(TemplateHandler):
           'Cache-Control',
           'no-store, no-cache, must-revalidate, max-age=0')
         self.render_template("index.html", {'messages': messages})
+
 
 class MessagingHandler(TemplateHandler):
     def get(self):
@@ -187,9 +198,19 @@ class make_app(tornado.web.Application):
 
 
 if __name__ == "__main__":
+    try:
+        fn = 'webpack-assets.json'
+        with open(fn) as f:
+            watch(fn)
+            assets = json.load(f)
+    except IOError:
+        pass
+    except KeyError:
+        pass
     tornado.log.enable_pretty_logging()
     ws_app = make_app()
     server = tornado.httpserver.HTTPServer(ws_app)
     # enables logging of updated files.
+    define('ASSETS', assets)
     server.listen(PORT)
     tornado.ioloop.IOLoop.current().start()
