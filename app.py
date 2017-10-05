@@ -24,10 +24,6 @@ from bs4 import BeautifulSoup
 import lxml
 from lxml.html.clean import Cleaner
 
-# natural language processing
-import nltk
-
-
 cleaner = Cleaner()
 cleaner.javascript = True # This is True because we want to activate the javascript filter
 cleaner.style = True      # This is True because we want to activate the styles & stylesheet filter
