@@ -9,7 +9,7 @@ console.log("is gulp working?")
 //define what we have ws = connection form = the form we use messageInput = where we input data
 //messagesList = where messages are stored message = the message we currently have entered
 var ws;
-var form = document.getElementById('form');
+var form = document.getEnpm lementById('form');
 var messageInput = document.getElementById('message');
 var messagesList = document.getElementById('messages');
 var socketStatus = document.getElementById('status');
@@ -19,8 +19,9 @@ function onLoad() {
 // hack for localhost versus production. will fix better later.
 var url = document.URL;
 
-ws = new WebSocket("ws://aws.4dconsulting.io/websocket");
+ws = new WebSocket("wss://aws.4dconsulting.io/websocket");
 
+console.log("heloo there");
 
 // ws = new WebSocket("ws://aws.4dconsulting.io/websocket");
 // Triggers when message is sent
