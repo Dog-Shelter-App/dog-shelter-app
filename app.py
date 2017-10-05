@@ -27,12 +27,6 @@ from lxml.html.clean import Cleaner
 # natural language processing
 import nltk
 
-# webpack modules
-import json
-from tornado.options import options, define
-from tornado.autoreload import watch
-from jinja2 import Environment, FileSystemLoader
-
 
 cleaner = Cleaner()
 cleaner.javascript = True # This is True because we want to activate the javascript filter
@@ -83,7 +77,6 @@ def get_ingredients(url):
 
 ############################################################################################
 
-
 # Environment variable. Defines location of template files, declares what MUL are interpreted
 # IMPORTANT: must include __init__.py file in top directory. in this case '/myapp'
 ENV = Environment(
@@ -91,9 +84,14 @@ ENV = Environment(
     autoescape = select_autoescape(['html', 'xml'])
 )
 
-
 # set default port for server env
-PORT = int(os.environ.get('PORT', '8080'))
+PORT = int(os.environ.get('PORT', '8902'))
+
+DATABASE_URL = os.environ.get(
+  'DATABASE_URL',
+  'postgres://postgres:e6aef3b4b5685d1ad42a72f5c641853f@dokku-postgres-crmdb:5432/crmdb'
+)
+
 
 
 # open client to db that runs infinitely during the app runtime.
@@ -116,9 +114,7 @@ class WebSocketHandler(tornado.websocket.WebSocketHandler):
 class TemplateHandler(tornado.web.RequestHandler):
   def render_template (self, tpl, context):
     template = ENV.get_template(tpl)
-    self.write(template.render({
-        'assets': options.ASSETS
-    }))
+    self.write(template.render(**context))
 
 # main handler, passes in template handler for finding template files
 class MainHandler(TemplateHandler):
@@ -127,8 +123,7 @@ class MainHandler(TemplateHandler):
         self.set_header(
           'Cache-Control',
           'no-store, no-cache, must-revalidate, max-age=0')
-        self.render_template("index.html", {'messages': messages})
-
+        self.render_template("pages/index.html", {'messages': messages})
 
 class MessagingHandler(TemplateHandler):
     def get(self):
@@ -175,7 +170,7 @@ class DeleteMessageHandler(TemplateHandler):
             'Cache-Control',
             'no-store, no-cache, must-revalidate, max-age=0'
         )
-        self.render_template("index.html", {'messages': messages})
+        self.render_template("pages/index.html", {'messages': messages})
 
 settings = {
     "debug": True,
@@ -190,27 +185,17 @@ class make_app(tornado.web.Application):
             (r"/messaging", MessagingHandler),
             (r"/websocket", WebSocketHandler),
             (r"/delete", WebSocketHandler),
-            (r"/(styles\.css)", tornado.web.StaticFileHandler,
-             dict(path=settings['static_path'])),
+            # (r"/(styles\.css)", tornado.web.StaticFileHandler,
+            #  dict(path=settings['static_path'])),
             (r"/py-scraper", PyScraperHandler),
         ]
         tornado.web.Application.__init__(self, handlers, autoreload=True, **settings)
 
 
 if __name__ == "__main__":
-    try:
-        fn = 'webpack-assets.json'
-        with open(fn) as f:
-            watch(fn)
-            assets = json.load(f)
-    except IOError:
-        pass
-    except KeyError:
-        pass
     tornado.log.enable_pretty_logging()
     ws_app = make_app()
     server = tornado.httpserver.HTTPServer(ws_app)
     # enables logging of updated files.
-    define('ASSETS', assets)
     server.listen(PORT)
     tornado.ioloop.IOLoop.current().start()
