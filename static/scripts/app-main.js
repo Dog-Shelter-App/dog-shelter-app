@@ -9,13 +9,13 @@ console.log("is gulp working?")
 //define what we have ws = connection form = the form we use messageInput = where we input data
 //messagesList = where messages are stored message = the message we currently have entered
 var ws;
-var form = document.getEnpm lementById('form');
+var form = document.getElementById('form');
 var messageInput = document.getElementById('message');
 var messagesList = document.getElementById('messages');
 var socketStatus = document.getElementById('status');
 var closeBtn = document.getElementById('close');
 
-function onLoad() {
+window.onload = function() {
 // hack for localhost versus production. will fix better later.
 var url = document.URL;
 
