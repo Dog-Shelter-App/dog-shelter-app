@@ -19,7 +19,7 @@ function onLoad() {
 // hack for localhost versus production. will fix better later.
 var url = document.URL;
 
-ws = new WebSocket("ws://aws.4dconsulting.io/websocket");
+ws = new WebSocket("wss://aws.4dconsulting.io/websocket");
 
 
 // ws = new WebSocket("ws://aws.4dconsulting.io/websocket");
