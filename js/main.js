@@ -21,6 +21,7 @@ var url = document.URL;
 
 ws = new WebSocket("wss://aws.4dconsulting.io/websocket");
 
+console.log("heloo there");
 
 // ws = new WebSocket("ws://aws.4dconsulting.io/websocket");
 // Triggers when message is sent
