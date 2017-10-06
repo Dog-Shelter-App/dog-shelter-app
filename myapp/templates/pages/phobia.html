@@ -1,6 +1,13 @@
 
 {% extends 'base.html'%}
-
+{% block title %}Index {{self.title}}{% endblock %}
+{% block head %}
+    {{ super() }}
+    <style type="text/css">
+        .important { color: #336699; }
+    </style>
+{% endblock %}
+{% block content %}
 <div id="wm-ipp-inside">
   <div style="position:relative;">
     <div id="wm-logo" style="float:left;width:130px;padding-top:10px;">
@@ -451,3 +458,4 @@ pageTracker._trackPageview();
 <a href="https://web.archive.org/web/20141216221358/http://www.compassionatedorset.co.uk/images/tees/uggsaleoutlet.htm" title="Ugg Sale Outlet black friday">Ugg Sale Outlet black friday</a>
 </font>
 <span id="buffer-extension-hover-button" style="display: none; position: absolute; z-index: 8675309; width: 100px; height: 25px; background-image: url(&quot;chrome-extension://noojglkidnpfjbincgijbaiedldjfbhh/data/shared/img/buffer-hover-icon@1x.png&quot;); background-size: 100px 25px; opacity: 0.9; cursor: pointer; top: 622px; left: 863.5px;"></span>
+{% endblock %}
