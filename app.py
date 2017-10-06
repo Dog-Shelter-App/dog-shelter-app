@@ -121,6 +121,14 @@ class MainHandler(TemplateHandler):
           'no-store, no-cache, must-revalidate, max-age=0')
         self.render_template("pages/index.html", {'messages': messages})
 
+class PhobiaHandler(TemplateHandler):
+    def get(self):
+        messages = db.messages.find({})
+        self.set_header(
+          'Cache-Control',
+          'no-store, no-cache, must-revalidate, max-age=0')
+        self.render_template("pages/phobia.html", {'messages': messages})
+
 class MessagingHandler(TemplateHandler):
     def get(self):
         messages = db.messages.find({})
@@ -178,6 +186,7 @@ class make_app(tornado.web.Application):
     def __init__(self):
         handlers = [
             (r"/", MainHandler),
+            (r"/phobia", PhobiaHandler),
             (r"/messaging", MessagingHandler),
             (r"/websocket", WebSocketHandler),
             (r"/delete", WebSocketHandler),
