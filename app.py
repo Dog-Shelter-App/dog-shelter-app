@@ -1,6 +1,7 @@
 
 ###############################################################################
 import os
+import datetime
 # Needed to run server, event loop and basic server logging
 import tornado.ioloop
 import tornado.web
@@ -56,12 +57,10 @@ class MainHandler(TemplateHandler):
           'no-store, no-cache, must-revalidate, max-age=0')
         self.render_template("pages/index.html", {'user': user})
 
-class LoginHandler(BaseHandler):
+class LoginHandler(TemplateHandler):
     def get(self):
-        self.write('<html><body><form action="/login" method="post">'
-                   'Name: <input type="text" name="name">'
-                   '<input type="submit" value="Sign in">'
-                   '</form></body></html>')
+        date = datetime.date.today()
+        self.render_template("pages/login.html", {'date': date})
 
     def post(self):
         self.set_secure_cookie("user", self.get_argument("name"))
@@ -93,23 +92,10 @@ class MessagingHandler(TemplateHandler):
           'no-store, no-cache, must-revalidate, max-age=0')
         self.render_template("messaging.html", {'messages': messages})
 
-class PyScraperHandler(TemplateHandler):
-    def get(self):
-        # get url parameter
-        url = "https://www.vice.com/en_us/article/a3kpv4/i-waited-for-mcdonalds-szechuan-sauce-and-it-was-fine"
-        url = self.get_argument("url")
-        # scrape url and pass to template
-        words = py_scraper.py_scrape(url)
-
-        self.set_header(
-          'Cache-Control',
-          'no-store, no-cache, must-revalidate, max-age=0')
-        self.render_template("py-scraper.html", {'words': words, 'url': url})
-
 settings = {
     "debug": True,
     "static_path": os.path.join(os.path.dirname(__file__), "static"),
-    "cookie_secret": "sdflk2j3f23f2lk2jf30ijsdflkjff0j998h98h",
+    "cookie_secret": "<set to a random long string>",
     "login_url": "/login"
 }
 
@@ -122,10 +108,6 @@ class make_app(tornado.web.Application):
             (r"/logout", LogOutHandler),
             (r"/messaging", MessagingHandler),
             (r"/websocket", WebSocketHandler),
-            (r"/delete", WebSocketHandler),
-            # (r"/(styles\.css)", tornado.web.StaticFileHandler,
-            #  dict(path=settings['static_path'])),
-            (r"/py-scraper", PyScraperHandler),
         ]
         tornado.web.Application.__init__(self, handlers, autoreload=True, **settings)
 
