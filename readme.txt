@@ -1,21 +1,30 @@
-Startup
-Made by Alan Chang
-Materializecss.com
+Tornado_Starter Template by 
+Kevin Meinhardt 
 
--------------------
+twitter: https://twitter.com/kevinmeinhardt2
+github: https://www.github.com/kevinmind
 
-Personal Use License
+clone repo 
 
-All themes are under the Personal Use License meaning you can use and modify these themes for personal and client projects. You cannot redistribute or resell these themes in any way.
+$ git clone https://github.com/KevinMind/tornado-starter.git
 
--------------------
+pip install requirements: tornado jinja2 and pymongo
 
-Support
+$ pip install -r requirements.txt 
 
-All themes come with active support. Send your questions and concerns to materializethemes@gmail.com</a>
+install frontend framework and file manager (if you need a front end)
 
--------------------
+$npm install
 
-Sass Compilation
+$gulp
 
-Sass compilation is exactly the same as what is used for Materialize. Install all the npm dependencies in the theme folder and then use grunt monitor to automatically compile changes to your files.
+add your services to the services folder and import them to your app.py file with
+
+import services.<your service>
+<your service name> = service.<your service>
+
+call a function from your service 
+
+<your service name>.<your service's function>()
+
+#prints out "hello world... or something."

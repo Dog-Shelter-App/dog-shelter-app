@@ -19,13 +19,7 @@ from pymongo import MongoClient
 
 ###############################################################################
 
-# Localized Services
-
-import services.py_scraper
-py_scraper = services.py_scraper
-
-import services.messanger_pygeon
-messanger_pygeon = services.messanger_pygeon
+# Localized Services Imported Here
 
 client = pymongo.MongoClient("<YOUR MONGODB URL HERE>")
 db = client.test
@@ -40,7 +34,7 @@ ENV = Environment(
 )
 
 # set default port for server env
-PORT = int(os.environ.get('PORT', '8902'))
+PORT = int(os.environ.get('PORT', '8080'))
 
 class BaseHandler(tornado.web.RequestHandler):
     def get_current_user(self):
@@ -93,7 +87,7 @@ class WebSocketHandler(tornado.websocket.WebSocketHandler):
 
 class MessagingHandler(TemplateHandler):
     def get(self):
-        messages = db.messages.find({})
+        messages = "db.messages.find({})"
         self.set_header(
           'Cache-Control',
           'no-store, no-cache, must-revalidate, max-age=0')
