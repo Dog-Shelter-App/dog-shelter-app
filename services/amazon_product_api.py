@@ -12,6 +12,7 @@ import webbrowser
 import hmac
 import hashlib
 import base64
+from Crypto.Hash import SHA256 as sha256
 
 ###################################
 # 1. Define Constants and audibles#
@@ -87,6 +88,12 @@ dig_string_encoded = dig_string.encode('utf-8')
 
 # Encrypt request
 dig = hmac.new(b'+DwXFtp4/KFpAFe/2FeGfMv0Rn4kim4/vNzawe36', msg=dig_string_encoded, digestmod=hashlib.sha256).digest()
+
+signature = quote(
+    b64encode(hmac.new(AWS_SECRET_KEY, dig_string, sha256).digest()))
+
+print(signature)
+
 
 # This doesn't work unless I decode it,,, but I just encoded it.. wtf
 hash_string = base64.b64encode(dig).decode()
