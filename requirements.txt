@@ -1,3 +1,8 @@
 Jinja2==2.9.6
 pymongo==3.5.1
 tornado==4.5.2
+google-api-python-client==1.6.4
+certifi==2017.7.27.1
+peewee==2.10.1
+psycopg2==2.7.3.1
+requests==2.18.4

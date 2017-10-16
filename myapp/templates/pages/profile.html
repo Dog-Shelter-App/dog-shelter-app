@@ -1,0 +1,36 @@
+{% extends 'base.html' %}
+{% block head %}
+{{ super() }}
+{% endblock %}
+{% block body %}
+<div class="section">
+  <div class="container">
+    {% if user %}
+    <form class="" action="/profile" method="post">
+      <h4>{{header}}</h4>
+        <div class="input-field">
+          <input type="text" name="first_name" value="{{user.first_name}}" autofocus="">
+          <label for="first_name" data-error="must enter valid email">first name</label>
+        </div>
+        <div class="input-field">
+          <input type="text" name="last_name" value="{{user.last_name}}">
+          <label for="last_name" data-error="must enter valid email">last name</label>
+        </div>
+        <div class="input-field">
+          <input type="email" name="email_visible" value="{{user.email}}" disabled>
+          <label for="email" data-error="must enter valid email">email</label>
+        </div>
+        <input type="hidden" name="email" value="{{user.email}}">
+        <div class="input-field">
+          <input type="number" name="phone" value="{{user.phone}}">
+          <label for="phone" data-error="must enter valid phone number">phone</label>
+        </div>
+        <div class="input-field">
+          <button type="submit" class="waves-effect waves-light btn"><i class="material-icons left">cloud</i>Update Profile</button>
+
+        </div>
+      </form>
+    {% endif %}
+  </div>
+</div>
+{% endblock%}

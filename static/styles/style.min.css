@@ -1,6 +1,9 @@
 h1 {
   color: blue; }
 
+.body_content {
+  min-height: calc(100vh - 80px); }
+
 .text-center {
   text-align: center; }
 
@@ -21,8 +24,7 @@ h1 {
 
 .message-box {
   max-width: 500px;
-  margin: 0 auto;
-  position: sticky; }
+  margin: 0 auto; }
 
 .messages-box {
   border: 2px solid;

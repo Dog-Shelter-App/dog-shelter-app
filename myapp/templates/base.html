@@ -12,11 +12,11 @@
 
   </head>
 
-  <body>
+  <body class="body_content">
 
     {% include 'components/navbar.html' %}
 
-    <div id="content">{% block content %}{% endblock %}</div>
+    <div id="content">{% block body %}{% endblock %}</div>
 
     {% include 'components/footer.html' %}
     <script type="text/javascript" src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
