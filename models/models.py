@@ -12,7 +12,7 @@ from playhouse.db_url import connect
 #   )
 # )
 
-myDB = peewee.MySQLDatabase("mydb", host="arn:aws:rds:us-east-1:956377352119:db:dog-shelter-app", port=5432, user="dogshelteruser", passwd="dogshelterpw")
+myDB = peewee.MySQLDatabase("mydb", host="arn:aws:rds:us-east-1:956377352119:db:dog-shelter-app", port=54, user="dogshelteruser", passwd="dogshelterpw")
 
 # db = PostgressqlDatabase(
 #     'dog-shelter-app',
