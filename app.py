@@ -15,13 +15,9 @@ import tornado.auth
 from jinja2 import \
     Environment, PackageLoader, select_autoescape
 
-# Use For Mongo DB
-import pymongo
-from pymongo import MongoClient
-
 # Use for POSTGRES
 # Import all models
-from models.models import *
+# from models.models import *
 
 import requests
 
@@ -30,10 +26,15 @@ import requests
 
 # Localized Services Imported Here
 
-client = pymongo.MongoClient("<YOUR MONGODB URL HERE>")
-db = client.test
-
 from services.uimodules import Menu
+
+from settings import mongo_url
+import pymongo
+from pymongo import MongoClient
+client = pymongo.MongoClient(mongo_url)
+db = client.test_database
+collection = db.test_collection
+users = db.user_collection
 
 ###############################################################################
 
@@ -63,29 +64,80 @@ class MainHandler(TemplateHandler):
     def get(self):
         login = self.get_argument('login', None)
         user = self.get_current_user
+        messages = collection.find({})
+        users = db.user_collection.find({})
         self.set_header(
           'Cache-Control',
           'no-store, no-cache, must-revalidate, max-age=0')
-        self.render_template("/pages/index.html", {"login": login, "user": user})
+        self.render_template("/pages/index.html", {"login": login, "users": users, "messages": messages})
+
+    def post(self):
+        text = self.get_body_argument('text')
+        result = collection.insert_one(
+            {"text": text}
+        )
+        self.redirect('/')
+
+class SignupHandler(TemplateHandler):
+    def get(self):
+        self.set_header(
+          'Cache-Control',
+          'no-store, no-cache, must-revalidate, max-age=0')
+        self.render_template("pages/signup.html", {"user": "Kevin"})
+    def post(self):
+        given_name = self.get_body_argument('given_name')
+        family_name = self.get_body_argument('family_name')
+        email = self.get_body_argument('email')
+        password = self.get_body_argument('password')
+        zip_code = self.get_body_argument("zip")
+        if User.select().where(User.email == email).count() == 0:
+            User.create(
+                first_name = given_name,
+                last_name = family_name,
+                email = email,
+                password = password,
+                zip = zip_code,
+                auth = "tornado"
+                )
+            self.redirect("/login")
+        else:
+            raise tornado.web.HTTPError(500,  "user already exists.")
+            self.redirect('/login?status=signup')
+
 
 class LoginHandler(TemplateHandler):
     def get(self):
-        if self.get_secure_cookie:
+        status = self.get_argument('status', None)
+        reason = "Log In"
+        if status == "fail":
+            reason = "Incorrect Username or Password"
+        if self.get_secure_cookie('user'):
             self.redirect('/profile?status=good')
-        path = self.request
-        destination = self.get_argument('next', None)
-        # print("next is {}".format(request_path))
-        data = 4
-        self.set_header(
-          'Cache-Control',
-          'no-store, no-cache, must-revalidate, max-age=0')
-        self.render_template("/pages/login.html", {"data": data})
+        else:
+            path = self.request
+            destination = self.get_argument('next', None)
+            # print("next is {}".format(request_path))
+            data = 4
+            self.set_header(
+              'Cache-Control',
+              'no-store, no-cache, must-revalidate, max-age=0')
+            self.render_template("/pages/login.html", {"data": data, "reason": reason})
 
     def post(self):
         email = self.get_argument('email')
         password = self.get_argument('password')
-        self.set_secure_cookie("user", email)
-        self.redirect(destination)
+        if User.select().where(User.email == email).count() == 0:
+            print("no user found")
+            # raise tornado.web.HTTPError(404, 'No Account with that email address.')
+            self.redirect("/signup?user=null")
+        else:
+            user = User.select().where(User.email == email).get()
+        if user.password != password:
+            self.redirect('/login?status=fail')
+            raise tornado.web.HTTPError(403, "Incorrect username or password.")
+        else:
+            self.set_secure_cookie("user", email)
+        self.redirect('/profile')
 
 class LogOutHandler(BaseHandler, tornado.auth.GoogleOAuth2Mixin):
     def get(self):
@@ -150,13 +202,15 @@ class GAuthLoginHandler(BaseHandler, tornado.auth.GoogleOAuth2Mixin):
 
             # If user does not exists by id in DB, create a user for them..
             # redirect to complete profile
-            if User.select().where(User.email == email).count() == 0:
-                User.create(
-                    first_name = given_name,
-                    last_name = family_name,
-                    email = email,
-                    username = given_name + "_" + family_name + "_" + str(user_id)
-                )
+            users.insert_one(
+                {
+                "given_name": given_name,
+                "family_name": family_name,
+                "email": email,
+                "avatar": avatar,
+                "user_id": user_id
+                }
+            )
             ###################################################################
             #        WRITE USER WITH MONGODB                                  #
             ###################################################################
@@ -216,16 +270,13 @@ class ProfileHandler(TemplateHandler):
         elif status == "good":
             header = "Already Logged In"
         cookie = self.current_user
-        user = User.select().where(User.email == cookie).get()
-        print(user.email)
         self.set_header(
           'Cache-Control',
           'no-store, no-cache, must-revalidate, max-age=0')
-        self.render_template("pages/profile.html", {'user': user, "header": header})
+        self.render_template("pages/profile.html", {"header": header})
     def post(self):
         # Get ID
         email = self.get_body_argument('email')
-        user = User.select().where(User.email == email).get()
         # Write data to user
         user.first_name = self.get_body_argument('first_name')
         user.last_name = self.get_body_argument('last_name')
@@ -238,8 +289,11 @@ class MenuModule(tornado.web.UIModule):
         return self.render_string("menu.html")
 
 
+
 # see settings.py for instructions on setting this up
 from settings import client_id, project_id, auth_uri, token_uri, auth_provider_x509_cert_url, client_secret, cookie_secret
+
+print(client_id)
 
 settings = {
     "debug": True,
@@ -262,7 +316,7 @@ class make_app(tornado.web.Application):
             (r"/login-google", GAuthLoginHandler),
             (r"/profile", ProfileHandler),
             (r"/messaging", MessagingHandler),
-            (r"/websocket", WebSocketHandler),
+            (r"/websocket", WebSocketHandler)
         ]
         # ui_modules = {'Menu': uimodule.Terminal}
         tornado.web.Application.__init__(self, handlers, autoreload=True, **settings)

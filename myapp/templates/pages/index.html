@@ -10,11 +10,17 @@
 {% block body %}
 <div class="section no-pad-bot" id="index-banner">
   <div class="container">
-    <br><br>
-    <h1 class="header center white-text text-center">Starter Template</h1>
-    <div class="row center">
-      <h5 class="header col s12 light text-white text-center">A modern responsive front-end framework based on Material Design</h5>
+    <form class="" action="/" method="post">
+      <input type="text" name="text" value="">
+      <button type="submit" name="" value="">Submit Text</button
+    </form>
+    <div class="row">
+      {% for user in users%}
+      <p>{{user.email}}</p>
+      <p>{{user.given_name}} {{user.family_name}}</p>
+      {% endfor %}
     </div>
+
   </div>
 </div>
 
