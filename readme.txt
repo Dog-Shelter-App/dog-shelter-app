@@ -4,21 +4,31 @@ Kevin Meinhardt
 twitter: https://twitter.com/kevinmeinhardt2
 github: https://www.github.com/kevinmind
 
-clone repo
+##clone repo
 
-$ git clone https://github.com/KevinMind/tornado-starter.git
+$ git clone https://github.com/Dog-Shelter-App/dog-shelter-app
 
-pip install requirements: tornado jinja2 and pymongo
+$ cd dog-shelter-app
+
+##pip install requirements: tornado jinja2 and pymongo
 
 $ pip install -r requirements.txt
 
-install frontend framework and file manager (if you need a front end)
+##install frontend framework and file manager (if you need a front end)
 
 $npm install
 
 $gulp
 
-add your services to the services folder and import them to your app.py file with
+##run app
+
+$ python app.py
+
+##
+
+## go to http://localhost:8080
+
+##add your services to the services folder and import them to your app.py file with
 
 import services.<your service>
 <your service name> = service.<your service>
