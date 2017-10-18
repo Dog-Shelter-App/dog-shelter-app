@@ -10,6 +10,8 @@ $ git clone https://github.com/Dog-Shelter-App/dog-shelter-app.git
 
 $ cd dog-shelter-app
 
+$ virtualenv -a `pwd` -p `which python3`
+
 ##pip install requirements: tornado jinja2 and pymongo
 
 $ pip install -r requirements.txt
