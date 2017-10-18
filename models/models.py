@@ -1,10 +1,6 @@
 import datetime
 import os
 
-
-import peewee as pw
-from playhouse.db_url import connect
-
 # DB = connect(
 #   os.environ.get(
 #     'DATABASE_URL',
