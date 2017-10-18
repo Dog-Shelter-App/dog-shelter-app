@@ -1,32 +1,34 @@
 import datetime
 import os
 
-import peewee
+import peewee as pw
 from playhouse.db_url import connect
 
+
+
+
 # Connect To DB
-DB = connect(
-  os.environ.get(
-    'DATABASE_URL',
-    'postgres://localhost:5432/tornado_starter'
-  )
-)
+# DB = connect(os.environ.get('DATABASE') or 'dog-shelter-app.c1ga7ut5sy84.us-east-1.rds.amazonaws.com')
+
+DB = pw.MySqlDatabase("mydb", host = "dog-shelter-app.c1ga7ut5sy84.us-east-1.rds.amazonaws.com", port=5432, user="dogshelteruser", passwd="dogshelterpw")
+
+DB.connect()
 
 # Base Data Model
-class BaseModel (peewee.Model):
+class BaseModel (pw.Model):
     class Meta:
         database = DB
 
 class PersonModel(BaseModel):
-    first_name = peewee.CharField(max_length=255)
-    last_name = peewee.CharField(max_length=255)
-    phone = peewee.CharField(null = True)
-    email = peewee.CharField(unique = True)
-    address = peewee.CharField(null = True)
-    city = peewee.CharField(null = True)
-    state = peewee.CharField(null = True)
-    zip_code = peewee.CharField(null = True)
-    created = peewee.DateTimeField(
+    first_name = pw.CharField(max_length=255)
+    last_name = pw.CharField(max_length=255)
+    phone = pw.CharField(null = True)
+    email = pw.CharField(unique = True)
+    address = pw.CharField(null = True)
+    city = pw.CharField(null = True)
+    state = pw.CharField(null = True)
+    zip_code = pw.CharField(null = True)
+    created = pw.DateTimeField(
         default = datetime.datetime.utcnow()
     )
     def __str__ (self):
@@ -34,4 +36,4 @@ class PersonModel(BaseModel):
 
 # User Model
 class User(PersonModel):
-    username = peewee.CharField(null = False)
+    username = pw.CharField(null = False)
