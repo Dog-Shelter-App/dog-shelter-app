@@ -6,7 +6,7 @@ github: https://www.github.com/kevinmind
 
 ##clone repo
 
-$ git clone https://github.com/Dog-Shelter-App/dog-shelter-app
+$ git clone https://github.com/Dog-Shelter-App/dog-shelter-app.git
 
 $ cd dog-shelter-app
 
