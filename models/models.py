@@ -1,16 +1,28 @@
 import datetime
 import os
 
-import peewee
+import peewee as peewee
 from playhouse.db_url import connect
 
 # Connect To DB
-DB = connect(
-  os.environ.get(
-    'DATABASE_URL',
-    'postgres://localhost:5432/tornado_starter'
-  )
-)
+# DB = connect(
+#   os.environ.get(
+#     'DATABASE_URL',
+#     'postgres://localhost:5432/tornado_starter'
+#   )
+# )
+
+myDB = peewee.MySQLDatabase("mydb", host="arn:aws:rds:us-east-1:956377352119:db:dog-shelter-app", port=5432, user="dogshelteruser", passwd="dogshelterpw")
+
+# db = PostgressqlDatabase(
+#     'dog-shelter-app',
+#     user='user',
+#     password='12345',
+#     host='db.mysite.com'
+# )
+
+# when you're ready to start querying, remember to connect
+myDB.connect()
 
 # Base Data Model
 class BaseModel (peewee.Model):
