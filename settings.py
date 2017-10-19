@@ -18,6 +18,9 @@ cookie_secret = os.environ.get("cookie_secret")
 # for each entry in client_secret.json add to postactivate script
 # EX: export client_id="<YOUR_CLIENT_IDE>"
 
+aws_s3_access_key = "AKIAIKSEMI7ILS6MSJJQ,psW5yhtCR2XWGP1xujYpxQhM5DmIUNmQbAdPwnNK"
+aws_s3_secret_access_key = "psW5yhtCR2XWGP1xujYpxQhM5DmIUNmQbAdPwnNK"
+
 mongo_url = "mongodb://dog-shelter-app:123456dogs!@cluster0-shard-00-00-kfusm.mongodb.net:27017,cluster0-shard-00-01-kfusm.mongodb.net:27017,cluster0-shard-00-02-kfusm.mongodb.net:27017/test?ssl=true&replicaSet=Cluster0-shard-0&authSource=admin"
 
 
