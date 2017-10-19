@@ -1,0 +1,76 @@
+{% extends "base.html" %}
+{% block jumbotron%}{% endblock %}
+{% block calculator %}
+<div class="calculator">
+<div id="calculator">
+  <div class="container">
+    <div class="row">
+      <div class="col-lg-12">
+
+        <h4>Pay_Gap Calculator</h4>
+        <div class="row">
+        <div class="col-lg-8"><h2 style="font-size: 35px; font-weight: bold; font-family: 'Arvo';">What could you be making?</h2></div>
+        <div class="col-lg-4"><img src="/static/img/coins.png" alt="" width="90%"></div>
+        </div>
+        <h4>The gender wage gap has lowered pay for working women, and growing inequality affects nearly everyone who works.</h4>
+        <p style="color: blue;"><strong>Enter your information to find out how much you could be paid in a more equal economy.</strong></p>
+
+        <form class="" action="/calculator" method="post">
+            <div class="container">
+              <div class="row">
+                <div class="col-lg-8 col-md-8 col-sm-8">
+                  <label for="gender">Gender</label>
+                </div>
+                <div class="col-lg-4 col-md-4 col-sm-4">
+                  <label for="age">Age</label>
+                </div>
+              </div>
+              <div class="row">
+                <div class="col-lg-8 col-md-8 col-sm-8">
+
+                  <p class="form__answer">
+                    <input type="radio" name="gender" id="female" value="female" checked>
+                    <label for="female">Female</label>
+                  </p>
+                  <p class="form__answer">
+                    <input type="radio" name="gender" id="male" value="male">
+                    <label for="male">Male</label>
+                  </p>
+                </div>
+                <div class="col-lg-4 col-md-4 col-sm-4">
+                  <input class="form-control form-control-lg" type="number" step="1" size="" placeholder="30" name="age" value="">
+                </div>
+              </div>
+              <div class="row">
+                <div class="col-lg-12 col-md-12 col-sm-12">
+                  <label for="education">Education</label>
+                </div>
+              </div>
+                  <p class="form__answer">
+                    <input type="radio" name="education" id="bachelors" value="bachelors" checked>
+                    <label for="bachelors">Bachelor's Degree</label>
+                  </p>
+
+                  <p class="form__answer">
+                    <input type="radio" name="education" id="nobachelors" value="nobachelors">
+                    <label for="nobachelors">No Bachelor's Degree</label>
+                  </p>
+
+              <div class="row">
+                <div class="col-lg-12">
+                  <label for="salary">Annual Salary</label>
+                </div>
+                <div class="col-lg-12">
+                  <input class="form-control form-control-lg" type="number" required placeholder="30,000" name="salary" value="">
+                </div>
+              </div>
+            </div>
+          <p>How much does gender affect your pay?</p>
+          <button type="submit" class="btn btn-primary" name="button">Submit</button>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
+</div>
+{% endblock %}

@@ -1,13 +1,6 @@
 import datetime
 import os
 
-# DB = connect(
-#   os.environ.get(
-#     'DATABASE_URL',
-#     'postgres://localhost:5432/tornado_starter'
-#   )
-# )
-
 myDB = peewee.MySQLDatabase("mydb", host="arn:aws:rds:us-east-1:956377352119:db:dog-shelter-app", port=54, user="dogshelteruser", passwd="dogshelterpw")
 
 # db = PostgressqlDatabase(
