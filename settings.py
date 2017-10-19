@@ -9,7 +9,7 @@ auth_provider_x509_cert_url = os.environ.get("auth_provider_x509_cert_url")
 client_secret = "OrorRXuRg2F0qLJPUqxPMJHW"
 
 # Application cookie secret (long random string)
-cookie_secret = os.environ.get("cookie_secret")
+cookie_secret = "sdflkjweghwoegjwoekfjwoekfjweogkhwoekjwoeihrgowehfwjhglkdjdksjbvdfjksdahofdjkhdfjkhsdfbdf"
 
 ################################################################################
 # https://stackoverflow.com/questions/9554087/setting-an-environment-variable-in-virtualenv OPEN ENVIRONMENT VARIABLES

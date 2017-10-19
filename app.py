@@ -53,9 +53,6 @@ dogs = db.dogs_collection
 
 from settings import aws_s3_access_key, aws_s3_secret_access_key
 
-print(aws_s3_access_key)
-print(aws_s3_secret_access_key)
-
 # import boto3
 #
 # s3 = boto3.client('s3')
@@ -141,10 +138,30 @@ class DogFormHandler(TemplateHandler):
           'no-store, no-cache, must-revalidate, max-age=0')
         self.render_template("/pages/dog-form.html", {"user": "kevin"})
     def post(self):
+
+
+
         # import io
         # from PIL import Image
-        # File_All = self.request.files['my_File']
-        # File_Body = File_All[0]['body']
+        file_all = self.request.files['my_File'][0]
+        file_name = file_all['filename']
+        file_body = file_all['body']
+
+        import os
+
+        file_path = os.path.join('static/img/dogs/', file_name)
+        if not os.path.exists('static/img/dogs/'):
+            os.makedirs('static/img/dogs/')
+        print(file_path)
+        with open(file_path, 'wb') as f:
+            f.write(file_body)
+        f.closed
+
+
+
+
+
+
         # # File_Name = File_All.name
         #
         # print(File_Body)
@@ -159,19 +176,24 @@ class DogFormHandler(TemplateHandler):
         #
         # with open(img, 'rb') as data:
         #     obj.upload_fileobj(data)
+        # file_name = self.request.files['my_File'][0]['filename']
 
         # import boto3
         # s3 = boto3.client('s3')
-        # filename = self.request.files['my_File']
         # bucket_name = 'images.findmypup.com'
-        # s3.upload_file(filename, bucket_name, filename)
+        # s3.upload_file(file_path, bucket_name, file_name)
+        #
+        # import base64
+        # import json
+        # image_64_encode = base64.encodestring(file_body)
+        # print(image_64_encode)
         #
 
         # call add dog function from db opperations
         dogs.insert_one(
             {
             "dog_name": self.get_body_argument('dog_name'),
-            # "my_File": File_String,
+            "thumbnail": file_path,
             "breed": self.get_body_argument('breed'),
             "id_chip": self.get_body_argument('id_chip'),
             "location_found": self.get_body_argument('location_found'),
@@ -193,7 +215,6 @@ class DogFormHandler(TemplateHandler):
         "dog_name": "Dog"
         }
         )
-        print(entry)
         self.redirect('/dog-list')
         # ADD DOG
 
@@ -398,7 +419,6 @@ class MenuModule(tornado.web.UIModule):
 # see settings.py for instructions on setting this up
 from settings import client_id, project_id, auth_uri, token_uri, auth_provider_x509_cert_url, client_secret, cookie_secret
 
-print(client_id)
 
 settings = {
     "debug": True,
