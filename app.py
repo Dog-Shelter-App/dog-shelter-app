@@ -139,10 +139,29 @@ class DogFormHandler(TemplateHandler):
         self.render_template("/pages/dog-form.html", {"user": "kevin"})
     def post(self):
 
+
+
         # import io
         # from PIL import Image
-        # File_All = self.request.files['my_File']
-        # File_Body = File_All[0]['body']
+        file_all = self.request.files['my_File'][0]
+        file_name = file_all['filename']
+        file_body = file_all['body']
+
+        import os
+
+        file_path = os.path.join('static/img/dogs/', file_name)
+        if not os.path.exists('static/img/dogs/'):
+            os.makedirs('static/img/dogs/')
+        print(file_path)
+        with open(file_path, 'wb') as f:
+            f.write(file_body)
+        f.closed
+
+
+
+
+
+
         # # File_Name = File_All.name
         #
         # print(File_Body)
@@ -157,35 +176,24 @@ class DogFormHandler(TemplateHandler):
         #
         # with open(img, 'rb') as data:
         #     obj.upload_fileobj(data)
+        # file_name = self.request.files['my_File'][0]['filename']
 
-<<<<<<< HEAD
-        import boto3
-        #
-        file_name = self.request.files['my_File'][0]['filename']
-        file_body = self.request.files['my_File'][0]['body']
-        bucket_name = 'images.findmypup.com'
-        #
-        # s3_resource = boto3.resource('s3')
-        # s3_client = boto3.client('s3')
-        #
-        #
-        # object_method = s3_client.upload_fileobj(file_body, bucket_name, file_name)
-        # # response = s3_resource.meta.client.upload_file(file_name, bucket_name, file_name)
-
-=======
         # import boto3
         # s3 = boto3.client('s3')
-        # filename = self.request.files['my_File']
         # bucket_name = 'images.findmypup.com'
-        # s3.upload_file(filename, bucket_name, filename)
+        # s3.upload_file(file_path, bucket_name, file_name)
         #
->>>>>>> master
+        # import base64
+        # import json
+        # image_64_encode = base64.encodestring(file_body)
+        # print(image_64_encode)
+        #
 
         # call add dog function from db opperations
         dogs.insert_one(
             {
             "dog_name": self.get_body_argument('dog_name'),
-            # "my_File": File_String,
+            "thumbnail": file_path,
             "breed": self.get_body_argument('breed'),
             "id_chip": self.get_body_argument('id_chip'),
             "location_found": self.get_body_argument('location_found'),
@@ -207,7 +215,7 @@ class DogFormHandler(TemplateHandler):
         "dog_name": "Dog"
         }
         )
-        # self.redirect('/dog-list')
+        self.redirect('/dog-list')
         # ADD DOG
 
 class DogListHandler(TemplateHandler):

@@ -8,7 +8,7 @@
   <div class="">
     {% for dog in dogs_list%}
     <div class="card" style="width:20em;">
-      <img class="card-img-top" src="" alt="lost-dog">
+      <img class="card-img-top" src="{{dog.thumbnail}}" alt="lost-dog">
       <div class="card-body">
         <h4 class="card-title"> {{dog.dog_name}}</h4>
         <p class="card-text">{{dog.dog_gender}} {{dog.breed}}</p>
