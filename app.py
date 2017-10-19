@@ -50,17 +50,14 @@ dogs = db.dogs_collection
 
 from settings import aws_s3_access_key, aws_s3_secret_access_key
 
-print(aws_s3_access_key)
-print(aws_s3_secret_access_key)
-
-import boto3
-
-s3 = boto3.client('s3')
-
-response = s3.list_buckets()
-
-buckets = [bucket['Name'] for bucket in response['Buckets']]
-print(buckets)
+# import boto3
+#
+# s3 = boto3.client('s3')
+#
+# response = s3.list_buckets()
+#
+# buckets = [bucket['Name'] for bucket in response['Buckets']]
+# print(buckets)
 
 
 ###############################################################################
@@ -138,6 +135,7 @@ class DogFormHandler(TemplateHandler):
           'no-store, no-cache, must-revalidate, max-age=0')
         self.render_template("/pages/dog-form.html", {"user": "kevin"})
     def post(self):
+
         # import io
         # from PIL import Image
         # File_All = self.request.files['my_File']
@@ -158,10 +156,17 @@ class DogFormHandler(TemplateHandler):
         #     obj.upload_fileobj(data)
 
         import boto3
-        s3 = boto3.client('s3')
-        filename = self.request.files['my_File']
+        #
+        file_name = self.request.files['my_File'][0]['filename']
+        file_body = self.request.files['my_File'][0]['body']
         bucket_name = 'images.findmypup.com'
-        s3.upload_file(filename, bucket_name, filename)
+        #
+        # s3_resource = boto3.resource('s3')
+        # s3_client = boto3.client('s3')
+        #
+        #
+        # object_method = s3_client.upload_fileobj(file_body, bucket_name, file_name)
+        # # response = s3_resource.meta.client.upload_file(file_name, bucket_name, file_name)
 
 
         # call add dog function from db opperations
@@ -190,8 +195,7 @@ class DogFormHandler(TemplateHandler):
         "dog_name": "Dog"
         }
         )
-        print(entry)
-        self.redirect('/dog-list')
+        # self.redirect('/dog-list')
         # ADD DOG
 
 class DogListHandler(TemplateHandler):
@@ -395,7 +399,6 @@ class MenuModule(tornado.web.UIModule):
 # see settings.py for instructions on setting this up
 from settings import client_id, project_id, auth_uri, token_uri, auth_provider_x509_cert_url, client_secret, cookie_secret
 
-print(client_id)
 
 settings = {
     "debug": True,
