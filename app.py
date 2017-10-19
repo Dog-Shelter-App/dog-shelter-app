@@ -32,7 +32,7 @@ import pymongo
 # import client function
 from pymongo import MongoClient
 # create client
-client = pymongo.MongoClient(mongo_url, ssl=True, ssl_cert_reqs=ssl.CERT_NONE)
+client = pymongo.MongoClient(mongo_url, ssl=True)
 
 if client:
     print("client working.")
