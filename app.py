@@ -15,9 +15,16 @@ import tornado.auth
 from jinja2 import \
     Environment, PackageLoader, select_autoescape
 
+<<<<<<< HEAD
 # Use for POSTGRES
 # Import all models
 # from models.models import *
+=======
+# Use For Mongo DB
+import pymongo
+from pymongo import MongoClient
+
+>>>>>>> master
 
 import requests
 
