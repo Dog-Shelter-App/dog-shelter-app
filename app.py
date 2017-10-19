@@ -19,9 +19,6 @@ from jinja2 import \
 import pymongo
 from pymongo import MongoClient
 
-# Use for POSTGRES
-# Import all models
-from models.models import *
 
 import requests
 
