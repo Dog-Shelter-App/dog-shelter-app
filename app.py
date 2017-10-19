@@ -15,17 +15,6 @@ import tornado.auth
 from jinja2 import \
     Environment, PackageLoader, select_autoescape
 
-<<<<<<< HEAD
-# Use for POSTGRES
-# Import all models
-# from models.models import *
-=======
-# Use For Mongo DB
-import pymongo
-from pymongo import MongoClient
-
->>>>>>> master
-
 import requests
 
 
@@ -34,14 +23,35 @@ import requests
 # Localized Services Imported Here
 
 from services.uimodules import Menu
+import services.db_opperations as db_opp
 
+# pull creds
 from settings import mongo_url
+# import driver
 import pymongo
+# import client function
 from pymongo import MongoClient
+# create client
 client = pymongo.MongoClient(mongo_url)
+# define database
 db = client.test_database
+# define collections
 collection = db.test_collection
 users = db.user_collection
+dogs = db.dogs_collection
+
+##########################
+#### cluster
+######## database
+############ collection
+################ document
+
+# AWS S3
+
+from settings import aws_s3_access_key, aws_s3_secret_access_key
+
+print(aws_s3_access_key)
+print(aws_s3_secret_access_key)
 
 ###############################################################################
 
@@ -110,6 +120,54 @@ class SignupHandler(TemplateHandler):
         else:
             raise tornado.web.HTTPError(500,  "user already exists.")
             self.redirect('/login?status=signup')
+
+class DogFormHandler(TemplateHandler):
+    def get(self):
+        self.set_header(
+          'Cache-Control',
+          'no-store, no-cache, must-revalidate, max-age=0')
+        self.render_template("/pages/dog-form.html", {"user": "kevin"})
+    def post(self):
+        # call add dog function from db opperations
+        dogs.insert_one(
+            {
+            "dog_name": self.get_body_argument('dog_name'),
+            "my_File": self.get_body_argument('my_File'),
+            "breed": self.get_body_argument('breed'),
+            "id_chip": self.get_body_argument('id_chip'),
+            "location_found": self.get_body_argument('location_found'),
+            "prim_color": self.get_body_argument('prim_color'),
+            "sec_color": self.get_body_argument('sec_color'),
+            "height": self.get_body_argument('height'),
+            "weight": self.get_body_argument('weight'),
+            "gender": self.get_body_argument('gender', None),
+            "fix": self.get_body_argument('fix', None),
+            "collar": self.get_body_argument('collar', None),
+            "collar_color": self.get_body_argument('collar_color'),
+            "ears": self.get_body_argument('ears'),
+            "eyes": self.get_body_argument('eyes'),
+            "notes": self.get_body_argument('notes')
+            }
+        )
+        entry = dogs.find(
+        {
+        "dog_name": "Dog"
+        }
+        )
+        print(entry)
+        self.redirect('/dog-list')
+        # ADD DOG
+
+class DogListHandler(TemplateHandler):
+    def get(self):
+        dogs_list = dogs.find({})
+        self.set_header(
+          'Cache-Control',
+          'no-store, no-cache, must-revalidate, max-age=0')
+        self.render_template("/pages/dog-list.html", {"dogs_list": dogs_list})
+
+
+
 
 
 class LoginHandler(TemplateHandler):
@@ -270,6 +328,7 @@ class ProfileHandler(TemplateHandler):
     # Add this decorator to restrict access to logged in users.
     @tornado.web.authenticated
     def get(self):
+        user_list = users.find({})
         status = self.get_argument('status', None)
         header = "Your Profile"
         if status == "update":
@@ -280,7 +339,7 @@ class ProfileHandler(TemplateHandler):
         self.set_header(
           'Cache-Control',
           'no-store, no-cache, must-revalidate, max-age=0')
-        self.render_template("pages/profile.html", {"header": header})
+        self.render_template("pages/profile.html", {"users": user_list})
     def post(self):
         # Get ID
         email = self.get_body_argument('email')
@@ -313,7 +372,6 @@ settings = {
     }
 
 
-
 class make_app(tornado.web.Application):
     def __init__(self):
         handlers = [
@@ -323,6 +381,8 @@ class make_app(tornado.web.Application):
             (r"/login-google", GAuthLoginHandler),
             (r"/profile", ProfileHandler),
             (r"/messaging", MessagingHandler),
+            (r"/dog", DogFormHandler),
+            (r"/dog-list", DogListHandler),
             (r"/websocket", WebSocketHandler)
         ]
         # ui_modules = {'Menu': uimodule.Terminal}

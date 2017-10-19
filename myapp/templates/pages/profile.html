@@ -4,6 +4,11 @@
 {% endblock %}
 {% block body %}
 <div class="section">
+  <div class="">
+    {% for user in users %}
+    <span>{{user.email}}</span>
+    {% endfor %}
+  </div>
   <div class="container">
     {% if user %}
     <form class="" action="/profile" method="post">
