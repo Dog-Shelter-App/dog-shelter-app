@@ -32,7 +32,10 @@ import pymongo
 # import client function
 from pymongo import MongoClient
 # create client
-client = pymongo.MongoClient(mongo_url)
+client = pymongo.MongoClient(mongo_url, ssl=True)
+
+if client:
+    print("client working.")
 # define database
 db = client.test_database
 # define collections
@@ -155,6 +158,7 @@ class DogFormHandler(TemplateHandler):
         # with open(img, 'rb') as data:
         #     obj.upload_fileobj(data)
 
+<<<<<<< HEAD
         import boto3
         #
         file_name = self.request.files['my_File'][0]['filename']
@@ -168,6 +172,14 @@ class DogFormHandler(TemplateHandler):
         # object_method = s3_client.upload_fileobj(file_body, bucket_name, file_name)
         # # response = s3_resource.meta.client.upload_file(file_name, bucket_name, file_name)
 
+=======
+        # import boto3
+        # s3 = boto3.client('s3')
+        # filename = self.request.files['my_File']
+        # bucket_name = 'images.findmypup.com'
+        # s3.upload_file(filename, bucket_name, filename)
+        #
+>>>>>>> master
 
         # call add dog function from db opperations
         dogs.insert_one(
