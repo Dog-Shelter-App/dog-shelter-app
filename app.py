@@ -46,7 +46,12 @@ dogs = db.dogs_collection
 ############ collection
 ################ document
 
+# AWS S3
 
+from settings import aws_s3_access_key, aws_s3_secret_access_key
+
+print(aws_s3_access_key)
+print(aws_s3_secret_access_key)
 
 ###############################################################################
 
