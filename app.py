@@ -53,6 +53,16 @@ from settings import aws_s3_access_key, aws_s3_secret_access_key
 print(aws_s3_access_key)
 print(aws_s3_secret_access_key)
 
+import boto3
+
+s3 = boto3.client('s3')
+
+response = s3.list_buckets()
+
+buckets = [bucket['Name'] for bucket in response['Buckets']]
+print(buckets)
+
+
 ###############################################################################
 
 # Environment variable. Defines location of template files, declares what MUL are interpreted
@@ -128,11 +138,37 @@ class DogFormHandler(TemplateHandler):
           'no-store, no-cache, must-revalidate, max-age=0')
         self.render_template("/pages/dog-form.html", {"user": "kevin"})
     def post(self):
+        # import io
+        # from PIL import Image
+        # File_All = self.request.files['my_File']
+        # File_Body = File_All[0]['body']
+        # # File_Name = File_All.name
+        #
+        # print(File_Body)
+        # # print("+" * 10)
+        # # print(File_Name)
+        #
+        # img = Image.open(io.StringIO(File_Body))
+        # import boto3
+        # s3 = boto3.resource('s3')
+        # bucket = s3.Bucket('images.findmypup.com')
+        # obj = bucket.Object('mykey')
+        #
+        # with open(img, 'rb') as data:
+        #     obj.upload_fileobj(data)
+
+        import boto3
+        s3 = boto3.client('s3')
+        filename = self.request.files['my_File']
+        bucket_name = 'images.findmypup.com'
+        s3.upload_file(filename, bucket_name, filename)
+
+
         # call add dog function from db opperations
         dogs.insert_one(
             {
             "dog_name": self.get_body_argument('dog_name'),
-            "my_File": self.get_body_argument('my_File'),
+            # "my_File": File_String,
             "breed": self.get_body_argument('breed'),
             "id_chip": self.get_body_argument('id_chip'),
             "location_found": self.get_body_argument('location_found'),
