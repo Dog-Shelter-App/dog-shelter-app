@@ -32,7 +32,10 @@ import pymongo
 # import client function
 from pymongo import MongoClient
 # create client
-client = pymongo.MongoClient(mongo_url)
+client = pymongo.MongoClient(mongo_url, ssl=True, ssl_cert_reqs=ssl.CERT_NONE)
+
+if client:
+    print("client working.")
 # define database
 db = client.test_database
 # define collections
@@ -53,14 +56,14 @@ from settings import aws_s3_access_key, aws_s3_secret_access_key
 print(aws_s3_access_key)
 print(aws_s3_secret_access_key)
 
-import boto3
-
-s3 = boto3.client('s3')
-
-response = s3.list_buckets()
-
-buckets = [bucket['Name'] for bucket in response['Buckets']]
-print(buckets)
+# import boto3
+#
+# s3 = boto3.client('s3')
+#
+# response = s3.list_buckets()
+#
+# buckets = [bucket['Name'] for bucket in response['Buckets']]
+# print(buckets)
 
 
 ###############################################################################
@@ -157,12 +160,12 @@ class DogFormHandler(TemplateHandler):
         # with open(img, 'rb') as data:
         #     obj.upload_fileobj(data)
 
-        import boto3
-        s3 = boto3.client('s3')
-        filename = self.request.files['my_File']
-        bucket_name = 'images.findmypup.com'
-        s3.upload_file(filename, bucket_name, filename)
-
+        # import boto3
+        # s3 = boto3.client('s3')
+        # filename = self.request.files['my_File']
+        # bucket_name = 'images.findmypup.com'
+        # s3.upload_file(filename, bucket_name, filename)
+        #
 
         # call add dog function from db opperations
         dogs.insert_one(
