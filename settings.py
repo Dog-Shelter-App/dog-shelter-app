@@ -1,12 +1,12 @@
 import os
 
 # Google Oauth Credentials
-client_id = os.environ.get("client_id")
+client_id = "1085158931211-rm9ugg4e6te9shrootb7sg22ahbi714l.apps.googleusercontent.com"
 project_id = os.environ.get("project_id")
 auth_uri = os.environ.get("auth_uri")
 token_uri = os.environ.get("token_uri")
 auth_provider_x509_cert_url = os.environ.get("auth_provider_x509_cert_url")
-client_secret = os.environ.get("client_secret")
+client_secret = "OrorRXuRg2F0qLJPUqxPMJHW"
 
 # Application cookie secret (long random string)
 cookie_secret = os.environ.get("cookie_secret")
@@ -18,7 +18,7 @@ cookie_secret = os.environ.get("cookie_secret")
 # for each entry in client_secret.json add to postactivate script
 # EX: export client_id="<YOUR_CLIENT_IDE>"
 
-
+mongo_url = "mongodb://dog-shelter-app:123456dogs!@cluster0-shard-00-00-kfusm.mongodb.net:27017,cluster0-shard-00-01-kfusm.mongodb.net:27017,cluster0-shard-00-02-kfusm.mongodb.net:27017/test?ssl=true&replicaSet=Cluster0-shard-0&authSource=admin"
 
 
 ################################################################################
