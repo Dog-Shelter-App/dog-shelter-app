@@ -1,4 +1,3 @@
-<<<<<<< HEAD
 import boto3
 
 AWS_ACCESS_KEY = "AKIAIQ44FUP2X2WWJZ5Q"
@@ -45,5 +44,3 @@ response = client.create_db_cluster(
     SourceRegion='string'
 )
 print(RDS_CLIENT)
-=======
->>>>>>> e3045b199f38cf66e3ecf00de291dc2fdd753a35
