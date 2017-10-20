@@ -93,12 +93,12 @@ class MainHandler(TemplateHandler):
     def get(self):
         login = self.get_argument('login', None)
         user = self.get_current_user
-        messages = collection.find({})
-        users = db.user_collection.find({})
+
+        users = "hello"
         self.set_header(
           'Cache-Control',
           'no-store, no-cache, must-revalidate, max-age=0')
-        self.render_template("/pages/index.html", {"login": login, "users": users, "messages": messages})
+        self.render_template("/pages/index.html", {"login": login, "users": users})
 
     def post(self):
         text = self.get_body_argument('text')
@@ -207,13 +207,17 @@ class DogFormHandler(TemplateHandler):
             "notes": self.get_body_argument('notes')
             }
         )
-        # self.redirect('/dogs')
-        self.render_template("/pages/dog-list.html", {})
+        self.redirect('/dogs')
+
         # ADD DOG
 
 class DogListHandler(TemplateHandler):
     def get(self):
-        dogs_list = dogs.find({})
+        dogs_list = dogs.find(
+        {
+        "dog_name": "Betty"
+        }
+        )
         self.set_header(
           'Cache-Control',
           'no-store, no-cache, must-revalidate, max-age=0')
@@ -398,8 +402,7 @@ class make_app(tornado.web.Application):
             (
                 r"/static/(.*)",
                 tornado.web.StaticFileHandler,
-                {'path': 'static'}
-            ),
+                {'path': 'static'}),
             (r"/websocket", WebSocketHandler)
         ]
         # ui_modules = {'Menu': uimodule.Terminal}
