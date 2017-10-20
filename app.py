@@ -402,7 +402,8 @@ class make_app(tornado.web.Application):
             (
                 r"/static/(.*)",
                 tornado.web.StaticFileHandler,
-                {'path': 'static'}),
+                {'path': 'static'}
+                ),
             (r"/websocket", WebSocketHandler)
         ]
         # ui_modules = {'Menu': uimodule.Terminal}
