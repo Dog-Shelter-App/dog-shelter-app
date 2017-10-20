@@ -33,6 +33,8 @@ import pymongo
 from pymongo import MongoClient
 # create client
 client = pymongo.MongoClient(mongo_url, ssl=True)
+# imort UUID functionality
+import uuid
 
 if client:
     print("client working.")
@@ -157,11 +159,6 @@ class DogFormHandler(TemplateHandler):
             f.write(file_body)
         f.closed
 
-
-
-
-
-
         # # File_Name = File_All.name
         #
         # print(File_Body)
@@ -182,7 +179,7 @@ class DogFormHandler(TemplateHandler):
         # s3 = boto3.client('s3')
         # bucket_name = 'images.findmypup.com'
         # s3.upload_file(file_path, bucket_name, file_name)
-        #
+
         # import base64
         # import json
         # image_64_encode = base64.encodestring(file_body)
@@ -192,6 +189,7 @@ class DogFormHandler(TemplateHandler):
         # call add dog function from db opperations
         dogs.insert_one(
             {
+            "_id": uuid.uuid4(),
             "dog_name": self.get_body_argument('dog_name'),
             "thumbnail": file_path,
             "breed": self.get_body_argument('breed'),
