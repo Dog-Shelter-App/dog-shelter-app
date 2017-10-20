@@ -5,15 +5,12 @@ var concat = require('gulp-concat');
 var minifyCSS = require('gulp-minify-css');
 var rename = require('gulp-rename');
 
-
-// compile all scss files to
 gulp.task('styles', function() {
-    gulp.src('./scss/**/*.scss')
-        .pipe(sass().on('error', sass.logError))
-        .pipe(concat('style.min.css'))
-        // .pipe(minifyCSS())
-        .pipe(gulp.dest('./static/styles'));
-});
+    gulp.src('./scss/main.scss')
+    .pipe(sass().on('error', sass.logError))
+    .pipe(concat('style.min.css'))
+    .pipe(gulp.dest('./static/styles'))
+})
 
 gulp.task('js', function() {
     gulp.src('./js/**/*.js')
@@ -21,7 +18,6 @@ gulp.task('js', function() {
         .pipe(concat('app-main.js'))
         .pipe(gulp.dest('./static/scripts'));
 });
-
 
 
 //Watch task
