@@ -387,8 +387,9 @@ settings = {
 
 class DogProfileHandler(TemplateHandler):
     def get(self, slug):
-        dog = dogs.find({dog._id})
-        self.render_template("dog-profile.html", {'dog': dog})
+        dog = dogs.find({
+        "_id": slug})
+        self.render_template("pages/dog-profile.html", {'dog': dog})
 
 class make_app(tornado.web.Application):
     def __init__(self):
@@ -400,6 +401,9 @@ class make_app(tornado.web.Application):
             (r"/dogs/new-dog", DogFormHandler),
             (r"/dogs", DogListHandler),
             (r"/dogs/(.*)",DogProfileHandler),
+            (r"/static/(.*)", tornado.web.StaticFileHandler,
+                {"path": "static"}
+            ),
             (r"/websocket", WebSocketHandler)
         ]
         # ui_modules = {'Menu': uimodule.Terminal}
