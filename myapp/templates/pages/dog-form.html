@@ -5,119 +5,118 @@
     {{ super() }}
 {% endblock %}
 {% block body %}
-<div class="dogform">
-<form enctype="multipart/form-data" action="/dog" id="dogForm"method="post">
-  <div class="form-group">
-      <label for="dogname">Name of Dog</label>
-      <input type="text" name="dog_name"class="form-control" id="dogname" placeholder="Enter dog's name">
-      <small id="emailHelp" class="form-text text-muted">If unknown, leave empty</small>
-    </div>
-    <div class="form-group">
-      <label for="myFile">Upload Picture</label>
-    <input name="my_File" type="file">
-  </div>
-    <div class="form-group">
+<div class="dogform container">
+  <form enctype="multipart/form-data" action="/dog" id="dogForm" method="post">
+      <div class="form-group">
+          <label for="dogname">Name of Dog</label>
+          <input type="text" name="dog_name"class="form-control" id="dogname" placeholder="Enter dog's name">
+          <small id="emailHelp" class="form-text text-muted">If unknown, leave empty</small>
+      </div>
+      <div class="form-group">
         <label for="breed">Breed</label>
         <input type="text" name="breed"class="form-control" id="breed" placeholder="Enter breed">
       </div>
-
       <div class="form-group">
-          <label for="idchip">ID CHIP </label>
-          <input type="text" name='id_chip' class="form-control" id="idchip">
+        <label for="idchip">ID CHIP </label>
+        <input type="text" name='id_chip' class="form-control" id="idchip">
+      </div>
+      <div class="form-group">
+        <label for="locationfound">Location Found </label>
+        <input type="text" name="location_found"class="form-control" id="locationfound">
+      </div>
+      <div class="row">
+        <div class="col-lg-6">
+              <div class="form-group">
+                <label for="primcolor">Primary Color</label>
+                <input type="text" name="prim_color"class="form-control" id="primcolor">
+              </div>
         </div>
-
-        <div class="form-group">
-            <label for="locationfound">Location Found </label>
-            <input type="text" name="location_found"class="form-control" id="locationfound">
-          </div>
-<div class="row">
-  <div class="col-lg-6">
-          <div class="form-group">
-              <label for="primcolor">Primary Color</label>
-              <input type="text" name="prim_color"class="form-control" id="primcolor">
-            </div>
-    </div>
-    <div class="col-lg-6">
-            <div class="form-group">
+        <div class="col-lg-6">
+              <div class="form-group">
                 <label for="seccolor">Secondary Color</label>
                 <input type="text" name="sec_color"class="form-control" id="seccolor">
               </div>
-  </div>
-</div>
-
-<div class="row">
-  <div class="col-lg-6">
-    <div class="form-group">
-        <label for="height">Height</label>
-        <input type="number" name="height" class="form-control" id="height">
-      </div>
-    </div>
-    <div class="col-lg-6">
-      <div class="form-group">
-          <label for="weight">Weight</label>
-          <input type="number" name="weight"class="form-control" id="weight">
         </div>
-  </div>
-</div>
+      </div>
+      <div class="row">
+        <div class="col-lg-6">
+          <div class="form-group">
+            <label for="height">Height</label>
+            <input type="number" name="height" class="form-control" id="height">
+          </div>
+        </div>
+        <div class="col-lg-6">
+          <div class="form-group">
+            <label for="weight">Weight</label>
+            <input type="number" name="weight"class="form-control" id="weight">
+          </div>
+        </div>
+      </div>
 
-<label for="gender">Gender</label>
-<p class="form__answer">
-  <input type="radio" name="gender" id="female" value="female">
-  <label for="female">Female</label>
-</p>
+      <label for="gender">Gender</label>
+      <br>
+      <p class="form__answer">
+        <input type="radio" name="gender" id="female" value="female">
+        <label for="female">Female</label>
+      </p>
+      <p class="form__answer">
+        <input type="radio" name="gender" id="male" value="male">
+        <label for="male">Male</label>
+      </p>
 
-<p class="form__answer">
-  <input type="radio" name="gender" id="male" value="male">
-  <label for="male">Male</label>
-</p>
-<label for="fix">Has the dog been neutered/spayed?</label><br>
-<p class="form__answer">
-  <input type="radio" name="fix" id="fixyes" value="yes">
-  <label for="fixyes">Yes</label>
-</p>
+      <label for="fix">Has the dog been neutered/spayed?</label>
+      <br>
+      <p class="form__answer">
+        <input type="radio" name="fix" id="fixyes" value="yes">
+        <label for="fixyes">Yes</label>
+      </p>
+      <p class="form__answer">
+        <input type="radio" name="fix" id="fixno" value="no">
+        <label for="fixno">No</label>
+      </p>
+      <br>
+      
+      <label for="collar">Collar</label>
+      <br>
+      <p class="form__answer">
+        <input type="radio" name="collar" id="collaryes" value="yes">
+        <label for="collaryes">Yes</label>
+      </p>
+      <p class="form__answer">
+        <input type="radio" name="collar" id="collarno" value="no">
+        <label for="collarno">No</label>
+      </p>
 
-<p class="form__answer">
-  <input type="radio" name="fix" id="fixno" value="no">
-  <label for="fixno">No</label>
-</p>
+      <br>
+      <label for="collarcolor" class='collarcolor'>If yes, describe collar:</label>
+      <input type="text" name="collar_color" placeholder="color, material">
 
-<br>
-<label for="collar">Collar</label>
+      <div class="form-group"><label for="ears">Ears</label>
+      <select name="ears" id="ears" class="form-control">
+        <option value="stand-up">Stand-up</option>
+        <option value="cropped">Cropped</option>
+        <option value="folded">Folded</option>
+      </select></div>
 
-<p class="form__answer">
-  <input type="radio" name="collar" id="collaryes" value="yes">
-  <label for="collaryes">Yes</label>
-</p>
-<p class="form__answer">
-  <input type="radio" name="collar" id="collarno" value="no">
-  <label for="collarno">No</label>
-</p>
+      <label for="eyes">Eye Color</label>
+      <input type="text" id="eyes" name="eyes">
+      <br>
 
-<br>
-<label for="collarcolor">If yes, describe collar:</label>
-<input type="text" name="collar_color" placeholder="color, material">
+      <label for="notes">Notes</label>
+      <br>
+      <textarea class='notes-area' name="notes" id="" cols="30" rows="10"></textarea>
 
-<div class="form-group"><label for="ears">Ears</label>
-<select name="ears" id="ears" class="form-control">
-  <option value="stand-up">Stand-up</option>
-  <option value="cropped">Cropped</option>
-  <option value="folded">Folded</option>
-</select></div>
-
-<label for="eyes">Eye Color</label>
-<input type="text" id="eyes" name="eyes">
-
-<br>
-<label for="notes">Notes</label>
-<textarea name="notes" id="" cols="30" rows="10"></textarea>
-
-    <div class="form-check">
-      <label class="form-check-label">
-        <input type="checkbox" class="form-check-input">
-        Check me out
-      </label>
-    </div>
-    <button type="submit" class="btn btn-primary">Submit</button>
-</form>
+      <div class="form-check">
+        <label class="form-check-label">
+          <input type="checkbox" class="form-check-input">
+          Check me out
+        </label>
+      </div>
+      <div class="form-group">
+        <label for="myFile">Upload Picture</label>
+        <input name="my_File" type="file">
+      </div>
+      <button type="submit" class="btn btn-primary">Submit</button>
+  </form>
 </div>
 {% endblock %}
