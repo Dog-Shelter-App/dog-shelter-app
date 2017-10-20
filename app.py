@@ -93,12 +93,12 @@ class MainHandler(TemplateHandler):
     def get(self):
         login = self.get_argument('login', None)
         user = self.get_current_user
-        messages = collection.find({})
-        users = db.user_collection.find({})
+
+        users = "hello"
         self.set_header(
           'Cache-Control',
           'no-store, no-cache, must-revalidate, max-age=0')
-        self.render_template("/pages/index.html", {"login": login, "users": users, "messages": messages})
+        self.render_template("/pages/index.html", {"login": login, "users": users})
 
     def post(self):
         text = self.get_body_argument('text')
@@ -189,7 +189,7 @@ class DogFormHandler(TemplateHandler):
         # call add dog function from db opperations
         dogs.insert_one(
             {
-            "_id": uuid.uuid4(),
+            "_id": str(uuid.uuid4()),
             "dog_name": self.get_body_argument('dog_name'),
             "thumbnail": file_path,
             "breed": self.get_body_argument('breed'),
@@ -210,24 +210,21 @@ class DogFormHandler(TemplateHandler):
             "notes": self.get_body_argument('notes')
             }
         )
-        entry = dogs.find(
-        {
-        "dog_name": "Dog"
-        }
-        )
-        self.redirect('/dog-list')
+
+        self.redirect('/dogs')
         # ADD DOG
 
 class DogListHandler(TemplateHandler):
     def get(self):
-        dogs_list = dogs.find({})
+        dogs_list = dogs.find(
+        {
+        "dog_name": "Betty"
+        }
+        )
         self.set_header(
           'Cache-Control',
           'no-store, no-cache, must-revalidate, max-age=0')
         self.render_template("/pages/dog-list.html", {"dogs_list": dogs_list})
-
-
-
 
 
 class LoginHandler(TemplateHandler):
