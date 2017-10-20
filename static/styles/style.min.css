@@ -12,6 +12,22 @@ footer{
   color: #000;
 }
 
+/************************************************************
+
+DOG FORM HTML PAGE
+
+************************************************************/
+.collarcolor {
+  margin-right: 1em;
+}
+
+#eyes {
+  margin-left: 1em;
+}
+
+.notes-area {
+  width: 100%;
+}
 .dogform{
   margin: auto;
   width: 50%;
