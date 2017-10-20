@@ -5,6 +5,7 @@
     {{ super() }}
 {% endblock %}
 {% block body %}
+<<<<<<< HEAD
 <div class="dogform container">
   <form enctype="multipart/form-data" action="/dog" id="dogForm" method="post">
       <div class="form-group">
@@ -15,6 +16,21 @@
       <div class="form-group">
         <label for="breed">Breed</label>
         <input type="text" name="breed"class="form-control" id="breed" placeholder="Enter breed">
+=======
+<div class="dogform">
+<form enctype="multipart/form-data" action="/dog" id="dogForm"method="post">
+  <div class="form-group">
+      <label for="dogname">Name of Dog</label>
+      <input type="text" name="dog_name"class="form-control" id="dogname" placeholder="Enter dog's name">
+      <small id="emailHelp" class="form-text text-muted">If unknown, leave empty</small>
+    </div>
+    <div class="form-group">
+      <label for="myFile">Upload Picture</label>
+    <input name="my_File" type="file">
+  </div>
+    <div class="form-group">
+      {% include "components/breed.html" %}
+>>>>>>> refs/remotes/origin/master
       </div>
       <div class="form-group">
         <label for="idchip">ID CHIP </label>
@@ -31,11 +47,37 @@
                 <input type="text" name="prim_color"class="form-control" id="primcolor">
               </div>
         </div>
+<<<<<<< HEAD
         <div class="col-lg-6">
               <div class="form-group">
+=======
+        <div class="form-group">
+            <label for="age">Age (years)</label>
+            <input type="number" name='age' class="form-control" id="age">
+          </div>
+          <div class="form-group">
+              <label for="date_found">Date Found </label>
+              <input type="date" name='date_found' class="form-control" id="date_found">
+            </div>
+
+        <div class="form-group">
+            <label for="locationfound">Location Found </label>
+            <input type="text" name="location_found"class="form-control" id="locationfound">
+          </div>
+<div class="row">
+  <div class="col-lg-6">
+          <div class="form-group">
+              <label for="primcolor">Primary Color</label>
+              <input type="color" name="prim_color"class="form-control" id="primcolor">
+            </div>
+    </div>
+    <div class="col-lg-6">
+            <div class="form-group">
+>>>>>>> refs/remotes/origin/master
                 <label for="seccolor">Secondary Color</label>
-                <input type="text" name="sec_color"class="form-control" id="seccolor">
+                <input type="color" name="sec_color"class="form-control" id="seccolor">
               </div>
+<<<<<<< HEAD
         </div>
       </div>
       <div class="row">
@@ -44,6 +86,22 @@
             <label for="height">Height</label>
             <input type="number" name="height" class="form-control" id="height">
           </div>
+=======
+  </div>
+</div>
+
+<div class="row">
+  <div class="col-lg-6">
+    <div class="form-group">
+        <label for="height">Height (inches)</label>
+        <input type="number" name="height" class="form-control" id="height">
+      </div>
+    </div>
+    <div class="col-lg-6">
+      <div class="form-group">
+          <label for="weight">Weight (pounds)</label>
+          <input type="number" name="weight"class="form-control" id="weight">
+>>>>>>> refs/remotes/origin/master
         </div>
         <div class="col-lg-6">
           <div class="form-group">

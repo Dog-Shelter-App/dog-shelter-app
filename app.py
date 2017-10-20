@@ -194,6 +194,8 @@ class DogFormHandler(TemplateHandler):
             "thumbnail": file_path,
             "breed": self.get_body_argument('breed'),
             "id_chip": self.get_body_argument('id_chip'),
+            "age": self.get_body_argument('age'),
+            "date_found": self.get_body_argument('date_found'),
             "location_found": self.get_body_argument('location_found'),
             "prim_color": self.get_body_argument('prim_color'),
             "sec_color": self.get_body_argument('sec_color'),
@@ -372,48 +374,6 @@ class WebSocketHandler(tornado.websocket.WebSocketHandler):
         db.messages.insert_one({"message": message})
         messages_list = db.messages.find({})
 
-class MessagingHandler(TemplateHandler):
-    # Add this decorator to restrict access to logged in users.
-    @tornado.web.authenticated
-    def get(self):
-        messages = "db.messages.find({})"
-        self.set_header(
-          'Cache-Control',
-          'no-store, no-cache, must-revalidate, max-age=0')
-        self.render_template("messaging.html", {'messages': messages})
-
-class ProfileHandler(TemplateHandler):
-    # Add this decorator to restrict access to logged in users.
-    @tornado.web.authenticated
-    def get(self):
-        user_list = users.find({})
-        status = self.get_argument('status', None)
-        header = "Your Profile"
-        if status == "update":
-            header = "Profile Updated"
-        elif status == "good":
-            header = "Already Logged In"
-        cookie = self.current_user
-        self.set_header(
-          'Cache-Control',
-          'no-store, no-cache, must-revalidate, max-age=0')
-        self.render_template("pages/profile.html", {"users": user_list})
-    def post(self):
-        # Get ID
-        email = self.get_body_argument('email')
-        # Write data to user
-        user.first_name = self.get_body_argument('first_name')
-        user.last_name = self.get_body_argument('last_name')
-        user.phone = self.get_body_argument('phone')
-        user.save()
-        self.redirect('/profile?status=update')
-
-class MenuModule(tornado.web.UIModule):
-    def render(self):
-        return self.render_string("menu.html")
-
-
-
 # see settings.py for instructions on setting this up
 from settings import client_id, project_id, auth_uri, token_uri, auth_provider_x509_cert_url, client_secret, cookie_secret
 
@@ -428,6 +388,10 @@ settings = {
     "ui_modules": {"Menu": Menu}
     }
 
+class DogProfileHandler(TemplateHandler):
+    def get(self, slug):
+        dog = dogs.find({dog._id})
+        self.render_template("dog-profile.html", {'dog': dog})
 
 class make_app(tornado.web.Application):
     def __init__(self):
@@ -436,10 +400,9 @@ class make_app(tornado.web.Application):
             (r"/login", LoginHandler),
             (r"/logout", LogOutHandler),
             (r"/login-google", GAuthLoginHandler),
-            (r"/profile", ProfileHandler),
-            (r"/messaging", MessagingHandler),
-            (r"/dog", DogFormHandler),
-            (r"/dog-list", DogListHandler),
+            (r"/dogs/new-dog", DogFormHandler),
+            (r"/dogs", DogListHandler),
+            (r"/dogs/(.*)",DogProfileHandler),
             (r"/websocket", WebSocketHandler)
         ]
         # ui_modules = {'Menu': uimodule.Terminal}
