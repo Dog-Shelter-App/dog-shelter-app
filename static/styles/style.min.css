@@ -23,10 +23,30 @@ DOG FORM HTML PAGE
 #eyes {
   margin-left: 1em; }
 
+<<<<<<< HEAD
 .notes-area {
   width: 100%; }
 
 .dogform {
+=======
+/************************************************************
+
+DOG FORM HTML PAGE
+
+************************************************************/
+.collarcolor {
+  margin-right: 1em;
+}
+
+#eyes {
+  margin-left: 1em;
+}
+
+.notes-area {
+  width: 100%;
+}
+.dogform{
+>>>>>>> 1767a38662602eaf6ca1781b45c5b5d8db76f6d7
   margin: auto;
   width: 50%; }
 
