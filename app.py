@@ -392,12 +392,7 @@ settings = {
 
 class DogProfileHandler(TemplateHandler):
     def get(self, slug):
-        # steps to make dogs profile:
-        # 1. make handlers
-        # 2. carry hidden unique ID into html
-        # 3. in the handler, find the dog by unique ID.
-        # 4. pass the dogs data into jinja post template
-        dog = dogs.find({dog.id})
+        dog = dogs.find({dog._id})
         self.render_template("dog-profile.html", {'dog': dog})
 
 class make_app(tornado.web.Application):
