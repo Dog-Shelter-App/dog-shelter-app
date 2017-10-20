@@ -112,7 +112,7 @@ class SignupHandler(TemplateHandler):
         self.set_header(
           'Cache-Control',
           'no-store, no-cache, must-revalidate, max-age=0')
-        self.render_template("pages/signup.html", {"user": "Kevin"})
+        self.render_template("pages/signup.html", {})
     def post(self):
         given_name = self.get_body_argument('given_name')
         family_name = self.get_body_argument('family_name')
@@ -138,11 +138,8 @@ class DogFormHandler(TemplateHandler):
         self.set_header(
           'Cache-Control',
           'no-store, no-cache, must-revalidate, max-age=0')
-        self.render_template("/pages/dog-form.html", {"user": "kevin"})
+        self.render_template("/pages/dog-form.html", {})
     def post(self):
-
-
-
         # import io
         # from PIL import Image
         file_all = self.request.files['my_File'][0]
@@ -189,7 +186,7 @@ class DogFormHandler(TemplateHandler):
         # call add dog function from db opperations
         dogs.insert_one(
             {
-            "_id": uuid.uuid4(),
+            "_id": str(uuid.uuid4()),
             "dog_name": self.get_body_argument('dog_name'),
             "thumbnail": file_path,
             "breed": self.get_body_argument('breed'),
@@ -210,12 +207,8 @@ class DogFormHandler(TemplateHandler):
             "notes": self.get_body_argument('notes')
             }
         )
-        entry = dogs.find(
-        {
-        "dog_name": "Dog"
-        }
-        )
-        self.redirect('/dog-list')
+        # self.redirect('/dogs')
+        self.render_template("/pages/dog-list.html", {})
         # ADD DOG
 
 class DogListHandler(TemplateHandler):
@@ -225,10 +218,6 @@ class DogListHandler(TemplateHandler):
           'Cache-Control',
           'no-store, no-cache, must-revalidate, max-age=0')
         self.render_template("/pages/dog-list.html", {"dogs_list": dogs_list})
-
-
-
-
 
 class LoginHandler(TemplateHandler):
     def get(self):
@@ -389,9 +378,12 @@ settings = {
     }
 
 class DogProfileHandler(TemplateHandler):
-    def get(self, slug):
-        dog = dogs.find({dog._id})
-        self.render_template("dog-profile.html", {'dog': dog})
+    def get(self, _id):
+        dog = dogs.find_one({"_id": _id})
+        self.set_header(
+          'Cache-Control',
+          'no-store, no-cache, must-revalidate, max-age=0')
+        self.render_template("/pages/dog-profile.html", {'dog': dog})
 
 class make_app(tornado.web.Application):
     def __init__(self):
@@ -403,6 +395,11 @@ class make_app(tornado.web.Application):
             (r"/dogs/new-dog", DogFormHandler),
             (r"/dogs", DogListHandler),
             (r"/dogs/(.*)",DogProfileHandler),
+            (
+                r"/static/(.*)",
+                tornado.web.StaticFileHandler,
+                {'path': 'static'}
+            ),
             (r"/websocket", WebSocketHandler)
         ]
         # ui_modules = {'Menu': uimodule.Terminal}

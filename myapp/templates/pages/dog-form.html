@@ -1,12 +1,8 @@
 {% extends 'base.html' %}
 
-{% block title %}Index {{self.title}}{% endblock %}
-{% block head %}
-    {{ super() }}
-{% endblock %}
 {% block body %}
 <div class="dogform">
-<form enctype="multipart/form-data" action="/dog" id="dogForm"method="post">
+<form enctype="multipart/form-data" action="/dogs/new-dog" id="dogForm"method="post">
   <div class="form-group">
       <label for="dogname">Name of Dog</label>
       <input type="text" name="dog_name"class="form-control" id="dogname" placeholder="Enter dog's name">
@@ -41,13 +37,13 @@
   <div class="col-lg-6">
           <div class="form-group">
               <label for="primcolor">Primary Color</label>
-              <input type="color" name="prim_color"class="form-control" id="primcolor">
+              <input type="text" name="prim_color"class="form-control" id="primcolor">
             </div>
     </div>
     <div class="col-lg-6">
             <div class="form-group">
                 <label for="seccolor">Secondary Color</label>
-                <input type="color" name="sec_color"class="form-control" id="seccolor">
+                <input type="text" name="sec_color"class="form-control" id="seccolor">
               </div>
   </div>
 </div>
