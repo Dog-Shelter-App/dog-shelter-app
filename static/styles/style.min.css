@@ -18,7 +18,9 @@ DOG FORM HTML PAGE
 
 ************************************************************/
 .collarcolor {
-  margin-right: 1em; }
+  margin-right: 1em;
+  padding-top: 2em;
+}
 
 #eyes {
   margin-left: 1em;
@@ -33,6 +35,10 @@ DOG FORM HTML PAGE
 .profile{
   margin:auto;
   width: 70%;
+}
+
+.upload {
+  margin-right: 1em;
 }
 
 /********************************************************
