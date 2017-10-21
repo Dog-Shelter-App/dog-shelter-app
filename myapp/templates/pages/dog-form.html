@@ -4,7 +4,7 @@
 <div class="dogform">
 <form enctype="multipart/form-data" action="/dogs/new-dog" id="dogForm"method="post">
   <div class='daform container'>
-    
+
     <div class="form-group">
       <label for="dogname">Name of Dog</label>
       <input type="text" name="dog_name"class="form-control" id="dogname" placeholder="Enter dog's name">
@@ -31,7 +31,7 @@
       <div class="date_found col-lg-6">
         <div class="form-group">
           <label for="date_found">Date Found </label>
-          <input type="date" name='date_found' class="form-control" id="date_found">
+          <input name='date_found' class="form-control date_found" id="date_found">
         </div>
       </div>
       <div class="dogage col-lg-6">
@@ -41,7 +41,7 @@
         </div>
       </div>
     </div>
-  
+
     <div class="row">
       <div class="col-lg-6">
         <div class='form-group'>
@@ -56,7 +56,7 @@
         </div>
       </div>
     </div>
-  
+
     <div class="row">
       <div class="col-lg-6">
         <div class="form-group">
@@ -71,7 +71,7 @@
         </div>
       </div>
     </div>
-  
+
     <label for="gender">Gender</label>
     <br>
     <div class="form__answer col-lg-6">
@@ -82,7 +82,7 @@
       <input type="radio" name="gender" id="male" value="male">
       <label for="male">Male</label>
     </div>
-    
+
     <label for="fix">Has the dog been neutered/spayed?</label>
     <br>
     <div class="form__answer">
@@ -121,7 +121,7 @@
     <label for="eyes">Eye Color</label>
     <input type="text" id="eyes" name="eyes">
     <br>
-  
+
     <label for="notes">Notes</label>
     <br>
     <textarea class='notes-area' name="notes" id="" cols="30" rows="10"></textarea>
