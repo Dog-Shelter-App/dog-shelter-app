@@ -17,7 +17,6 @@ from jinja2 import \
 
 import requests
 
-
 ###############################################################################
 
 # pull creds
@@ -134,7 +133,7 @@ class DogFormHandler(TemplateHandler):
         self.set_header(
           'Cache-Control',
           'no-store, no-cache, must-revalidate, max-age=0')
-        self.render_template("/pages/dog-form.html", {})
+        self.render_template("/pages/new-dog-form.html", {})
     def post(self):
         # import io
         # from PIL import Image

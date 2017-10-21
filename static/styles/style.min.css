@@ -9,23 +9,6 @@ footer{
   margin: 0 auto;
 }
 
-.login-page {
-  min-height: 600px;
-  background-image: url("/static/img/pexels-photo-59523.jpeg");
-  background-size: cover;
-  background-repeat: no-repeat;
-  background-position: left;
-}
-
-.login-form-container {
-  height: 100%;
-  min-height: 600px;
-}
-
-.login-form {
-  padding: 20px;
-  
-}
 #header>a{
   color: #000;
 }
@@ -100,11 +83,23 @@ CALCULATOR
   /*line-height: 5px;*/
 	text-align: center;
 }
+
+.flex-form-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  min-height: 500px;
+  padding: 25px;
+}
+
+.dog-form {
+  border: 2px solid;
+}
+
 label {
   text-transform: uppercase;
   font-weight: bold;
-	height: 100%;
-	/*width: 100%;*/
 	padding: 10px 0px 0px 0px;
 	opacity: .5;
 	transition: all .5s ease-in-out;
