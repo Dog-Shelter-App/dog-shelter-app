@@ -17,13 +17,7 @@ from jinja2 import \
 
 import requests
 
-
 ###############################################################################
-
-# Localized Services Imported Here
-
-from services.uimodules import Menu
-import services.db_opperations as db_opp
 
 # pull creds
 from settings import mongo_url
@@ -135,6 +129,7 @@ class SignupHandler(TemplateHandler):
             self.redirect('/login?status=signup')
 
 class DogFormHandler(TemplateHandler):
+    @tornado.web.authenticated
     def get(self):
         self.set_header(
           'Cache-Control',
@@ -213,6 +208,7 @@ class DogFormHandler(TemplateHandler):
         # ADD DOG
 
 class DogListHandler(TemplateHandler):
+    @tornado.web.authenticated
     def get(self):
         dogs_list = dogs.find(
         {
@@ -337,7 +333,7 @@ class GAuthLoginHandler(BaseHandler, tornado.auth.GoogleOAuth2Mixin):
             ###################################################################
 
             # user exists, redirect to profile page.
-            self.redirect('/profile')
+            self.redirect('/shelters/new-user')
 
 
             return
@@ -378,8 +374,7 @@ settings = {
     "cookie_secret": cookie_secret,
     'google_oauth':{"key":client_id, "secret":client_secret},
     "login_url": "/login",
-    "google_redirect_url": "/login-google",
-    "ui_modules": {"Menu": Menu}
+    "google_redirect_url": "/login-google"
     }
 
 class DogProfileHandler(TemplateHandler):
