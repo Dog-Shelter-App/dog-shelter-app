@@ -13,16 +13,6 @@ footer{
   color: #000;
 }
 
-.carousel-controller {
-  display: flex;
-  justify-content: space-around;
-
-}
-.carousel-controller a {
-  border: 1px solid;
-
-}
-
 
 /********************************************************
 JUMBOTRON
@@ -90,17 +80,8 @@ CALCULATOR
 	text-align: center;
 }
 
-.flex-form-container {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  width: 100%;
-  min-height: 500px;
-  padding: 25px;
-}
-
-.dog-form {
-  border: 2px solid;
+.form-group {
+  margin-right: 1rem;
 }
 
 .radio-label {
@@ -215,4 +196,26 @@ BOOTSTRAP
     height: 150px;
   }
   .jumbotron-paygap >h3{font-size: 15px;}
+}
+
+/********************************************************
+CAROUSEL
+*******************************************************/
+
+.carousel-controller {
+  display: flex;
+  justify-content: space-around;
+
+}
+.carousel-controller a {
+  border: 1px solid;
+
+}
+
+/********************************************************
+DOG LIST
+*******************************************************/
+
+.dog-card {
+  margin: 1rem;
 }

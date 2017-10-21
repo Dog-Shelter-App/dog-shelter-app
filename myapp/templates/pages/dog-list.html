@@ -5,9 +5,9 @@
     {{ super() }}
 {% endblock %}
 {% block body %}
-  <div class="dog_list">
+  <div class="dog_list d-flex pt-5 flex-wrap justify-content-start">
     {% for dog in dogs_list%}
-      <article class="card" style="width:20em;">
+      <article class="card dog-card" style="width:20em;">
         <a href="dogs/{{dog._id}}">
           <img class="card-img-top" src="{{dog.thumbnail}}" alt="lost-dog">
           <div class="card-body">
