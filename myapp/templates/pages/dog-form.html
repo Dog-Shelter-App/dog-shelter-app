@@ -6,15 +6,9 @@
 {% endblock %}
 {% block body %}
 
-<div class="container">
-  <div class="row">
-    <div class="col-sm-12 col-md-6">
-      {% include 'components/dog-form.html'%}
-    </div>
-    <div class="col-sm-12 col-md-6">
-      {% include 'components/dog-form-multi.html'%}
-
-    </div>
+<div class="container-fluid d-flex pt-5 justify-content-center" style="background-image: url('/static/img/blur1.jpg');">
+  <div class="form">
+    {% include 'components/dog-form-multi.html'%}
   </div>
 </div>
 

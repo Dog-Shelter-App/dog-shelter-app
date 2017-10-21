@@ -18,7 +18,6 @@ footer{
   justify-content: space-around;
 
 }
-
 .carousel-controller a {
   border: 1px solid;
 
@@ -104,30 +103,55 @@ CALCULATOR
   border: 2px solid;
 }
 
-label {
+.radio-label {
   text-transform: uppercase;
   font-weight: bold;
-	padding: 10px 0px 0px 0px;
+	padding: 8px 24px;
 	opacity: .5;
-	transition: all .5s ease-in-out;
+	transition: all .1s ease-in-out;
+  border: 3px solid #ddd;
 	/*&:hover, &:focus, &:active {
 		border: 1px solid rgba(#ddd,.5);
 	}*/
 }
-/*input[type="radio"] {
+input[type="radio"] {
+  display: none;
 	opacity: 0;
 	width: 0;
   height: 0;
 }
-input[type="radio"]:active ~ label {
+
+input[type="date"] {
+  padding: 5px;
+}
+
+input.form-control, textarea#notes, select{
+  border: 2px solid #ddd;
+}
+
+
+.form-section {
+  background: white;
+  border: 3px solid #ddd;
+  padding: 25px;
+  margin-bottom: 15px;
+  border-radius: 5px;
+}
+
+/*input[type="radio"]:active ~ label {
   opacity: 1;
 }
 input[type="radio"]:checked ~ label {
-  opacity: 1;
-  font-size: 16px;
-  font-weight: bold;
-  /*background-color: #ddd;*/
+  color: green;
 }*/
+
+:checked + span {
+    font-weight: bold;
+    color: green;
+}
+.radio-label:hover {
+    cursor:pointer;
+}
 /********************************************************
 RESULTS
 *******************************************************/
