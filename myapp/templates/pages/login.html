@@ -8,32 +8,24 @@
     </style>
 {% endblock %}
 {% block body %}
-<div class="section">
-  <div class="row">
-    <div class="col s12 m6">
+<div class="login-page">
+  <div class="container d-flex align-items-center login-form-container">
+    <div class="row">
+      <div class="col-sm-12 col-md-4">
+        <div class="card login-form">
+          <h3>Find My Pup</h3>
+          <p>Please login to access our comprehensive database of lost animals.</p>
+          <a href="/login-google" class="btn-default">Login with Google</a>
+        </div>
+      </div>
+      <div class="col-sm12 col-md-8">
 
-    </div>
-    <div class="col s12 m6">
-      <div class="card">
-        <form action="/login" method="post">
-          <div class="card-content">
-            <h4>Create User Account</h4>
-              <div class="input-field">
-                <input name="email" type="email" class="validate">
-                <label for="email" data-error="must enter valid email">Email</label>
-              </div>
-              <div class="input-field">
-                <input name="password" type="password">
-                <label for="password">Password</label>
-              </div>
-          </div>
-          <div class="card-action space-between">
-            <button class="waves-effect waves-light btn" type="submit"><i class="material-icons right"><i class="material-icons">account_circle</i></i>Create Account</button>
-            <a href="/login-google"><i class=""></i>Login with Google</a>
-          </div>
-        </form>
       </div>
     </div>
   </div>
+
 </div>
+
+
+
 {% endblock %}
