@@ -175,13 +175,33 @@ BOOTSTRAP
   }
   .solution{
     padding: 0;
-    width: 100%;
+
+    width: 100%; }
+  h3 {
+    font-size: 20px; }
+  .jumbotron-paygap {
+    height: 150px; }
+  .jumbotron-paygap > h3 {
+    font-size: 15px; } }
+
+/********************************************************
+
+Turtles
+
+*******************************************************/
+.dog_list {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  padding: 20px; }
+  /********************************************************
+
+  New User pick a shelter page
+
+  *******************************************************/
+
+  .newuser{
+    margin: auto;
+    width: 50%;
   }
-  h3{
-    font-size: 20px;
-  }
-  .jumbotron-paygap{
-    height: 150px;
-  }
-  .jumbotron-paygap >h3{font-size: 15px;}
-}
+
