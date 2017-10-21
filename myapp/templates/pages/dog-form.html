@@ -1,6 +1,39 @@
 {% extends 'base.html' %}
 
+{% block title %}Index {{self.title}}{% endblock %}
+{% block head %}
+    {{ super() }}
+{% endblock %}
 {% block body %}
+<<<<<<< HEAD
+
+<div class="container-fluid d-flex pt-5 justify-content-center" style="background-image: url('/static/img/blur1.jpg');">
+  <div class="form">
+    {% include 'components/dog-form-multi.html'%}
+  </div>
+</div>
+
+
+
+<script type="text/javascript">
+  $('#formCarousel').carousel()
+
+  $('#formCarousel').on('slide.bs.carousel', function () {
+
+  })
+
+  // Next Button
+  $( ".carousel-control-next" ).on( "click", function() {
+    console.log("NEXT");
+  });
+
+  // Previous Button
+  $( ".carousel-control-prev" ).on( "click", function() {
+    console.log("NEXT");
+  });
+</script>
+
+=======
 <div class="dogform">
 <form enctype="multipart/form-data" action="/dogs/new-dog" id="dogForm"method="post">
   <div class='daform container'>
@@ -133,4 +166,5 @@
   </div>
   </form>
 </div>
+>>>>>>> master
 {% endblock %}

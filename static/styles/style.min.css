@@ -22,6 +22,8 @@ DOG FORM HTML PAGE
   padding-top: 2em;
 }
 
+<<<<<<< HEAD
+=======
 #eyes {
   margin-left: 1em;
 }
@@ -42,6 +44,7 @@ DOG FORM HTML PAGE
 .upload {
   margin-right: 1em;
 }
+>>>>>>> master
 
 /********************************************************
 
@@ -109,6 +112,64 @@ CALCULATOR
   vertical-align: top;
   font-size: 15px;
   /*line-height: 5px;*/
+<<<<<<< HEAD
+	text-align: center;
+}
+
+.form-group {
+  margin-right: 1rem;
+}
+
+.radio-label {
+  text-transform: uppercase;
+  font-weight: bold;
+	padding: 8px 24px;
+	opacity: .5;
+	transition: all .1s ease-in-out;
+  border: 3px solid #ddd;
+	/*&:hover, &:focus, &:active {
+		border: 1px solid rgba(#ddd,.5);
+	}*/
+}
+input[type="radio"] {
+  display: none;
+	opacity: 0;
+	width: 0;
+  height: 0;
+}
+
+input[type="date"] {
+  padding: 5px;
+}
+
+input.form-control, textarea#notes, select{
+  border: 2px solid #ddd;
+}
+
+
+.form-section {
+  background: white;
+  border: 3px solid #ddd;
+  padding: 25px;
+  margin-bottom: 15px;
+  border-radius: 5px;
+}
+
+/*input[type="radio"]:active ~ label {
+  opacity: 1;
+}
+input[type="radio"]:checked ~ label {
+  color: green;
+}*/
+
+:checked + span {
+    font-weight: bold;
+    color: green;
+}
+.radio-label:hover {
+    cursor:pointer;
+}
+=======
   text-align: center; }
 
 label {
@@ -137,6 +198,7 @@ input[type="radio"]:checked ~ label {
   font-weight: bold;
   /*background-color: #ddd;*/ }
 
+>>>>>>> master
 /********************************************************
 
 RESULTS
@@ -210,4 +272,26 @@ New User Page
   height: 100vh;
   margin: auto;
   width: 50%;
+}
+
+/********************************************************
+CAROUSEL
+*******************************************************/
+
+.carousel-controller {
+  display: flex;
+  justify-content: space-around;
+
+}
+.carousel-controller a {
+  border: 1px solid;
+
+}
+
+/********************************************************
+DOG LIST
+*******************************************************/
+
+.dog-card {
+  margin: 1rem;
 }
