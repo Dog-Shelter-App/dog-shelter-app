@@ -5,6 +5,7 @@
     {{ super() }}
 {% endblock %}
 {% block body %}
+<<<<<<< HEAD
 
 <div class="container-fluid d-flex pt-5 justify-content-center" style="background-image: url('/static/img/blur1.jpg');">
   <div class="form">
@@ -32,4 +33,138 @@
   });
 </script>
 
+=======
+<div class="dogform">
+<form enctype="multipart/form-data" action="/dogs/new-dog" id="dogForm"method="post">
+  <div class='daform container'>
+
+    <div class="form-group">
+      <label for="dogname">Name of Dog</label>
+      <input type="text" name="dog_name"class="form-control" id="dogname" placeholder="Enter dog's name">
+      <small id="emailHelp" class="form-text text-muted">If unknown, leave empty</small>
+    </div>
+
+    <div class="row">
+      <div class="form-group col-lg-6">
+        {% include "components/breed.html" %}
+      </div>
+      <div class="form-group col-lg-6">
+        <label for="idchip">ID CHIP </label>
+        <input type="text" name='id_chip' id="idchip" placeholder="If applicable">
+      </div>
+    </div>
+
+    <div class="form-group">
+      <label for="locationfound">Location Found </label>
+      <input type="text" name="location_found"class="form-control" id="locationfound">
+      <small id="locationfound" class="form-text text-muted">Please list a full address if possible. Otherwise, list as much as possible.</small>
+    </div>
+
+    <div class='age_date_found row'>
+      <div class="date_found col-lg-6">
+        <div class="form-group">
+          <label for="date_found">Date Found </label>
+          <input name='date_found' class="form-control date_found" id="date_found">
+        </div>
+      </div>
+      <div class="dogage col-lg-6">
+        <div class="form-group">
+          <label for="age">Age (years)</label>
+          <input type="number" name='age' class="form-control" id="dogage">
+        </div>
+      </div>
+    </div>
+
+    <div class="row">
+      <div class="col-lg-6">
+        <div class='form-group'>
+            <label for="primcolor">Primary Color</label>
+            <input type="text" name="prim_color" class="form-control" id="primcolor">
+        </div>
+      </div>
+      <div class="col-lg-6">
+        <div class='form-group'>
+          <label for="seccolor">Secondary Color</label>
+          <input type="text" name="sec_color" class="form-control" id="seccolor">
+        </div>
+      </div>
+    </div>
+
+    <div class="row">
+      <div class="col-lg-6">
+        <div class="form-group">
+          <label for="height">Height (inches)</label>
+          <input type="number" name="height" class="form-control" id="height">
+        </div>
+      </div>
+      <div class="col-lg-6">
+        <div class="form-group">
+          <label for="weight">Weight (pounds)</label>
+          <input type="number" name="weight"class="form-control" id="weight">
+        </div>
+      </div>
+    </div>
+
+    <label for="gender">Gender</label>
+    <br>
+    <div class="form__answer col-lg-6">
+      <input type="radio" name="gender" id="female" value="female">
+      <label for="female">Female</label>
+    </div>
+    <div class="form__answer col-lg-6">
+      <input type="radio" name="gender" id="male" value="male">
+      <label for="male">Male</label>
+    </div>
+
+    <label for="fix">Has the dog been neutered/spayed?</label>
+    <br>
+    <div class="form__answer">
+      <input type="radio" name="fix" id="fixyes" value="yes">
+      <label for="fixyes">Yes</label>
+    </div>
+    <div class="form__answer">
+      <input type="radio" name="fix" id="fixno" value="no">
+      <label for="fixno">No</label>
+    </div>
+    <br>
+    <label for="collar">Collar</label>
+    <br>
+    <div class="form__answer">
+      <input type="radio" name="collar" id="collaryes" value="yes">
+      <label for="collaryes">Yes</label>
+    </div>
+    <div class="form__answer">
+      <input type="radio" name="collar" id="collarno" value="no">
+      <label for="collarno">No</label>
+    </div>
+
+    <br>
+    <label for="collarcolor" class='collarcolor'>If yes, describe collar:</label>
+    <input type="text" name="collar_color" placeholder="color, material">
+
+    <div class="form-group">
+      <label for="ears">Ears</label>
+      <select name="ears" id="ears" class="form-control">
+        <option value="stand-up">Stand-up</option>
+        <option value="cropped">Cropped</option>
+        <option value="folded">Folded</option>
+      </select>
+    </div>
+
+    <label for="eyes">Eye Color</label>
+    <input type="text" id="eyes" name="eyes">
+    <br>
+
+    <label for="notes">Notes</label>
+    <br>
+    <textarea class='notes-area' name="notes" id="" cols="30" rows="10"></textarea>
+    <div class="form-group">
+      <label for="myFile" class="upload">Upload Picture</label>
+      <input name="my_File" type="file">
+    </div>
+    <button type="submit" class="btn btn-primary">Submit</button>
+  </div>
+  </form>
+</div>
+>>>>>>> master
 {% endblock %}

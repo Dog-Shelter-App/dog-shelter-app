@@ -38,6 +38,7 @@ db = client.test_database
 collection = db.test_collection
 users = db.user_collection
 dogs = db.dogs_collection
+shelters = db.shelters_collection
 
 
 
@@ -385,6 +386,22 @@ class DogProfileHandler(TemplateHandler):
           'no-store, no-cache, must-revalidate, max-age=0')
         self.render_template("/pages/dog-profile.html", {'dog': dog})
 
+class NewUserFormHandler(TemplateHandler):
+    def get(self):
+        shelters_list = shelters.find({})
+        self.render_template("pages/new-user.html", {"shelters_list": shelters_list})
+
+    def post(self):
+        shelters.insert_one(
+            {
+            "shelter_name": self.get_body_argument("shelter_name"),
+            "email":self.get_body_argument("email"),
+            "phone_number": self.get_body_argument("phone_number"),
+            "address": self.get_body_argument("address")
+            }
+        )
+        self.redirect("/")
+
 class make_app(tornado.web.Application):
     def __init__(self):
         handlers = [
@@ -394,6 +411,7 @@ class make_app(tornado.web.Application):
             (r"/login-google", GAuthLoginHandler),
             (r"/dogs/new-dog", DogFormHandler),
             (r"/dogs", DogListHandler),
+            (r"/shelters/new-user", NewUserFormHandler),
             (r"/dogs/(.*)",DogProfileHandler),
             (
                 r"/static/(.*)",

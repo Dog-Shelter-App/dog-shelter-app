@@ -1,37 +1,69 @@
-body{
-  font-family: 'Arvo', 'Quicksand', Helvetica, monospace;
-}
-footer{
+/* BEGIN APP STYLES*/
+body {
+  font-family: 'Arvo', 'Quicksand', Helvetica, monospace; }
+
+footer {
   padding: 30px;
   background-color: #ddd;
   font-size: 80%;
   margin: 100%;
-  margin: 0 auto;
+  margin: 0 auto; }
+
+#header > a {
+  color: #000; }
+
+/************************************************************
+
+DOG FORM HTML PAGE
+
+************************************************************/
+.collarcolor {
+  margin-right: 1em;
+  padding-top: 2em;
 }
 
-#header>a{
-  color: #000;
+<<<<<<< HEAD
+=======
+#eyes {
+  margin-left: 1em;
+}
+.notes-area {
+  width: 100%;
+}
+.dogform{
+  margin: auto;
+  width: 50%;
+  height: 100%;
+  padding-bottom: 1em;
+}
+.profile{
+  margin:auto;
+  width: 70%;
 }
 
+.upload {
+  margin-right: 1em;
+}
+>>>>>>> master
 
 /********************************************************
+
 JUMBOTRON
+
 *******************************************************/
 .jumbotron {
   background: url("/static/img/dog.jpg") no-repeat center top;
   height: 100vh;
   /*width: 100vh;*/
-  position: relative;
-}
+  position: relative; }
 
-.jumbotrontext{
+.jumbotrontext {
   text-align: right;
   color: #333;
-  font-family:  'Quicksand', Helvetica, Arial, sans-serif;
-  /*text-shadow: 3px 1px 1px #eee;*/
+  font-family: 'Quicksand', Helvetica, Arial, sans-serif;
+  /*text-shadow: 3px 1px 1px #eee;*/ }
 
-}
-.jumbotron-paygap{
+.jumbotron-paygap {
   position: absolute;
   bottom: 0;
   left: 0;
@@ -40,43 +72,47 @@ JUMBOTRON
   min-width: 100%;
   align-items: center;
   padding: 0;
-  margin:0;
-}
+  margin: 0; }
+
 /********************************************************
+
 SOLUTION
+
 *******************************************************/
-.solution{
+.solution {
   font-family: 'Arvo', 'Quicksand', Helvetica, monospace;
   margin: 10px auto;
   width: 70%;
   padding: 40px;
   min-height: 100vh;
   height: 100%;
-  border: 3px solid #ddd;
-}
+  border: 3px solid #ddd; }
 
 /********************************************************
+
 CALCULATOR
+
 *******************************************************/
-.calculator{
-  min-height: 100vh;
-}
-#calculator{
-  font-family:'Quicksand', Helvetica, monospace;
+.calculator {
+  min-height: 100vh; }
+
+#calculator {
+  font-family: 'Quicksand', Helvetica, monospace;
   margin: 20px auto;
   max-width: 600px;
   border: 1px solid #ddd;
   padding: 20px;
-  height: 100%;
-}
+  height: 100%; }
+
 .form__answer {
-	display: inline-block;
-	width: 45%;
+  display: inline-block;
+  width: 45%;
   border: 3px solid #ddd;
-	height: 50px;
-	vertical-align: top;
+  height: 50px;
+  vertical-align: top;
   font-size: 15px;
   /*line-height: 5px;*/
+<<<<<<< HEAD
 	text-align: center;
 }
 
@@ -133,69 +169,109 @@ input[type="radio"]:checked ~ label {
 .radio-label:hover {
     cursor:pointer;
 }
+=======
+  text-align: center; }
+
+label {
+  text-transform: uppercase;
+  font-weight: bold;
+  height: 100%;
+  /*width: 100%;*/
+  padding: 10px 0px 0px 0px;
+  opacity: .5;
+  transition: all .5s ease-in-out;
+  /*&:hover, &:focus, &:active {
+        border: 1px solid rgba(#ddd,.5);
+    }*/ }
+
+input[type="radio"] {
+  opacity: 0;
+  width: 0;
+  height: 0; }
+
+input[type="radio"]:active ~ label {
+  opacity: 1; }
+
+input[type="radio"]:checked ~ label {
+  opacity: 1;
+  font-size: 16px;
+  font-weight: bold;
+  /*background-color: #ddd;*/ }
+
+>>>>>>> master
 /********************************************************
+
 RESULTS
+
 *******************************************************/
-#calculator-result{
+#calculator-result {
   font-family: 'Quicksand', Helvetica, monospace;
   margin: 10px auto;
   max-width: 600px;
   border: 1px solid #ddd;
   padding: 40px;
   min-height: 100vh;
-  heignt: 100%;
-}
+  heignt: 100%; }
 
-.pay_gap{
+.pay_gap {
   background-color: rgba(255, 0, 0, 0.5);
   color: #fff;
-  padding:10px;
-}
+  padding: 10px; }
+
 .vertical-center {
   min-height: 100%;
   /* Fallback for browsers do NOT support vh unit */
   min-height: 70vh;
-  /* These two lines are counted as one :-)       */
+  /* These two lines are counted as one :slightly_smiling_face:       */
   display: flex;
-  align-items: center;
-}
-/********************************************************
-BOOTSTRAP
-*******************************************************/
-@media all and (min-width: 1024px) {
-}
-@media all and (min-width: 768px) and (max-width: 1024px) {
-}
-@media all and (min-width: 480px) and (max-width: 768px) {
-}
+  align-items: center; }
 
+/********************************************************
+
+BOOTSTRAP
+
+*******************************************************/
 @media all and (max-width: 480px) {
-  h1{
+  h1 {
     font-size: 30px;
     color: #eee;
-    text-shadow: 1px 0 0 #000;
-  }
-  h2{
-    font-size:20px;
-  }
-  .jumbotron>img{
-    display: none;
-  }
-  .jumbotron{
+    text-shadow: 1px 0 0 #000; }
+  h2 {
+    font-size: 20px; }
+  .jumbotron > img {
+    display: none; }
+  .jumbotron {
     max-height: 100vh;
-    max-width: 100vh;
-  }
-  .solution{
+    max-width: 100vh; }
+  .solution {
     padding: 0;
-    width: 100%;
-  }
-  h3{
-    font-size: 20px;
-  }
-  .jumbotron-paygap{
-    height: 150px;
-  }
-  .jumbotron-paygap >h3{font-size: 15px;}
+    width: 100%; }
+  h3 {
+    font-size: 20px; }
+  .jumbotron-paygap {
+    height: 150px; }
+  .jumbotron-paygap > h3 {
+    font-size: 15px; } }
+
+/********************************************************
+
+Turtles
+
+*******************************************************/
+.dog_list {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  padding: 20px; }
+/********************************************************
+
+New User Page
+
+*******************************************************/
+.newuser{
+  height: 100vh;
+  margin: auto;
+  width: 50%;
 }
 
 /********************************************************
