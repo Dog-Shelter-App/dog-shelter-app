@@ -31,6 +31,8 @@ DOG FORM HTML PAGE
 .dogform{
   margin: auto;
   width: 50%;
+  height: 100%;
+  padding-bottom: 1em;
 }
 .profile{
   margin:auto;
@@ -199,3 +201,13 @@ Turtles
   flex-wrap: wrap;
   justify-content: space-between;
   padding: 20px; }
+/********************************************************
+
+New User Page
+
+*******************************************************/
+.newuser{
+  height: 100vh;
+  margin: auto;
+  width: 50%;
+}

@@ -1,18 +1,9 @@
 $(document).ready(function () {
-
-
-  $('#section1').hide();
-  $('#section2').hide();
-  $('#section3').hide();
-$('#section-header1').click(function(event){
-  $('#section1').slideToggle()
-  })
-  $('#section-header2').click(function(event){
-    $('#section2').slideToggle()
-    })
-    $('#section-header3').click(function(event){
-      $('#section3').slideToggle()
-      })
+//Prefills the date
+var d = new Date();
+var n = d.toLocaleDateString();
+var dateInput = document.getElementById('date_found');
+dateInput.value = n;
 });
 
 var range = 100;
