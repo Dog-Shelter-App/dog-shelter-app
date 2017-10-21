@@ -210,9 +210,7 @@ class DogListHandler(TemplateHandler):
     @tornado.web.authenticated
     def get(self):
         dogs_list = dogs.find(
-        {
-        "dog_name": "Betty"
-        }
+        {}
         )
         self.set_header(
           'Cache-Control',

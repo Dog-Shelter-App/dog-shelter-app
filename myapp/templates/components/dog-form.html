@@ -1,0 +1,108 @@
+<form enctype="multipart/form-data" action="/dogs/new-dog" id="dogForm"method="post">
+  <fieldset class="form-group">
+    <label for="dogname">Name of Dog</label>
+    <input type="text" name="dog_name" class="form-control" id="dogname" placeholder="Enter dog's name">
+    <small id="emailHelp" class="form-text text-muted">If unknown, leave empty</small>
+  </fieldset>
+  <fieldset class="form-group">
+    <label class="custom-file">
+      <input type="file" name="my_File" id="file" class="custom-file-input">
+      <span class="custom-file-control"></span>
+    </label>
+  </fieldset>
+  <fieldset class="form-group">
+    {% include "components/breed.html" %}
+  </fieldset>
+  <fieldset class="form-group">
+    <label for="idchip">ID CHIP </label>
+    <input type="text" name='id_chip' class="form-control" id="idchip">
+  </fieldset>
+  <fieldset class="form-group">
+    <label for="locationfound">Location Found </label>
+    <input type="text" name="location_found"class="form-control" id="locationfound">
+  </fieldset>
+  <fieldset class="form-group">
+    <label for="date_found">Date Found </label>
+    <input type="date" name='date_found' class="form-control" id="date_found">
+  </fieldset>
+  <fieldset class="form-group">
+    <legend>Gender</legend>
+    <div class="form-check form-check-inline">
+      <label class="form-check-label">
+        <input class="form-check-input" type="radio" name="gender" id="genderFemale" value="female"> Female
+      </label>
+    </div>
+    <div class="form-check form-check-inline">
+      <label class="form-check-label">
+        <input class="form-check-input" type="radio" name="gender" id="genderMale" value="male"> Male
+      </label>
+    </div>
+  </fieldset>
+  <fieldset class="form-group">
+    <legend>Is the Dog Neutered?</legend>
+    <div class="form-check form-check-inline">
+      <label class="form-check-label">
+        <input class="form-check-input" type="radio" name="fix" id="fixYes" value="yes"> Yes
+      </label>
+    </div>
+    <div class="form-check form-check-inline">
+      <label class="form-check-label">
+        <input class="form-check-input" type="radio" name="fix" id="fixNo" value="no"> No
+      </label>
+    </div>
+  </fieldset>
+  <fieldset class="form-group">
+    <legend>Does the dog have a collar?</legend>
+    <div class="form-check form-check-inline">
+      <label class="form-check-label">
+        <input class="form-check-input" type="radio" name="collar" id="collarYes" value="yes"> Yes
+      </label>
+    </div>
+    <div class="form-check form-check-inline">
+      <label class="form-check-label">
+        <input class="form-check-input" type="radio" name="collar" id="collarNo" value="no"> No
+      </label>
+    </div>
+  </fieldset>
+  <fieldset class="form-group">
+    <label for="collarcolor" class='collarcolor'>If yes, describe collar:</label>
+    <input type="text" name="collar_color" class="form-control" placeholder="color, material">
+  </fieldset>
+  <fieldset class="form-group">
+    <label for="primcolor">Primary Color</label>
+    <input type="text" name="prim_color"class="form-control" id="primcolor">
+  </fieldset>
+  <fieldset class="form-group">
+    <label for="sec_color">Secondary Color</label>
+    <input type="text" name="sec_color"class="form-control" id="primcolor">
+  </fieldset>
+  <fieldset class="form-group">
+    <label for="ears">Ears</label>
+    <select name="ears" id="ears" class="form-control">
+      <option value="stand-up">Stand-up</option>
+      <option value="cropped">Cropped</option>
+      <option value="folded">Folded</option>
+    </select>
+  </fieldset>
+  <fieldset class="form-group">
+    <label for="eyes">Eye Color</label>
+    <input type="text" id="eyes" class="form-control" name="eyes">
+  </fieldset>
+  <fieldset class="form-group">
+    <label for="height">Height (inches)</label>
+    <input type="number" name="height" class="form-control" id="height">
+  </fieldset>
+  <fieldset class="form-group">
+    <label for="weight">Weight (pounds)</label>
+    <input type="number" name="weight"class="form-control" id="weight">
+  </fieldset>
+  <fieldset class="form-group">
+    <label for="age">Age (years)</label>
+    <input type="number" name='age' class="form-control" id="age">
+  </fieldset>
+  <fieldset class="form-group">
+    <label for="exampleTextarea">Example textarea</label>
+    <textarea class="form-control" id="notes" name="notes" rows="3"></textarea>
+  </fieldset>
+  <button type="submit" class="btn btn-primary">Submit</button>
+</form>

@@ -13,6 +13,17 @@ footer{
   color: #000;
 }
 
+.carousel-controller {
+  display: flex;
+  justify-content: space-around;
+
+}
+
+.carousel-controller a {
+  border: 1px solid;
+
+}
+
 
 /********************************************************
 JUMBOTRON
