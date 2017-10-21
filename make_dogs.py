@@ -1,0 +1,122 @@
+# pull creds
+from settings import mongo_url
+# import driver
+import pymongo
+# import client function
+from pymongo import MongoClient
+# create client
+client = pymongo.MongoClient(mongo_url, ssl=True)
+# imort UUID functionality
+import uuid
+
+if client:
+    print("client working.")
+# define database
+db = client.test_database
+# define collections
+collection = db.test_collection
+users = db.user_collection
+dogs = db.dogs_collection
+
+dog_names = [
+    "Bella",
+    "Lucy",
+    "Daisy",
+    "Lola",
+    "Luna",
+    "Molly",
+    "Sadie",
+    "Sophie",
+    "Bailey",
+    "Maggie",
+    "Chloe",
+    "Lily",
+    "Stella",
+    "Zoey",
+    "Penny",
+    "Roxy",
+    "Coco",
+    "Gracie",
+    "Ruby",
+    "Mia",
+    "Zoe",
+    "Ellie",
+    "Nala",
+    "Rosie",
+    "Ginger",
+    "Abby",
+    "Lilly",
+    "Piper",
+    "Sasha",
+    "Riley",
+    "Pepper",
+    "Lulu",
+    "Emma",
+    "Lady",
+    "Layla",
+    "Lexi",
+    "Olive",
+    "Annie",
+    "Izzy",
+    "Maya",
+    "Maddie",
+    "Dixie",
+    "Princess",
+    "Cali",
+    "Millie",
+    "Belle",
+    "Ella",
+    "Harley",
+    "Honey",
+    "Kona",
+    "Charlie",
+    "Willow",
+    "Marley",
+    "Roxie",
+    "Cookie",
+    "Scout",
+    "Holly",
+    "Minnie",
+    "Winnie",
+    "Angel",
+    "Dakota",
+    "Callie",
+    "Missy",
+    "Phoebe",
+    "Hazel",
+    "Athena",
+    "Shelby",
+    "Peanut",
+    "Sugar",
+    "Jasmine",
+    "Ava",
+    "Penelope",
+    "Sandy",
+    "Trixie",
+    "Gigi",
+    "Fiona",
+    "Sydney",
+    "Josie",
+    "Cleo",
+    "Mocha",
+    "Leia",
+    "Delilah",
+    "Baby",
+    "Harper",
+    "Shadow",
+    "Macy",
+    "Pearl",
+    "Allie",
+    "Mila",
+    "Heidi",
+    "Bonnie",
+    "Nina",
+    "Grace",
+    "Katie",
+    "Lacey",
+    "Gypsy",
+    "Cocoa",
+    "Nova",
+    "Charlotte",
+    "Xena"
+]
