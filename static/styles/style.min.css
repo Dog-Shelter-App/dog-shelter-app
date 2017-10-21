@@ -193,3 +193,13 @@ Turtles
   flex-wrap: wrap;
   justify-content: space-between;
   padding: 20px; }
+  /********************************************************
+
+  New User pick a shelter page
+
+  *******************************************************/
+
+  .newuser{
+    margin: auto;
+    width: 50%;
+  }
