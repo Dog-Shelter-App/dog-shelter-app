@@ -1,16 +1,16 @@
-$("#buttonRight").on('click', function(){
-  $("#formCarousel").carousel('next');
-  console.log("working.")
-});
-
-$("#buttonLeft").on('click', function(){
-  $("#formCarousel").carousel('prev');
-  console.log("working.")
-});
+//
+// $("#buttonRight").on('click', function(){
+//   $("#formCarousel").carousel('next');
+//   console.log("working.")
+// });
+//
+// $("#buttonLeft").on('click', function(){
+//   $("#formCarousel").carousel('prev');
+//   console.log("working.")
+// });
 
 $('#formCarousel').on('slid.bs.carousel', function (ev) {
   var id = ev.relatedTarget.id;
-  alert(id);
   switch (id) {
     case "1":
       $('#buttonLeft').hide();
