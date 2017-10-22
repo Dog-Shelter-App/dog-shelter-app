@@ -204,9 +204,9 @@ def get_height_weight():
 def get_bool(x):
     rand = random.randrange(0,1)
     if x == "bool":
-        return dog_genders[rand]
-    elif x == "gend":
         return dog_bool[rand]
+    elif x == "gend":
+        return dog_genders[rand]
 def get_ears():
     stop = len(dog_ears)
     rand = random.randrange(0,stop)
