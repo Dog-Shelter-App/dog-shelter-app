@@ -1,14 +1,10 @@
-
-
-
-//form event
-var formController = '<button class="btn btn-outline-secondary" href="#formCarousel" role="button" data-slide="prev">Back</button><button class="btn btn-outline-secondary" href="#formCarousel" role="button" data-slide="next">Next</button>'
-
 $('#formCarousel').on('slid.bs.carousel', function (ev) {
   var id = ev.relatedTarget.id;
   switch (id) {
     case "1":
       $('#buttonLeft').hide();
+      $("#buttonRight").show();
+      $("#buttonSubmit").hide();
       $("#slide1").addClass("active");
       $("#slide2").removeClass("active");
       $("#slide3").removeClass("active");
@@ -25,6 +21,7 @@ $('#formCarousel').on('slid.bs.carousel', function (ev) {
     case "3":
       // do something the id is 3
       $("#buttonRight").hide();
+      $("#buttonLeft").show();
       $("#buttonSubmit").show();
       $("#slide1").removeClass("active");
       $("#slide2").removeClass("active");

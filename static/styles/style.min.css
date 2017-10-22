@@ -132,10 +132,6 @@ FORM
   top: 35px;
 }
 
-
-
->>>>>>> KK
-
 .form__answer {
   display: inline-block;
   width: 45%;
@@ -150,8 +146,10 @@ FORM
 .form-group {
   margin-right: 1rem;
 }
-<<<<<<< HEAD
-=======
+
+.form-craousel-button:focus {
+      box-shadow: none;
+}
 
 .radio-label {
   text-transform: uppercase;
@@ -160,11 +158,12 @@ FORM
 	opacity: .5;
 	transition: all .1s ease-in-out;
   border: 3px solid #ddd;
-	/*&:hover, &:focus, &:active {
-		border: 1px solid rgba(#ddd,.5);
-	}*/
 }
->>>>>>> KK
+
+.radio-label:hover {
+    cursor:pointer;
+}
+
 input[type="radio"] {
   display: none;
 	opacity: 0;
@@ -186,22 +185,12 @@ input.form-control, textarea#notes, select{
     font-weight: bold;
     color: green;
 }
-<<<<<<< HEAD
-
-text-align: center; }
-=======
-.radio-label:hover {
-    cursor:pointer;
-}
-
->>>>>>> KK
 
 /********************************************************
 
 STYLING DOG FORM BUTTONS
 
 *******************************************************/
-<<<<<<< HEAD
   .radio-tile {
     display: flex;
     flex-direction: column;
@@ -212,26 +201,6 @@ STYLING DOG FORM BUTTONS
     border: 1px solid #079ad9;
     transition: transform 300ms ease;
   }
-  .radio-label {
-      text-align: center;
-      font-size: 0.75rem;
-      font-weight: bold;
-      letter-spacing: 1px;
-      text-transform: uppercase;
-      display: flex;
-    	padding: 1em 2em;
-    	/*opacity: .7;*/
-    	transition: all .1s ease-in-out;
-      border: 1px solid #ddd;
-    }
-    .radio-label:hover {
-        cursor:pointer;
-    }
-    .radio-button:checked + .radio-tile {
-    background-color: #079ad9;
-    color: white;
-  }
-=======
 
 .vertical-center {
   min-height: 100%;
@@ -239,8 +208,7 @@ STYLING DOG FORM BUTTONS
   min-height: 70vh;
   /* These two lines are counted as one :slightly_smiling_face:       */
   display: flex;
-  align-items: center; }
->>>>>>> KK
+}
 
 /********************************************************
 
