@@ -279,8 +279,7 @@ CAROUSEL
   justify-content: space-around;
 }
 .carousel-controller a {
-  border: 1px solid;
-
+  /*border: 1px solid;*/
 }
 
 
