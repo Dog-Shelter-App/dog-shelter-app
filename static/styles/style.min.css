@@ -71,24 +71,9 @@ JUMBOTRON
   margin: 0; }
 
 /********************************************************
-
-<<<<<<< HEAD
 DOG FORM RADIO BUTTONS
 
 *******************************************************/
-=======
-SOLUTION
-
-*******************************************************/
-.solution {
-  font-family: 'Arvo', 'Quicksand', Helvetica, monospace;
-  margin: 10px auto;
-  width: 70%;
-  padding: 40px;
-  min-height: 100vh;
-  height: 100%;
-  border: 3px solid #ddd; }
-
 /********************************************************
 
 FORM
@@ -139,7 +124,6 @@ FORM
   height: 50px;
   vertical-align: top;
   font-size: 15px;
-  /*line-height: 5px;*/
 	text-align: center;
 }
 
@@ -151,29 +135,6 @@ FORM
       box-shadow: none;
 }
 
-.radio-label {
-  text-transform: uppercase;
-  font-weight: bold;
-	padding: 4px 12px;
-	opacity: .5;
-	transition: all .1s ease-in-out;
-  border: 3px solid #ddd;
-}
-
-.radio-label:hover {
-    cursor:pointer;
-}
-
-input[type="radio"] {
-  display: none;
-	opacity: 0;
-	width: 0;
-  height: 0;
-}
-
-input.form-control, textarea#notes, select{
-  border: 2px solid #ddd;
-}
 .form-section {
   background: white;
   border: 1px solid #ddd;
@@ -181,35 +142,48 @@ input.form-control, textarea#notes, select{
   margin: 1em;
 }
 
-:checked + span {
-    font-weight: bold;
-    color: green;
-}
-
 /********************************************************
 
 STYLING DOG FORM BUTTONS
 
 *******************************************************/
-  .radio-tile {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    width: 100%;
-    height: 100%;
-    border: 1px solid #079ad9;
-    transition: transform 300ms ease;
-  }
-
-.vertical-center {
-  min-height: 100%;
-  /* Fallback for browsers do NOT support vh unit */
-  min-height: 70vh;
-  /* These two lines are counted as one :slightly_smiling_face:       */
-  display: flex;
+.radio-button{
+	opacity: 0;
+  display: none;
+  width: 0;
+  height: 0;
 }
-
+.radio-tile {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  height: 100%;
+  /*border: 1px solid #079ad9;*/
+  transition: transform 300ms ease;
+}
+.radio-label {
+  text-align: center;
+  font-size: 0.75rem;
+  font-weight: bold;
+  letter-spacing: 1px;
+  text-transform: uppercase;
+  display: flex;
+  width: 100%;
+  height: 100%;
+	padding: 1em 2em;
+	/*opacity: .7;*/
+	transition: all .1s ease-in-out;
+  border: 1px solid #ddd;
+}
+.radio-label:hover {
+    cursor:pointer;
+}
+.radio-button:checked + .radio-tile {
+background-color: #079ad9;
+color: white;
+}
 /********************************************************
 
 BOOTSTRAP
@@ -259,19 +233,6 @@ New User Page
 }
 
 /********************************************************
-CAROUSEL
-*******************************************************/
-
-.carousel-controller {
-}
-.carousel-controller a {
-  /*border: 1px solid;*/
-}
-.carousel-item{
-}
-
-
-/********************************************************
 DOG LIST
 *******************************************************/
 
@@ -284,11 +245,14 @@ QUERY BAR
 *******************************************************/
 .querybar{
   display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
   border: 3px solid #eee;
   margin: 10px;
   padding: 5px;
 }
 .radio{
   display: inline;
+
   max-width: 20%;
 }
