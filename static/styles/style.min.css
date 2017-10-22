@@ -37,6 +37,9 @@ DOG FORM HTML PAGE
   margin:auto;
   width: 70%;
 }
+.profile img{
+  max-width: 80vh;
+}
 
 .upload {
   margin-right: 1em;
