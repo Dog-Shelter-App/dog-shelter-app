@@ -1,4 +1,4 @@
-<form enctype="multipart/form-data" action="/dogs/new-dog" id="dogForm"method="post">
+<form enctype="multipart/form-data" action="/dogs/new-dog" id="dogForm" method="post">
   <div id="formCarousel" class="carousel slide formCarousel form-section" data-interval="false" data-ride="carousel">
     <div class="form-indicators d-flex justify-content-between align-items-center">
       <div id="slide1" data-target="#formCarousel" class="form-indicator 1 active" data-slide-to="0" class="active">1</div>
@@ -23,36 +23,32 @@
             </label>
           </fieldset>
           <fieldset class="form-group">
-            <label>Gender</label>
-            <div class="d-flex justif-content-start flex-wrap">
-              <div class="form-check">
-                <label for="female" class="radio-label">
-                  <input class="form-check-input" type="radio" name="gender" id="female" value="female">
-                  <span>Female</span>
-                </label>
+            <legend>Gender</legend>
+            <div class="form-check form-check-inline">
+              <input class="form-check-input radio-button" type="radio" name="gender" id="female" value="female">
+              <div class="radio-tile">
+                <label for="female" class="radio-label">Female</label>
               </div>
-              <div class="form-check">
-                <label for="male" class="radio-label">
-                  <input class="form-check-input" type="radio" name="gender" id="male" value="male">
-                  <span>Male</span>
-                </label>
+            </div>
+            <div class="form-check form-check-inline">
+              <input class="form-check-input radio-button" type="radio" name="gender" id="male" value="male">
+              <div class="radio-tile">
+                <label for="male" class="radio-label">Male</label>
               </div>
             </div>
           </fieldset>
           <fieldset class="form-group">
-            <label>Is the Dog Neutered?</label>
-            <div class="d-flex justify-content-start flex-wrap">
-              <div class="form-check ">
-                <label for="fixYes" class="radio-label">
-                  <input class="form-check-input" type="radio" name="fix" id="fixYes" value="yes">
-                  <span>Yes</span>
-                </label>
+            <legend>Is the Dog Neutered?</legend>
+            <div class="form-check form-check-inline">
+              <input class="form-check-input radio-button" type="radio" name="fix" id="fixYes" value="yes">
+              <div class="radio-tile">
+                <label for="fixYes" class="radio-label">Yes</label>
               </div>
-              <div class="form-check ">
-                <label for="fixNo" class="radio-label">
-                  <input class="form-check-input" type="radio" name="fix" id="fixNo" value="no">
-                  <span>No</span>
-                </label>
+            </div>
+            <div class="form-check form-check-inline">
+              <input class="form-check-input radio-button" type="radio" name="fix" id="fixNo" value="no">
+              <div class="radio-tile">
+                <label for="fixNo" class="radio-label">No</label>
               </div>
             </div>
           </fieldset>
@@ -67,21 +63,21 @@
           <div class="d-flex justify-content-start flex-wrap">
             <fieldset class="form-group">
               <label for="locationfound">Location Found </label>
-              <input type="text" name="location_found"class="form-control" id="locationfound">
+              <input type="text" name="location_found" class="form-control" id="locationfound">
             </fieldset>
             <fieldset class="form-group">
               <label for="date_found">Date Found</label>
-              <input type="date" name='date_found' class="form-control" id="date_found">
+              <input type="text" name='date_found' class="form-control" id="date_found">
             </fieldset>
           </div>
           <div class="d-flex justify-content-start">
             <fieldset class="form-group">
               <label for="primcolor">Primary Color</label>
-              <input type="text" name="prim_color"class="form-control" id="primcolor">
+              <input type="text" name="prim_color" class="form-control" id="primcolor">
             </fieldset>
             <fieldset class="form-group">
               <label for="sec_color">Secondary Color</label>
-              <input type="text" name="sec_color"class="form-control" id="primcolor">
+              <input type="text" name="sec_color" class="form-control" id="primcolor">
             </fieldset>
           </div>
           <div class="d-flex justify-content-start flex-wrap">
@@ -91,7 +87,7 @@
             </fieldset>
             <fieldset class="form-group">
               <label for="weight">Weight (pounds)</label>
-              <input type="number" name="weight"class="form-control" id="weight">
+              <input type="number" name="weight" class="form-control" id="weight">
             </fieldset>
           </div>
           <div class="d-flex justify-content-start flex-wrap">
@@ -122,22 +118,20 @@
             <textarea class="form-control" id="notes" name="notes" rows="3"></textarea>
           </fieldset>
           <fieldset class="form-group">
-            <label>Does the dog have a collar?</label>
-            <div class="d-flex justify-content-start flex-wrap">
-              <div class="form-check ">
-                <label for="collarYes" class="radio-label">
-                  <input class="form-check-input" type="radio" id="collarYes" name="collar"  value="yes">
-                  <span>Yes</span>
-                </label>
-              </div>
-              <div class="form-check ">
-                <label for="collarNo" class="radio-label">
-                  <input class="form-check-input" type="radio" name="collar" id="collarNo" value="no">
-                  <span>No</span>
-                </label>
-              </div>
-            </div>
-          </fieldset>
+    <legend>Does the dog have a collar?</legend>
+    <div class="form-check form-check-inline">
+      <input class="form-check-input radio-button" type="radio" id="collarYes" name="collar"  value="yes">
+      <div class="radio-tile">
+      <label for="collarYes" class="radio-label">Yes</label>
+    </div>
+    </div>
+    <div class="form-check form-check-inline">
+      <input class="form-check-input radio-button" type="radio" name="collar" id="collarNo" value="no">
+      <div class="radio-tile">
+      <label for="collarNo" class="radio-label">No</label>
+    </div>
+  </div>
+  </fieldset>
           <fieldset class="form-group" id="collar_color">
             <input type="text" name="collar_color" class="form-control" placeholder="color/ material">
           </fieldset>
@@ -147,14 +141,14 @@
           </fieldset>
         </div>
       </div>
-    <div id="carousel-controller" class="carousel-controller">
-      <button id="buttonLeft" class="btn btn-outline-secondary form-craousel-button" style="display:none" href="#formCarousel" role="button" data-slide="prev">
+      <div id="carousel-controller" class="carousel-controller">
+        <button id="buttonLeft" class="btn btn-outline-secondary form-craousel-button" style="display:none" href="#formCarousel" role="button" data-slide="prev">
         Back
       </button>
-      <button id="buttonRight" class="btn btn-outline-secondary form-craousel-button" href="#formCarousel" role="button" data-slide="next">
+        <button id="buttonRight" class="btn btn-outline-secondary form-craousel-button" href="#formCarousel" role="button" data-slide="next">
         Next
       </button>
-      <button id="buttonSubmit" style="display:none" type="submit" class="btn btn-primary">Submit</button>
+        <button id="buttonSubmit" style="display:none" type="submit" class="btn btn-primary">Submit</button>
+      </div>
     </div>
-  </div>
 </form>
