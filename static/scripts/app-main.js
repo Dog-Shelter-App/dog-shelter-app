@@ -1,3 +1,42 @@
+
+
+
+//form event
+var formController = '<button class="btn btn-outline-secondary" href="#formCarousel" role="button" data-slide="prev">Back</button><button class="btn btn-outline-secondary" href="#formCarousel" role="button" data-slide="next">Next</button>'
+
+$('#formCarousel').on('slid.bs.carousel', function (ev) {
+  var id = ev.relatedTarget.id;
+  switch (id) {
+    case "1":
+      $('#buttonLeft').hide();
+      $("#slide1").addClass("active");
+      $("#slide2").removeClass("active");
+      $("#slide3").removeClass("active");
+      break;
+    case "2":
+      // do something the id is 2
+      $('#buttonLeft').show();
+      $('#buttonRight').show();
+      $("#buttonSubmit").hide();
+      $("#slide1").removeClass("active");
+      $("#slide2").addClass("active");
+      $("#slide3").removeClass("active");
+      break;
+    case "3":
+      // do something the id is 3
+      $("#buttonRight").hide();
+      $("#buttonSubmit").show();
+      $("#slide1").removeClass("active");
+      $("#slide2").removeClass("active");
+      $("#slide3").addClass("active");
+      break;
+    default:
+      //the id is none of the above
+  }
+})
+
+
+
 $(document).ready(function () {
 //Prefills the date
 var d = new Date();
@@ -34,14 +73,6 @@ $(window).on('scroll', function () {
 //////////////////////////
 //END JULIE
 
-
-
-// Initialize collapse button
-$(".button-collapse").sideNav();
-// Initialize collapsible (uncomment the line below if you use the dropdown variation)
-//$('.collapsible').collapsible();
-
-console.log("is gulp working?")
 
 
 //define what we have ws = connection form = the form we use messageInput = where we input data

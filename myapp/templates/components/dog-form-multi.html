@@ -1,95 +1,81 @@
 <form enctype="multipart/form-data" action="/dogs/new-dog" id="dogForm"method="post">
   <div id="formCarousel" class="carousel slide formCarousel form-section" data-interval="false" data-ride="carousel">
+    <div class="form-indicators d-flex justify-content-between align-items-center">
+      <div id="slide1" data-target="#formCarousel" class="form-indicator 1 active" data-slide-to="0" class="active">1</div>
+      <div class="form-indicator-separator"></div>
+      <div id="slide2" data-target="#formCarousel" class="form-indicator 2" data-slide-to="1">2</div>
+      <div class="form-indicator-separator"></div>
+      <div id="slide3" data-target="#formCarousel" class="form-indicator 3" data-slide-to="2">3</div>
+    </div>
     <div class="carousel-inner " role="listbox">
-      <div class="carousel-item active">
+      <div id='1' class="carousel-item active">
         <!-- Section 1 -->
         <div class="">
           <fieldset class="form-group">
-            <legend>Name of Dog</legend>
+            <label>Name of Dog</label>
             <input type="text" name="dog_name" class="form-control" id="dogname" placeholder="Enter dog's name">
             <small id="emailHelp" class="form-text text-muted">If unknown, leave empty</small>
           </fieldset>
           <fieldset class="form-group">
-            <legend>Upload Picture</legend>
             <label class="custom-file">
               <input type="file" name="my_File" id="file" class="custom-file-input">
-              <span class="custom-file-control"></span>
+              <span class="custom-file-control">Upload a Photo</span>
             </label>
           </fieldset>
           <fieldset class="form-group">
-            <legend>Gender</legend>
-            <div class="form-check form-check-inline">
-                <input class="form-check-input radio-button" type="radio" name="gender" id="female" value="female">
-                <div class="radio-tile">
-                  <label for="female" class="radio-label">Female</label>
-            </div>
-            </div>
-            <div class="form-check form-check-inline">
-              <input class="form-check-input radio-button" type="radio" name="gender" id="male" value="male">
-              <div class="radio-tile">
-              <label for="male" class="radio-label">Male</label>
-            </div>
+            <label>Gender</label>
+            <div class="d-flex justif-content-start flex-wrap">
+              <div class="form-check">
+                <label for="female" class="radio-label">
+                  <input class="form-check-input" type="radio" name="gender" id="female" value="female">
+                  <span>Female</span>
+                </label>
+              </div>
+              <div class="form-check">
+                <label for="male" class="radio-label">
+                  <input class="form-check-input" type="radio" name="gender" id="male" value="male">
+                  <span>Male</span>
+                </label>
+              </div>
             </div>
           </fieldset>
           <fieldset class="form-group">
-            <legend>Is the Dog Neutered?</legend>
-            <div class="form-check form-check-inline">
-                <input class="form-check-input radio-button" type="radio" name="fix" id="fixYes" value="yes">
-                <div class="radio-tile">
+            <label>Is the Dog Neutered?</label>
+            <div class="d-flex justify-content-start flex-wrap">
+              <div class="form-check ">
                 <label for="fixYes" class="radio-label">
-                Yes
-              </label>
+                  <input class="form-check-input" type="radio" name="fix" id="fixYes" value="yes">
+                  <span>Yes</span>
+                </label>
               </div>
-            </div>
-            <div class="form-check form-check-inline">
-                <input class="form-check-input radio-button" type="radio" name="fix" id="fixNo" value="no">
-                <div class="radio-tile">
+              <div class="form-check ">
                 <label for="fixNo" class="radio-label">
-                No
-              </label>
+                  <input class="form-check-input" type="radio" name="fix" id="fixNo" value="no">
+                  <span>No</span>
+                </label>
+              </div>
             </div>
           </div>
           </fieldset>
         </div>
       </div>
-
-
-      <div class="carousel-item">
+      <div id='2' class="carousel-item">
         <!-- Section 2 -->
         <div class="">
           <fieldset class="form-group">
-            <legend>Does the dog have a collar?</legend>
-            <div class="form-check form-check-inline">
-              <input class="form-check-input radio-button" type="radio" id="collarYes" name="collar"  value="yes">
-              <div class="radio-tile">
-              <label for="collarYes" class="radio-label">Yes</label>
-            </div>
-            </div>
-            <div class="form-check form-check-inline">
-              <input class="form-check-input radio-button" type="radio" name="collar" id="collarNo" value="no">
-              <div class="radio-tile">
-              <label for="collarNo" class="radio-label">No</label>
-            </div>
-          </div>
-          </fieldset>
-          <fieldset class="form-group" id="collar_color">
-            <input type="text" name="collar_color" class="form-control" placeholder="color/ material">
-          </fieldset>
-
-          <fieldset class="form-group">
             {% include "components/breed.html" %}
           </fieldset>
-          <div class="d-flex justify-content-between flex-wrap">
+          <div class="d-flex justify-content-start flex-wrap">
             <fieldset class="form-group">
               <label for="locationfound">Location Found </label>
               <input type="text" name="location_found"class="form-control" id="locationfound">
             </fieldset>
             <fieldset class="form-group">
               <label for="date_found">Date Found</label>
-              <input type="text" name='date_found' class="form-control" id="date_found">
+              <input type="date" name='date_found' class="form-control" id="date_found">
             </fieldset>
           </div>
-          <div class="d-flex justify-content-between">
+          <div class="d-flex justify-content-start">
             <fieldset class="form-group">
               <label for="primcolor">Primary Color</label>
               <input type="text" name="prim_color"class="form-control" id="primcolor">
@@ -99,7 +85,7 @@
               <input type="text" name="sec_color"class="form-control" id="primcolor">
             </fieldset>
           </div>
-          <div class="d-flex justify-content-between flex-wrap">
+          <div class="d-flex justify-content-start flex-wrap">
             <fieldset class="form-group">
               <label for="height">Height (inches)</label>
               <input type="number" name="height" class="form-control" id="height">
@@ -109,7 +95,11 @@
               <input type="number" name="weight"class="form-control" id="weight">
             </fieldset>
           </div>
-          <div class="d-flex justify-content-between flex-wrap">
+          <div class="d-flex justify-content-start flex-wrap">
+            <fieldset class="form-group">
+              <label for="eyes">Eye Color</label>
+              <input type="text" id="eyes" class="form-control" name="eyes">
+            </fieldset>
             <fieldset class="form-group">
               <label for="ears">Ears</label>
               <select name="ears" id="ears" class="form-control">
@@ -118,14 +108,10 @@
                 <option value="folded">Folded</option>
               </select>
             </fieldset>
-            <fieldset class="form-group">
-              <label for="eyes">Eye Color</label>
-              <input type="text" id="eyes" class="form-control" name="eyes">
-            </fieldset>
           </div>
         </div>
       </div>
-      <div class="carousel-item">
+      <div id='3' class="carousel-item">
         <!-- Section 3 -->
         <div class="">
           <fieldset class="form-group">
@@ -137,20 +123,40 @@
             <textarea class="form-control" id="notes" name="notes" rows="3"></textarea>
           </fieldset>
           <fieldset class="form-group">
+            <label>Does the dog have a collar?</label>
+            <div class="d-flex justify-content-start flex-wrap">
+              <div class="form-check ">
+                <label for="collarYes" class="radio-label">
+                  <input class="form-check-input" type="radio" id="collarYes" name="collar"  value="yes">
+                  <span>Yes</span>
+                </label>
+              </div>
+              <div class="form-check ">
+                <label for="collarNo" class="radio-label">
+                  <input class="form-check-input" type="radio" name="collar" id="collarNo" value="no">
+                  <span>No</span>
+                </label>
+              </div>
+            </div>
+          </fieldset>
+          <fieldset class="form-group" id="collar_color">
+            <input type="text" name="collar_color" class="form-control" placeholder="color/ material">
+          </fieldset>
+          <fieldset class="form-group">
             <label for="idchip">ID CHIP </label>
             <input type="text" name='id_chip' class="form-control" id="idchip">
           </fieldset>
         </div>
-        <button type="submit" class="btn btn-primary">Submit</button>
       </div>
     </div>
-    <div class="carousel-controller">
-      <button class="btn btn-outline-secondary" href="#formCarousel" role="button" data-slide="prev">
+    <div id="carousel-controller" class="carousel-controller">
+      <button id="buttonLeft" class="btn btn-outline-secondary" style="display:none" href="#formCarousel" role="button" data-slide="prev">
         Back
       </button>
-      <button class="btn btn-outline-secondary" href="#formCarousel" role="button" data-slide="next">
+      <button id="buttonRight" class="btn btn-outline-secondary" href="#formCarousel" role="button" data-slide="next">
         Next
       </button>
+      <button id="buttonSubmit" style="display:none" type="submit" class="btn btn-primary">Submit</button>
     </div>
   </div>
 </form>
