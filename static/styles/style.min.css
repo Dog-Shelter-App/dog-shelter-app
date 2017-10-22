@@ -22,8 +22,6 @@ DOG FORM HTML PAGE
   padding-top: 2em;
 }
 
-<<<<<<< HEAD
-=======
 #eyes {
   margin-left: 1em;
 }
@@ -33,7 +31,6 @@ DOG FORM HTML PAGE
 .dogform{
   margin: auto;
   width: 50%;
-  height: 100%;
   padding-bottom: 1em;
 }
 .profile{
@@ -44,7 +41,6 @@ DOG FORM HTML PAGE
 .upload {
   margin-right: 1em;
 }
->>>>>>> master
 
 /********************************************************
 
@@ -281,12 +277,12 @@ CAROUSEL
 .carousel-controller {
   display: flex;
   justify-content: space-around;
-
 }
 .carousel-controller a {
   border: 1px solid;
 
 }
+
 
 /********************************************************
 DOG LIST
