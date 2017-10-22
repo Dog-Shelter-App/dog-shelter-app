@@ -3,6 +3,8 @@ $('#formCarousel').on('slid.bs.carousel', function (ev) {
   switch (id) {
     case "1":
       $('#buttonLeft').hide();
+      $("#buttonRight").show();
+      $("#buttonSubmit").hide();
       $("#slide1").addClass("active");
       $("#slide2").removeClass("active");
       $("#slide3").removeClass("active");
@@ -19,6 +21,7 @@ $('#formCarousel').on('slid.bs.carousel', function (ev) {
     case "3":
       // do something the id is 3
       $("#buttonRight").hide();
+      $("#buttonLeft").show();
       $("#buttonSubmit").show();
       $("#slide1").removeClass("active");
       $("#slide2").removeClass("active");
