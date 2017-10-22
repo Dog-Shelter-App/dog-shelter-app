@@ -310,3 +310,17 @@ DOG LIST
 .dog-card {
   margin: 1rem;
 }
+
+/********************************************************
+QUERY BAR
+*******************************************************/
+.querybar{
+  display: flex;
+  border: 3px solid #eee;
+  margin: 10px;
+  padding: 5px;
+}
+.radio{
+  display: inline;
+  max-width: 20%;
+}
