@@ -10,19 +10,20 @@
     <h2>Search Dogs</h2>
 <div class="radio">
   <label for="gender">Gender</label>
-    <input class="radio-button" type="radio" name="gender" id="female" value="female">
+    <input class="form-check-input radio-button" type="radio" name="gender" id="female" value="female">
     <div class="radio-tile"><label for="female" class="radio-label">Female</label></div>
 
-  <input class="radio-button" type="radio" name="gender" id="male" value="male">
+  <input class="form-check-input radio-button" type="radio" name="gender" id="male" value="male">
   <div class="radio-tile"><label for="male" class="radio-label">Male</label></div>
 </div>
 
-<div><label for="breed">Breed</label><input type="text" name="breed" id="breed"></div>
+    <label for="breed">Breed</label><input type="text" name="breed" id="breed">
 
     <button type="submit" class="btn btn-outline-danger">Filter</button>
-    
   </form>
 </div>
+
+<h2>Searched for "{{breed}}" and "{{gender}}"</h2>
 
   <div class="dog_list d-flex pt-5 flex-wrap justify-content-start">
     {% for dog in dogs_list%}

@@ -386,6 +386,18 @@ class DogProfileHandler(TemplateHandler):
           'no-store, no-cache, must-revalidate, max-age=0')
         self.render_template("/pages/dog-profile.html", {'dog': dog})
 
+class QueryHandler(TemplateHandler):
+    def post(self):
+        breed = self.get_body_argument("breed")
+        gender = self.get_body_argument("gender")
+
+        dogs_list = dogs.find({"breed": breed, "gender":gender})
+
+        self.set_header(
+          'Cache-Control',
+          'no-store, no-cache, must-revalidate, max-age=0')
+        self.render_template("/pages/dog-list-results.html", {'dogs_list': dogs_list, 'breed':breed, 'gender': gender})
+
 class NewUserFormHandler(TemplateHandler):
     def get(self):
         shelters_list = shelters.find({})
@@ -411,6 +423,7 @@ class make_app(tornado.web.Application):
             (r"/login-google", GAuthLoginHandler),
             (r"/dogs/new-dog", DogFormHandler),
             (r"/dogs", DogListHandler),
+            (r"/querybar", QueryHandler),
             (r"/shelters/new-user", NewUserFormHandler),
             (r"/dogs/(.*)",DogProfileHandler),
             (
