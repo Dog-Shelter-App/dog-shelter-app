@@ -1,11 +1,16 @@
+$("#buttonRight").on('click', function(){
+  $("#formCarousel").carousel('next');
+  console.log("working.")
+});
 
-
-
-//form event
-var formController = '<button class="btn btn-outline-secondary" href="#formCarousel" role="button" data-slide="prev">Back</button><button class="btn btn-outline-secondary" href="#formCarousel" role="button" data-slide="next">Next</button>'
+$("#buttonLeft").on('click', function(){
+  $("#formCarousel").carousel('prev');
+  console.log("working.")
+});
 
 $('#formCarousel').on('slid.bs.carousel', function (ev) {
   var id = ev.relatedTarget.id;
+  alert(id);
   switch (id) {
     case "1":
       $('#buttonLeft').hide();
