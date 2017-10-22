@@ -19,32 +19,36 @@
           <fieldset class="form-group">
             <legend>Gender</legend>
             <div class="form-check form-check-inline">
-              <label for="female" class="radio-label">
-                <input class="form-check-input" type="radio" name="gender" id="female" value="female">
-                <span>Female</span>
-              </label>
+                <input class="form-check-input radio-button" type="radio" name="gender" id="female" value="female">
+                <div class="radio-tile">
+                  <label for="female" class="radio-label">Female</label>
+            </div>
             </div>
             <div class="form-check form-check-inline">
-              <label for="male" class="radio-label">
-                <input class="form-check-input" type="radio" name="gender" id="male" value="male">
-                <span>Male</span>
-              </label>
+              <input class="form-check-input radio-button" type="radio" name="gender" id="male" value="male">
+              <div class="radio-tile">
+              <label for="male" class="radio-label">Male</label>
+            </div>
             </div>
           </fieldset>
           <fieldset class="form-group">
             <legend>Is the Dog Neutered?</legend>
             <div class="form-check form-check-inline">
-              <label for="fixYes" class="radio-label">
-                <input class="form-check-input" type="radio" name="fix" id="fixYes" value="yes">
-                <span>Yes</span>
+                <input class="form-check-input radio-button" type="radio" name="fix" id="fixYes" value="yes">
+                <div class="radio-tile">
+                <label for="fixYes" class="radio-label">
+                Yes
               </label>
+              </div>
             </div>
             <div class="form-check form-check-inline">
-              <label for="fixNo" class="radio-label">
-                <input class="form-check-input" type="radio" name="fix" id="fixNo" value="no">
-                <span>No</span>
+                <input class="form-check-input radio-button" type="radio" name="fix" id="fixNo" value="no">
+                <div class="radio-tile">
+                <label for="fixNo" class="radio-label">
+                No
               </label>
             </div>
+          </div>
           </fieldset>
         </div>
       </div>
@@ -56,17 +60,17 @@
           <fieldset class="form-group">
             <legend>Does the dog have a collar?</legend>
             <div class="form-check form-check-inline">
-              <label for="collarYes" class="radio-label">
-                <input class="form-check-input" type="radio" id="collarYes" name="collar"  value="yes">
-                <span>Yes</span>
-              </label>
+              <input class="form-check-input radio-button" type="radio" id="collarYes" name="collar"  value="yes">
+              <div class="radio-tile">
+              <label for="collarYes" class="radio-label">Yes</label>
+            </div>
             </div>
             <div class="form-check form-check-inline">
-              <label for="collarNo" class="radio-label">
-                <input class="form-check-input" type="radio" name="collar" id="collarNo" value="no">
-                <span>No</span>
-              </label>
+              <input class="form-check-input radio-button" type="radio" name="collar" id="collarNo" value="no">
+              <div class="radio-tile">
+              <label for="collarNo" class="radio-label">No</label>
             </div>
+          </div>
           </fieldset>
           <fieldset class="form-group" id="collar_color">
             <input type="text" name="collar_color" class="form-control" placeholder="color/ material">
