@@ -139,16 +139,16 @@ input[type="date"] {
 }
 
 input.form-control, textarea#notes, select{
-  border: 2px solid #ddd;
+  /*border: 2px solid #ddd;*/
 }
 
 
 .form-section {
   background: white;
-  border: 3px solid #ddd;
-  padding: 25px;
-  margin-bottom: 15px;
-  border-radius: 5px;
+  border: 1px solid #ddd;
+  padding: 20px;
+  margin: 1em;
+  /*border-radius: 5px;*/
 }
 
 /*input[type="radio"]:active ~ label {
@@ -280,6 +280,10 @@ CAROUSEL
 }
 .carousel-controller a {
   /*border: 1px solid;*/
+}
+.carousel-item{
+  min-height: 70vh;
+  min-width: 70vh;
 }
 
 
