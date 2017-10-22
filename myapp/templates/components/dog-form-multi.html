@@ -5,11 +5,12 @@
         <!-- Section 1 -->
         <div class="">
           <fieldset class="form-group">
-            <label for="dogname">Name of Dog</label>
+            <legend>Name of Dog</legend>
             <input type="text" name="dog_name" class="form-control" id="dogname" placeholder="Enter dog's name">
             <small id="emailHelp" class="form-text text-muted">If unknown, leave empty</small>
           </fieldset>
           <fieldset class="form-group">
+            <legend>Upload Picture</legend>
             <label class="custom-file">
               <input type="file" name="my_File" id="file" class="custom-file-input">
               <span class="custom-file-control"></span>
@@ -45,11 +46,18 @@
               </label>
             </div>
           </fieldset>
+        </div>
+      </div>
+
+
+      <div class="carousel-item">
+        <!-- Section 2 -->
+        <div class="">
           <fieldset class="form-group">
             <legend>Does the dog have a collar?</legend>
             <div class="form-check form-check-inline">
               <label for="collarYes" class="radio-label">
-                <input class="form-check-input" type="radio" name="collar" id="collarYes" value="yes">
+                <input class="form-check-input" type="radio" id="collarYes" name="collar"  value="yes">
                 <span>Yes</span>
               </label>
             </div>
@@ -60,15 +68,10 @@
               </label>
             </div>
           </fieldset>
-          <fieldset class="form-group">
-            <label for="collarcolor" class='collarcolor'>If yes, describe collar:</label>
-            <input type="text" name="collar_color" class="form-control" placeholder="color, material">
+          <fieldset class="form-group" id="collar_color">
+            <input type="text" name="collar_color" class="form-control" placeholder="color/ material">
           </fieldset>
-        </div>
-      </div>
-      <div class="carousel-item">
-        <!-- Section 2 -->
-        <div class="">
+
           <fieldset class="form-group">
             {% include "components/breed.html" %}
           </fieldset>
@@ -79,7 +82,7 @@
             </fieldset>
             <fieldset class="form-group">
               <label for="date_found">Date Found</label>
-              <input type="date" name='date_found' class="form-control" id="date_found">
+              <input type="text" name='date_found' class="form-control" id="date_found">
             </fieldset>
           </div>
           <div class="d-flex justify-content-between">
@@ -138,10 +141,10 @@
       </div>
     </div>
     <div class="carousel-controller">
-      <button class="btn btn-secondary" href="#formCarousel" role="button" data-slide="prev">
+      <button class="btn btn-outline-secondary" href="#formCarousel" role="button" data-slide="prev">
         Back
       </button>
-      <button class="btn btn-secondary" href="#formCarousel" role="button" data-slide="next">
+      <button class="btn btn-outline-secondary" href="#formCarousel" role="button" data-slide="next">
         Next
       </button>
     </div>

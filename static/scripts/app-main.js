@@ -4,6 +4,15 @@ var d = new Date();
 var n = d.toLocaleDateString();
 var dateInput = document.getElementById('date_found');
 dateInput.value = n;
+
+//DOG-FORM Button trigger if COLLAR_YES
+$('#collar_color').hide();
+$('#collarYes').click(function(event){
+  $('#collar_color').slideToggle();
+})
+$('#collarNo').click(function(event){
+  $('#collar_color').hide();
+})
 });
 
 var range = 100;
