@@ -7,7 +7,9 @@ footer {
   background-color: #ddd;
   font-size: 80%;
   margin: 100%;
-  margin: 0 auto; }
+  margin: 0 auto;
+  z-index: 999;
+}
 
 #header > a {
   color: #000; }
@@ -49,9 +51,12 @@ JUMBOTRON
 *******************************************************/
 .jumbotron {
   background: url("/static/img/dog.jpg") no-repeat center top;
-  height: 100vh;
+  height: 90vh;
   /*width: 100vh;*/
-  position: relative; }
+  position: relative;
+  background-position: left;
+  background-size: cover;
+}
 
 .jumbotrontext {
   text-align: right;
@@ -89,6 +94,10 @@ FORM
   border-radius: 6px;
 }
 
+.carousel-controller {
+  padding: 1rem;
+}
+
 .form-indicators {
   margin-bottom: 15px;
 }
@@ -102,6 +111,10 @@ FORM
   background: #e9ecef;
   border: 1px solid #ddd;
 
+}
+
+.form-indicator:hover {
+  cursor: pointer;
 }
 
 .form-indicator.active {
@@ -147,22 +160,13 @@ FORM
 STYLING DOG FORM BUTTONS
 
 *******************************************************/
-.radio-button{
+input[type='radio'] {
 	opacity: 0;
   display: none;
   width: 0;
   height: 0;
 }
-.radio-tile {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  width: 100%;
-  height: 100%;
-  /*border: 1px solid #079ad9;*/
-  transition: transform 300ms ease;
-}
+
 .radio-label {
   text-align: center;
   font-size: 0.75rem;
@@ -172,7 +176,7 @@ STYLING DOG FORM BUTTONS
   display: flex;
   width: 100%;
   height: 100%;
-	padding: 1em 2em;
+	padding: .6rem;
 	/*opacity: .7;*/
 	transition: all .1s ease-in-out;
   border: 1px solid #ddd;
@@ -180,9 +184,9 @@ STYLING DOG FORM BUTTONS
 .radio-label:hover {
     cursor:pointer;
 }
-.radio-button:checked + .radio-tile {
-background-color: #079ad9;
-color: white;
+:checked + label {
+  background-color: #079ad9;
+  color: white;
 }
 /********************************************************
 
@@ -216,11 +220,7 @@ BOOTSTRAP
 Turtles
 
 *******************************************************/
-.dog_list {
-  display: flex;
-  flex-wrap: wrap;
-  justify-content: space-between;
-  padding: 20px; }
+
 /********************************************************
 
 New User Page
@@ -238,18 +238,36 @@ DOG LIST
 
 .dog-card {
   margin: 1rem;
+  max-width: 250px;
+}
+
+@media (max-width: 450px) {
+  .dog-card {
+    max-width: 500px;
+  }
+}
+
+/********************************************************
+QUERY BAR
+*******************************************************/
+
+.fixed {
+  position:fixed;
+  top: 0;
 }
 
 /********************************************************
 QUERY BAR
 *******************************************************/
 .querybar{
+  postition: sticky;
   display: flex;
   align-items: flex-start;
   justify-content: space-between;
   border: 3px solid #eee;
-  margin: 10px;
-  padding: 5px;
+  margin: 1rem;
+  padding: 20px;
+  background: white;
 }
 .radio{
   display: inline;

@@ -42,7 +42,6 @@ shelters = db.shelters_collection
 
 
 
-
 ##########################
 #### cluster
 ######## database
