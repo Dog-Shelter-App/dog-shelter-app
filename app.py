@@ -412,6 +412,30 @@ class NewUserFormHandler(TemplateHandler):
             }
         )
         self.redirect("/")
+class EditPostHandler(TemplateHandler):
+    def get(self, slug):
+        post = BlogPost.select().where(BlogPost.slug == slug).get()
+        author = Author.select().where(Author.id == post.author_id).get()
+        self.render_template("editblog.html", {'post': post, 'author': author})
+class EditDogHandler(TemplateHandler):
+    def post(self):
+        title = self.get_body_argument('title')
+        body = self.get_body_argument('body')
+        slug = self.get_body_argument('slug')
+        author = self.get_body_argument('author')
+
+        if author == "addnewauthor":
+            Author.create(name=author)
+
+        newauthor = Author.select().where(Author.name == author)
+        post = BlogPost.select().where(BlogPost.slug == slug).get()
+
+        post.title = title
+        post.body = body
+        post.author = newauthor
+        post.save()
+
+        self.redirect('/post/' + slug)
 
 class make_app(tornado.web.Application):
     def __init__(self):
@@ -422,6 +446,7 @@ class make_app(tornado.web.Application):
             (r"/login-google", GAuthLoginHandler),
             (r"/dogs/new-dog", DogFormHandler),
             (r"/dogs", DogListHandler),
+            (r"/edit/(.*)",EditDogHandler),
             (r"/querybar", QueryHandler),
             (r"/shelters/new-user", NewUserFormHandler),
             (r"/dogs/(.*)",DogProfileHandler),

@@ -2,38 +2,8 @@
 
 {% block body %}
 <div class="profile">
-<!--
-####################
-
-Option One
-
-####################
--->
-<!-- <div class="container">
-{% for key, value in dog.items()%}
-<div class="row">
-  <div class="col-lg-6">
-    <h5>{{key}}</h5>
-  </div>
-  <div class="col-lg-6">
-    <h5>{{value}}</h5>
-  </div>
-</div>
-{% endfor %}
-</div> -->
-
-<!--
-####################
-
-Option Two
-
-####################
--->
 
 <div class="container">
-  <div class="edit">
-    <a href="/edit/{{dog._id}}" class="btn btn-outline-primary">Edit</a>
-  </div>
 <div class="row">
   <div class="col-lg-12">
     <img class="card-img-top" src="{{dog.thumbnail}}" alt="lost-dog">
