@@ -11,6 +11,14 @@
   {% endfor %}
 </select>
 
+{% for user in users_list%}
+<span>
+  {{user.given_name}}
+  {{user.family_name}}
+  {{user.email}}
+</span><br><br>
+{% endfor %}
+
 <!-- End select from list of existing shelters-->
 
 <br>

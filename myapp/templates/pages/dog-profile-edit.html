@@ -1,0 +1,179 @@
+{% extends "base.html" %}
+
+{% block title %}Edit|{{dog._id}}{% endblock %}
+
+
+{% block body %}
+<form action="/update" method="post">
+  <input type="hidden" name="_id" value="{{dog._id}}">
+
+  <div class="container">
+  <div class="row">
+    <!-- add ability to update image -->
+    <div class="col-lg-12">
+      <img class="card-img-top" src="{{dog.thumbnail}}" alt="lost-dog">
+    </div>
+
+  </div>
+    <div class="row">
+      <div class="col-lg-6">
+        <h5>Name</h5>
+      </div>
+      <div class="col-lg-6">
+        <h5><input type="text" name="dog_name" value="{{dog.dog_name}}"></h5>
+      </div>
+  </div>
+
+  <div class="row">
+    <div class="col-lg-6">
+      <h5>Gender</h5>
+    </div>
+    <div class="col-lg-6">
+      <h5>{{dog.gender}}</h5>
+    </div>
+  </div>
+
+  <div class="row">
+    <div class="col-lg-6">
+      <h5>Neutered/Spayed</h5>
+    </div>
+    <div class="col-lg-6">
+      <h5>{{dog.fix}}</h5>
+    </div>
+  </div>
+
+  <div class="row">
+    <div class="col-lg-6">
+      <h5>Breed</h5>
+    </div>
+    <div class="col-lg-6">
+      <h5>{{dog.breed}}</h5>
+        {% include "components/breed.html" %}
+    </div>
+  </div>
+
+
+  <div class="row">
+    <div class="col-lg-6">
+      <h5>Age</h5>
+    </div>
+    <div class="col-lg-6">
+      <h5><input type="number" name="age" value="{{dog.age}}"></h5>
+    </div>
+  </div>
+
+  <div class="row">
+    <div class="col-lg-6">
+      <h5>Location Found</h5>
+    </div>
+    <div class="col-lg-6">
+      <h5><input type="text" name="location_found" value="{{dog.location_found}}"></h5>
+    </div>
+  </div>
+
+  <div class="row">
+    <div class="col-lg-6">
+      <h5>Collar</h5>
+    </div>
+    <div class="col-lg-6">
+      <h5>{{dog.collar}}</h5>
+    </div>
+  </div>
+
+  <div class="row">
+    <div class="col-lg-6">
+      <h5>Collar Color</h5>
+    </div>
+    <div class="col-lg-6">
+      <h5><input type="text" name="collar_color" value="{{dog.collar_color}}"></h5>
+    </div>
+  </div>
+
+  <div class="row">
+    <div class="col-lg-6">
+      <h5>ID Chip</h5>
+    </div>
+    <div class="col-lg-6">
+      <h5><input type="text" name="id_chip" value="{{dog.id_chip}}"></h5>
+    </div>
+  </div>
+
+  <div class="row">
+    <div class="col-lg-6">
+      <h5>height</h5>
+    </div>
+    <div class="col-lg-6">
+      <h5><input type="number" name="height" value="{{dog.height}}"></h5>
+    </div>
+  </div>
+
+  <div class="row">
+    <div class="col-lg-6">
+      <h5>Weight</h5>
+    </div>
+    <div class="col-lg-6">
+      <h5><input type="number" name="weight" value="{{dog.weight}}"></h5>
+    </div>
+  </div>
+
+  <div class="row">
+    <div class="col-lg-6">
+      <h5>Primary Color</h5>
+    </div>
+    <div class="col-lg-6">
+      <h5><input type="text" name="prim_color" value="{{dog.prim_color}}"></h5>
+    </div>
+  </div>
+
+  <div class="row">
+    <div class="col-lg-6">
+      <h5>Secondary Color</h5>
+    </div>
+    <div class="col-lg-6">
+      <h5><input type="text" name="sec_color" value="{{dog.sec_color}}"></h5>
+    </div>
+  </div>
+
+  <div class="row">
+    <div class="col-lg-6">
+      <h5>Eyes</h5>
+    </div>
+    <div class="col-lg-6">
+      <h5><input type="text" name="eyes" value="{{dog.eyes}}"></h5>
+    </div>
+  </div>
+
+
+  <div class="row">
+    <div class="col-lg-6">
+      <h5>Ears</h5>
+    </div>
+    <div class="col-lg-6">
+      <h5>{{dog.ears}}</h5>
+      <select name="ears" id="ears">
+        <option value="stand-up" >Stand-up</option>
+        <option value="cropped">Cropped</option>
+        <option value="folded">Folded</option>
+      </select>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-lg-6">
+      <h5>Notes</h5>
+    </div>
+    <div class="col-lg-6">
+      <h5><textarea type="text" name="notes"rows="4">{{dog.notes}}</textarea></h5>
+    <button type="submit" class="btn btn-primary">Submit Changes</button></div>
+  </div>
+  </div>
+  </div>
+
+</form>
+
+<script>
+var opt = $("option[val={{dog.ears}}]"),
+    html = $("<div>").append(opt.clone()).html();
+html = html.replace(/\>/, ' selected="selected">');
+opt.replaceWith(html);
+</script>
+{% endblock %}
