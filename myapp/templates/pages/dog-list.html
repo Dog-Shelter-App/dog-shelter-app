@@ -5,23 +5,31 @@
     {{ super() }}
 {% endblock %}
 {% block body %}
-<div class="querybar">
-  {% include 'components/search.html'%}
-</div>
-
-  <div class="dog_list d-flex pt-5 flex-wrap justify-content-start">
-    {% for dog in dogs_list%}
-      <article class="card dog-card" style="width:20em;">
-        <a href="dogs/{{dog._id}}">
-          <img class="card-img-top" src="{{dog.thumbnail}}" alt="lost-dog">
-          <div class="card-body">
-            <h4 class="card-title"> {{dog.dog_name}}</h4>
-            <p class="card-text">{{dog.dog_gender}} {{dog.breed}}</p>
-          </div>
-        </a>
-        </article>
-    {% endfor%}
+  <div class="container-fluid">
+    <div class="row">
+      <div class="col-md-9">
+        <div class="d-flex flex-wrap justify-content-start">
+          {% for dog in dogs_list%}
+            <article class="card dog-card">
+              <a href="dogs/{{dog._id}}">
+                <img class="card-img-top" src="{{dog.thumbnail}}" alt="lost-dog">
+                <div class="card-body">
+                  <h4 class="card-title"> {{dog.dog_name}}</h4>
+                  <p class="card-text">{{dog.dog_gender}} {{dog.breed}}</p>
+                </div>
+              </a>
+              </article>
+          {% endfor%}
+        </div>
+      </div>
+      <div class="col-md-3">
+        <div class="d-flex">
+          {% include 'components/search.html'%}
+        </div>
+      </div>
+    </div>
   </div>
+
 
 
 {% endblock %}

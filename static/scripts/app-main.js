@@ -1,3 +1,6 @@
+
+// Dog Form Logic
+
 $('#formCarousel').on('slid.bs.carousel', function (ev) {
   var id = ev.relatedTarget.id;
   switch (id) {
@@ -31,6 +34,20 @@ $('#formCarousel').on('slid.bs.carousel', function (ev) {
       //the id is none of the above
   }
 })
+
+// Sticky Plugin
+
+$(document).ready(function () {
+  var top = $('.sticky-scroll-box').offset().top;
+  $(window).scroll(function (event) {
+    var y = $(this).scrollTop();
+    if (y >= top)
+      $('.sticky-scroll-box').addClass('fixed');
+    else
+      $('.sticky-scroll-box').removeClass('fixed');
+    // $('.sticky-scroll-box').width($('.sticky-scroll-box').parent().width());
+  });
+});
 
 
 

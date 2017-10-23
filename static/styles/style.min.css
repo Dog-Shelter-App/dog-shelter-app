@@ -7,7 +7,9 @@ footer {
   background-color: #ddd;
   font-size: 80%;
   margin: 100%;
-  margin: 0 auto; }
+  margin: 0 auto;
+  z-index: 999;
+}
 
 #header > a {
   color: #000; }
@@ -49,9 +51,12 @@ JUMBOTRON
 *******************************************************/
 .jumbotron {
   background: url("/static/img/dog.jpg") no-repeat center top;
-  height: 100vh;
+  height: 90vh;
   /*width: 100vh;*/
-  position: relative; }
+  position: relative;
+  background-position: left;
+  background-size: cover;
+}
 
 .jumbotrontext {
   text-align: right;
@@ -171,7 +176,7 @@ input[type='radio'] {
   display: flex;
   width: 100%;
   height: 100%;
-	padding: 1em 2em;
+	padding: .6rem;
 	/*opacity: .7;*/
 	transition: all .1s ease-in-out;
   border: 1px solid #ddd;
@@ -215,11 +220,7 @@ BOOTSTRAP
 Turtles
 
 *******************************************************/
-.dog_list {
-  display: flex;
-  flex-wrap: wrap;
-  justify-content: space-between;
-  padding: 20px; }
+
 /********************************************************
 
 New User Page
@@ -237,18 +238,36 @@ DOG LIST
 
 .dog-card {
   margin: 1rem;
+  max-width: 250px;
+}
+
+@media (max-width: 450px) {
+  .dog-card {
+    max-width: 500px;
+  }
+}
+
+/********************************************************
+QUERY BAR
+*******************************************************/
+
+.fixed {
+  position:fixed;
+  top: 0;
 }
 
 /********************************************************
 QUERY BAR
 *******************************************************/
 .querybar{
+  postition: sticky;
   display: flex;
   align-items: flex-start;
   justify-content: space-between;
   border: 3px solid #eee;
-  margin: 10px;
-  padding: 5px;
+  margin: 1rem;
+  padding: 20px;
+  background: white;
 }
 .radio{
   display: inline;
