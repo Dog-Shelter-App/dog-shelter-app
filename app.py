@@ -422,6 +422,7 @@ class EditDogHandler(TemplateHandler):
 
 class UpdateDogHandler(TemplateHandler):
     def post(self):
+        _id = self.get_body_argument('_id')
         dog_name = self.get_body_argument('dog_name')
         # "thumbnail": file_path
         breed= self.get_body_argument('breed').lower()
@@ -439,8 +440,8 @@ class UpdateDogHandler(TemplateHandler):
         ears= self.get_body_argument('ears').lower()
         eyes= self.get_body_argument('eyes').lower()
         notes= self.get_body_argument('notes')
-        dogs.update({"dog_name":dog_name}, )
-        # mongodb line to update
+        dogs.update_one({"_id":_id}, {'$set': {'dog_name':dog_name}})
+
         self.redirect('/dogs/' + _id)
 class DeleteDogHandler(TemplateHandler):
     def get():

@@ -171,9 +171,12 @@
 </form>
 
 <script>
-var opt = $("option[val={{dog.ears}}]"),
-    html = $("<div>").append(opt.clone()).html();
-html = html.replace(/\>/, ' selected="selected">');
-opt.replaceWith(html);
+var earsValue = $("option[value={{dog.ears}}]")
+console.log(earsValue)
+var html = $("<div>").append(earsValue.clone()).html();
+
+var ears = document.getElementById('ears');
+// html = html.replace(/\>/, ' selected="selected">');
+// opt.replaceWith(html);
 </script>
 {% endblock %}
