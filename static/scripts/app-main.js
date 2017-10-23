@@ -67,6 +67,12 @@ $('#collarNo').click(function(event){
 })
 });
 
+$('#shelterlist').hide();
+$('#shelter').click(function (event) {
+  $('#shelterlist').slideToggle();
+});
+
+
 var range = 100;
 
 $(window).on('scroll', function () {

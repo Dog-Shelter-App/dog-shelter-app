@@ -261,15 +261,12 @@ class GAuthLoginHandler(BaseHandler, tornado.auth.GoogleOAuth2Mixin):
     @tornado.gen.coroutine
     def get(self):
         user_type = self.get_body_argument("user_type")
-
         # TRY: REMEMBER WHERE USER WANTED TO GO
         # request = self.request.headers.get("Referer")
         # question = request.find('=')
         # next_path = request[question+1:]
-
         # Set host: used for compatibility with localhost and external servers.
         host = self.request.host
-
         # if there is a code in the url
         if self.get_argument('code', False):
             # check if user is already authenticated
@@ -294,9 +291,7 @@ class GAuthLoginHandler(BaseHandler, tornado.auth.GoogleOAuth2Mixin):
                 raise tornado.web.HTTPError(500, 'Google authentication failed')
             # If you are here, then google responded, continue reading the response
             user = json.loads(response.body)
-
             # unpack the info google sent
-
             name = user['name']
             given_name = user['given_name']
             family_name = user['family_name']
@@ -304,39 +299,46 @@ class GAuthLoginHandler(BaseHandler, tornado.auth.GoogleOAuth2Mixin):
             avatar = user['picture']
             user_id = user["id"]
 
-
             # google says they are cool, and we believe them
             # save user here, save to cookie or database
             self.set_secure_cookie('user', user['email'])
-
             ###################################################################
             #   WRITE NEW USER TO DB                                          #
             ###################################################################
             #        WRITE USER WITH POSTGRES                                 #
             ###################################################################
-
             # If user does not exists by id in DB, create a user for them..
             # redirect to complete profile
-
-            users.insert_one(
-                {
-                "given_name": given_name,
-                "family_name": family_name,
-                "email": email,
-                "avatar": avatar,
-                "user_id": user_id,
-                "user_type": user_type
-                }
-            )
+            if user not in users:
+                users.insert_one(
+                    {
+                    "given_name": given_name,
+                    "family_name": family_name,
+                    "email": email,
+                    "avatar": avatar,
+                    "user_id": user_id,
+                    "user_type": user_type
+                    }
+                )
             ###################################################################
             #        WRITE USER WITH MONGODB                                  #
             ###################################################################
             # CODE GOES HERE
             ###################################################################
 
+            if user not in users:
+                users.insert(
+                    {
+                    "given_name": given_name,
+                    "family_name": family_name,
+                    "email": email,
+                    "avatar": avatar,
+                    "user_id": user_id,
+                    "user_type": user_type
+                    }
+                )
             # user exists, redirect to profile page.
             self.redirect('/shelters/new-user')
-
 
             return
         # cookie exists, forward user to site
@@ -415,6 +417,32 @@ class NewUserFormHandler(TemplateHandler):
             }
         )
         self.redirect("/")
+
+#################################################################################################################
+#################################################################################################################
+#######                         Goose Additions: New Owner Form Handler                                   #######
+#################################################################################################################
+#################################################################################################################
+
+class NewOwnerFormHandler (TemplateHandler):
+    def get(self):
+        owners_list = users.find({})
+        self.render_template("pages/new-owner-user.html", {"owners_list": owners_list})
+    def post(self):
+        users.insert_one ({
+            "first_name": self.get_body_argument("first_name"),
+            "last_name": self.get_body_argument("last_name"),
+            "email":self.get_body_argument("email"),
+            "phone_number": self.get_body_argument("phone_number")
+        })
+        self.redirect("/")
+
+#################################################################################################################
+#################################################################################################################
+#######                         End Goose changes                                                         #######
+#################################################################################################################
+#################################################################################################################
+
 class EditDogHandler(TemplateHandler):
     def get(self, _id):
         dog = dogs.find_one({"_id": _id})
