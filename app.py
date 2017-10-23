@@ -416,9 +416,16 @@ class NewUserFormHandler(TemplateHandler):
         )
         self.redirect("/")
 class EditDogHandler(TemplateHandler):
+<<<<<<< HEAD
     def get(self, _id):
         dog = dogs.find_one({"_id": _id})
         self.render_template("pages/dog-profile-edit.html", {"dog":dog})
+=======
+    def get(self, slug):
+        post = BlogPost.select().where(BlogPost.slug == slug).get()
+        author = Author.select().where(Author.id == post.author_id).get()
+        self.render_template("editblog.html", {'post': post, 'author': author})
+>>>>>>> master
 class UpdateDogHandler(TemplateHandler):
     def post(self):
         dog_name = self.get_body_argument('dog_name')
