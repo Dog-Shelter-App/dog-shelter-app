@@ -152,7 +152,7 @@
       <h5>{{dog.ears}}</h5>
       <select name="ears" id="ears">
         <option value="stand-up" >Stand-up</option>
-        <option value="cropped">Cropped</option>
+        <option val="ID"value="cropped">Cropped</option>
         <option value="folded">Folded</option>
       </select>
     </div>
@@ -171,9 +171,10 @@
 </form>
 
 <script>
-var opt = $("option[val={{dog.ears}}]"),
-    html = $("<div>").append(opt.clone()).html();
-html = html.replace(/\>/, ' selected="selected">');
-opt.replaceWith(html);
+// var html = $("<div>").append(earsValue.clone()).html();
+
+var ears = document.getElementById('ears');
+// html = html.replace(/\>/, ' selected="selected">');
+// opt.replaceWith(html);
 </script>
 {% endblock %}
