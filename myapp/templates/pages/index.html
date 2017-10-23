@@ -13,7 +13,21 @@
       </div>
       <div class="col-lg-6">
         <h1 class="display-6">{% block jumbotrontext %}Get My Pup{% endblock %}</h1>
+        <h2>{{users.given_name}}</h2>
+
+        <form action="/login-google">
+
         <a href="/login-google" class="btn btn-outline-dark btn-lg"><i class=""></i>Login with Google</a>
+
+        <br>
+
+        <input class="form-check-input radio-button" type="radio" name="user_type" id="owner" value="owner">
+        <label for="owner" class="radio-label">Login As Owner</label>
+
+    <input class="form-check-input radio-button" type="radio" name="user_type" id="shelter" value="shelter"><label for="shelter" class="radio-label">Login As Shelter</label>
+
+      <button type="submit">Login</button>
+        </form>
       </div>
     </div>
 

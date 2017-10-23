@@ -187,21 +187,21 @@ class DogFormHandler(TemplateHandler):
             "_id": str(uuid.uuid4()),
             "dog_name": self.get_body_argument('dog_name'),
             "thumbnail": file_path,
-            "breed": self.get_body_argument('breed'),
+            "breed": self.get_body_argument('breed').lower(),
             "id_chip": self.get_body_argument('id_chip'),
             "age": self.get_body_argument('age'),
             "date_found": self.get_body_argument('date_found'),
             "location_found": self.get_body_argument('location_found'),
-            "prim_color": self.get_body_argument('prim_color'),
-            "sec_color": self.get_body_argument('sec_color'),
+            "prim_color": self.get_body_argument('prim_color').lower(),
+            "sec_color": self.get_body_argument('sec_color').lower(),
             "height": self.get_body_argument('height'),
             "weight": self.get_body_argument('weight'),
             "gender": self.get_body_argument('gender', None),
             "fix": self.get_body_argument('fix', None),
             "collar": self.get_body_argument('collar', None),
-            "collar_color": self.get_body_argument('collar_color'),
-            "ears": self.get_body_argument('ears'),
-            "eyes": self.get_body_argument('eyes'),
+            "collar_color": self.get_body_argument('collar_color').lower(),
+            "ears": self.get_body_argument('ears').lower(),
+            "eyes": self.get_body_argument('eyes').lower(),
             "notes": self.get_body_argument('notes')
             }
         )
@@ -212,9 +212,7 @@ class DogFormHandler(TemplateHandler):
 class DogListHandler(TemplateHandler):
     @tornado.web.authenticated
     def get(self):
-        dogs_list = dogs.find(
-        {}
-        )
+        dogs_list = dogs.find({})
         self.set_header(
           'Cache-Control',
           'no-store, no-cache, must-revalidate, max-age=0')
@@ -262,6 +260,8 @@ class LogOutHandler(BaseHandler, tornado.auth.GoogleOAuth2Mixin):
 class GAuthLoginHandler(BaseHandler, tornado.auth.GoogleOAuth2Mixin):
     @tornado.gen.coroutine
     def get(self):
+        user_type = self.get_body_argument("user_type")
+
         # TRY: REMEMBER WHERE USER WANTED TO GO
         # request = self.request.headers.get("Referer")
         # question = request.find('=')
@@ -317,13 +317,15 @@ class GAuthLoginHandler(BaseHandler, tornado.auth.GoogleOAuth2Mixin):
 
             # If user does not exists by id in DB, create a user for them..
             # redirect to complete profile
+
             users.insert_one(
                 {
                 "given_name": given_name,
                 "family_name": family_name,
                 "email": email,
                 "avatar": avatar,
-                "user_id": user_id
+                "user_id": user_id,
+                "user_type": user_type
                 }
             )
             ###################################################################
@@ -400,7 +402,8 @@ class QueryHandler(TemplateHandler):
 class NewUserFormHandler(TemplateHandler):
     def get(self):
         shelters_list = shelters.find({})
-        self.render_template("pages/new-user.html", {"shelters_list": shelters_list})
+        users_list = users.find({})
+        self.render_template("pages/new-user.html", {"shelters_list": shelters_list, "users_list":users_list})
 
     def post(self):
         shelters.insert_one(
@@ -413,30 +416,41 @@ class NewUserFormHandler(TemplateHandler):
         )
         self.redirect("/")
 class EditDogHandler(TemplateHandler):
+<<<<<<< HEAD
+    def get(self, _id):
+        dog = dogs.find_one({"_id": _id})
+        self.render_template("pages/dog-profile-edit.html", {"dog":dog})
+=======
     def get(self, slug):
         post = BlogPost.select().where(BlogPost.slug == slug).get()
         author = Author.select().where(Author.id == post.author_id).get()
         self.render_template("editblog.html", {'post': post, 'author': author})
+>>>>>>> master
 class UpdateDogHandler(TemplateHandler):
     def post(self):
-        title = self.get_body_argument('title')
-        body = self.get_body_argument('body')
-        slug = self.get_body_argument('slug')
-        author = self.get_body_argument('author')
-
-        if author == "addnewauthor":
-            Author.create(name=author)
-
-        newauthor = Author.select().where(Author.name == author)
-        post = BlogPost.select().where(BlogPost.slug == slug).get()
-
-        post.title = title
-        post.body = body
-        post.author = newauthor
-        post.save()
-
-        self.redirect('/post/' + slug)
-
+        dog_name = self.get_body_argument('dog_name')
+        # "thumbnail": file_path
+        breed= self.get_body_argument('breed').lower()
+        id_chip= self.get_body_argument('id_chip')
+        age= self.get_body_argument('age')
+        location_found= self.get_body_argument('location_found')
+        prim_color= self.get_body_argument('prim_color').lower()
+        sec_color= self.get_body_argument('sec_color').lower()
+        height= self.get_body_argument('height')
+        weight= self.get_body_argument('weight')
+        gender= self.get_body_argument('gender', None)
+        fix= self.get_body_argument('fix', None)
+        collar= self.get_body_argument('collar', None)
+        collar_color= self.get_body_argument('collar_color').lower()
+        ears= self.get_body_argument('ears').lower()
+        eyes= self.get_body_argument('eyes').lower()
+        notes= self.get_body_argument('notes')
+        dogs.update({"dog_name":dog_name}, )
+        # mongodb line to update
+        self.redirect('/dogs/' + _id)
+class DeleteDogHandler(TemplateHandler):
+    def get():
+        self.redirect('/')
 class make_app(tornado.web.Application):
     def __init__(self):
         handlers = [
@@ -447,6 +461,8 @@ class make_app(tornado.web.Application):
             (r"/dogs/new-dog", DogFormHandler),
             (r"/dogs", DogListHandler),
             (r"/edit/(.*)",EditDogHandler),
+            (r"/update", UpdateDogHandler),
+            (r"/delete/(.*)", DeleteDogHandler),
             (r"/querybar", QueryHandler),
             (r"/shelters/new-user", NewUserFormHandler),
             (r"/dogs/(.*)",DogProfileHandler),
