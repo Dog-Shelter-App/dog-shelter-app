@@ -8,9 +8,13 @@
   <div class="container-fluid">
     <div class="row">
       <div class="col-md-9">
-        <div class="d-flex flex-wrap justify-content-start">
+        <div id="dog-list" class="d-flex flex-wrap justify-content-start">
           {% for dog in dogs_list%}
-            <article class="card dog-card">
+            <article class="card dog-card"
+              data-breed="{{dog.breed}}"
+              data-gender="{{dog.gender}}"
+              data-age="{{dog.age}}"
+              >
               <a href="dogs/{{dog._id}}">
                 <img class="card-img-top" src="{{dog.thumbnail}}" alt="lost-dog">
                 <div class="card-body">

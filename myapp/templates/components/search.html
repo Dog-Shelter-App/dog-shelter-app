@@ -1,0 +1,22 @@
+<div class="sticky-scroll-box querybar" id="queryBar">
+  <form action="/querybar" method="post">
+    <h2>Search Dogs</h2>
+    <div class="form-group">
+      <label>Gender</label>
+      <div class="">
+        <div class="form-check form-check-inline">
+          <input class="form-check-input radio-button" type="radio" name="gender" id="female" value="female">
+          <label for="female" class="radio-label">Female</label>
+        </div>
+        <div class="form-check form-check-inline">
+          <input class="form-check-input radio-button" type="radio" name="gender" id="male" value="male">
+          <label for="male" class="radio-label">Male</label>
+        </div>
+      </div>
+    </div>
+    <div class="form-group">
+      {% include 'components/breed.html'%}
+    </div>
+    <button type="submit" class="btn btn-outline-danger">Filter</button>
+  </form>
+</div>

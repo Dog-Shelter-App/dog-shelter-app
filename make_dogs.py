@@ -646,7 +646,6 @@ def add_dog_breeds():
             "value": breed
         })
 
-add_dog_breeds()
 
 dog_thumbnails = [
     "/static/img/sample_dogs/01f3e1c841cf3b864ea024d8eb0c7251--dog-pictures-animal-pictures.jpg",
@@ -722,7 +721,11 @@ def get_height_weight():
     return random.randrange(5,69)
 
 def get_bool(x):
-    rand = random.randrange(0,1)
+    rand = bool(random.getrandbits(1))
+    if rand:
+        rand = 0
+    else:
+        rand = 1
     if x == "bool":
         return dog_bool[rand]
     elif x == "gend":
@@ -742,10 +745,10 @@ def get_note():
 
 def bulk_add_dogs():
     for name in dog_names:
-
+        _id = str(uuid.uuid4())
         dogs.insert_one(
             {
-            "_id": str(uuid.uuid4()),
+            "_id": _id,
             "dog_name": name,
             "thumbnail": get_thumbnail(),
             "breed": get_breed(),
@@ -766,3 +769,19 @@ def bulk_add_dogs():
             "notes": get_note()
             }
         )
+        dog = dogs.find({
+        "_id": _id
+        })
+
+        for dog in dog:
+            name = dog['dog_name']
+            gender = dog['gender']
+            if gender == "male":
+                gender = "He"
+            else:
+                gneder = "She"
+            breed = dog['breed']
+            age = dog['age']
+            print("Added {} to the DB. {} is a {} year old {}.".format(name, gender, age, breed))
+
+bulk_add_dogs()
