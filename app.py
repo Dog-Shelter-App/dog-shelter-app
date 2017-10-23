@@ -440,7 +440,7 @@ class UpdateDogHandler(TemplateHandler):
         ears= self.get_body_argument('ears').lower()
         eyes= self.get_body_argument('eyes').lower()
         notes= self.get_body_argument('notes')
-        dogs.update_one({"_id":_id}, {'$set': {'dog_name':dog_name}})
+        dogs.update_one({"_id":_id}, {'$set': {'dog_name':dog_name, 'age':age, 'breed':breed, 'id_chip':id_chip, 'location_found':location_found, 'collar':collar, 'collar_color':collar_color, 'height':height, 'weight':weight,'prim_color':prim_color, 'sec_color':sec_color, 'eyes':eyes, 'ears':ears, 'notes':notes }})
 
         self.redirect('/dogs/' + _id)
 class DeleteDogHandler(TemplateHandler):
