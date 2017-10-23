@@ -1,3 +1,8 @@
+// user type
+
+// monitor user_type input value
+
+
 // Dog Form Logic
 
 $('#formCarousel').on('slid.bs.carousel', function (ev) {

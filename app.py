@@ -259,8 +259,9 @@ class LogOutHandler(BaseHandler, tornado.auth.GoogleOAuth2Mixin):
 
 class GAuthLoginHandler(BaseHandler, tornado.auth.GoogleOAuth2Mixin):
     @tornado.gen.coroutine
-    def get(self):
-        user_type = self.get_body_argument("user_type")
+    def post(self):
+        user_type = self.get_body_argument("user_type", None)
+        print(user_type)
         # TRY: REMEMBER WHERE USER WANTED TO GO
         # request = self.request.headers.get("Referer")
         # question = request.find('=')

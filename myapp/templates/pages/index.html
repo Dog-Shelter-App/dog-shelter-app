@@ -21,14 +21,7 @@
         <label for="owner" class="radio-label">Login As Owner</label>
 
     <input class="form-check-input radio-button" type="radio" name="user_type" id="shelter" value="shelter"><label for="shelter" class="radio-label">Login As Shelter</label>
-    <div id="shelterlist">
-      <select name="shelters" class="form-control form-control-sm">
-        <option value="shelters">Select A Shelter</option>
-        {% for shelter in shelters_list%}
-        <option>{{shelter.shelter_name}}</option>
-        {% endfor %}
-      </select>
-    </div>
+
 
       <button type="submit">Login</button>
         </form>
