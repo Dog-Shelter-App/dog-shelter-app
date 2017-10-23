@@ -412,12 +412,12 @@ class NewUserFormHandler(TemplateHandler):
             }
         )
         self.redirect("/")
-class EditPostHandler(TemplateHandler):
+class EditDogHandler(TemplateHandler):
     def get(self, slug):
         post = BlogPost.select().where(BlogPost.slug == slug).get()
         author = Author.select().where(Author.id == post.author_id).get()
         self.render_template("editblog.html", {'post': post, 'author': author})
-class EditDogHandler(TemplateHandler):
+class UpdateDogHandler(TemplateHandler):
     def post(self):
         title = self.get_body_argument('title')
         body = self.get_body_argument('body')
