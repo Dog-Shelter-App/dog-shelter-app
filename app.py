@@ -100,10 +100,16 @@ class MainHandler(TemplateHandler):
 class DogFormHandler(TemplateHandler):
     @tornado.web.authenticated
     def get(self):
-        self.set_header(
-          'Cache-Control',
-          'no-store, no-cache, must-revalidate, max-age=0')
-        self.render_template("/pages/dog-form.html", {})
+        user = users.find_one({
+        "email": self.current_user.decode('utf-8')
+        })
+        if user['user_type'] == "owner":
+            self.redirect('/dogs')
+        else:
+            self.set_header(
+              'Cache-Control',
+              'no-store, no-cache, must-revalidate, max-age=0')
+            self.render_template("/pages/dog-form.html", {})
     def post(self):
         # import io
         # from PIL import Image
@@ -149,6 +155,12 @@ class DogFormHandler(TemplateHandler):
         # print(image_64_encode)
         #
 
+        user = users.find_one({
+        "email": self.current_user.decode('utf-8')
+        })
+
+        user_email = user['email']
+
         # call add dog function from db opperations
         dogs.insert_one(
             {
@@ -171,7 +183,8 @@ class DogFormHandler(TemplateHandler):
             "ears": self.get_body_argument('ears').lower(),
             "eyes": self.get_body_argument('eyes').lower(),
             "notes": self.get_body_argument('notes'),
-            "delete": False
+            "delete": False,
+            "user_email": user_email
             }
         )
         self.redirect('/dogs')
@@ -204,19 +217,24 @@ class LoginHandler(TemplateHandler):
               'Cache-Control',
               'no-store, no-cache, must-revalidate, max-age=0')
             self.render_template("/pages/login.html", {"data": data, "reason": reason})
-
-
 class UserProfileHandler(TemplateHandler):
     @tornado.web.authenticated
     def get(self):
         user_email = self.current_user.decode('utf-8')
+        print("UserEmail: {}".format(user_email))
+        # print(user_email)
         user_data = users.find_one({
         "email": user_email
         })
+        if user_data['user_type'] == "owner":
+            shelter = False
+        else:
+            shelter = True
+        shelters_list = shelters.find({})
         self.set_header(
           'Cache-Control',
           'no-store, no-cache, must-revalidate, max-age=0')
-        self.render_template("/pages/profile.html", {"user": user_data})
+        self.render_template("/pages/profile.html", {"user": user_data, "shelter": shelter, "shelters_list": shelters_list})
 
     def post(self):
         given_name= self.get_body_argument("given_name", None)
@@ -225,15 +243,37 @@ class UserProfileHandler(TemplateHandler):
         phone= self.get_body_argument("phone", None)
         user_type = self.get_body_argument("user_type")
 
-        users.update_one({"email": email},
-        { "$set" :
-            {
-            "given_name": given_name,
-            "family_name": family_name,
-            "phone": phone,
-            "user_type": user_type
-            }
+        users.update_one({"email": email}, {'$set': {
+        "given_name": given_name,
+        "family_name": family_name,
+        "email": email,
+        "phone": phone,
+        "user_type": user_type
+        }})
+        self.redirect('/profile')
+
+class CompleteProfileHandler(TemplateHandler):
+    @tornado.web.authenticated
+    def get(self):
+        user_email = self.current_user.decode('utf-8')
+        print(user_email)
+        user_data = users.find_one({
+        "email": user_email
         })
+
+        self.set_header(
+          'Cache-Control',
+          'no-store, no-cache, must-revalidate, max-age=0')
+        self.render_template("/pages/complete-profile.html", {"user": user_data})
+
+    def post(self):
+        email = self.get_body_argument('email')
+        user_type = self.get_body_argument("user_type")
+        print("User Type: {}.".format(user_type))
+        users.update_one({"email": email}, {'$set': {
+        "user_type": user_type
+        }})
+
         self.redirect("/profile")
 
 class UsersHandler(TemplateHandler):
@@ -249,6 +289,8 @@ class LogOutHandler(BaseHandler, tornado.auth.GoogleOAuth2Mixin):
     def get(self):
         self.clear_cookie("user")
         self.redirect("/?login=false")
+
+users.remove({})
 
 class GAuthLoginHandler(BaseHandler, tornado.auth.GoogleOAuth2Mixin):
     @tornado.gen.coroutine
@@ -300,12 +342,16 @@ class GAuthLoginHandler(BaseHandler, tornado.auth.GoogleOAuth2Mixin):
             ###################################################################
             # If user does not exists by id in DB, create a user for them..
             # redirect to complete profile
+
             if users.find_one({"email": email}):
+                print("user exists")
                 current_user = users.find_one({"email": email})
-                print(current_user)
-                for user in current_user:
-                    print("current user {} {} has an email of {}.".format(current_user['given_name'], current_user['family_name'], current_user['email']))
-                    pass
+                print(current_user['email'])
+                self.set_secure_cookie('user', current_user['email'])
+                if current_user['user_type'] == "not_set":
+                    self.redirect('/complete-profile')
+                else:
+                    self.redirect('/profile')
             else:
                 users.insert_one(
                     {
@@ -313,12 +359,15 @@ class GAuthLoginHandler(BaseHandler, tornado.auth.GoogleOAuth2Mixin):
                     "given_name": given_name,
                     "family_name": family_name,
                     "email": email,
-                    "avatar": avatar
+                    "avatar": avatar,
+                    "user_type": "not_set"
                     }
                 )
-            self.set_secure_cookie('user', email)
+                self.set_secure_cookie('user', email)
+                self.redirect("/complete-profile")
+                print("added user to db")
+
             # set user type cookie
-            self.redirect("/profile")
 
 
 ##################################
@@ -331,7 +380,7 @@ class GAuthLoginHandler(BaseHandler, tornado.auth.GoogleOAuth2Mixin):
             return
         # cookie exists, forward user to site
         elif self.get_secure_cookie('user'):
-            self.redirect('/profile')
+            self.redirect('/complete-profile')
             return
         # no code, no cookie, try to log them in... via google oauth
         else:
@@ -341,7 +390,6 @@ class GAuthLoginHandler(BaseHandler, tornado.auth.GoogleOAuth2Mixin):
                 scope=['email'],
                 response_type='code',
                 extra_params={'approval_prompt': 'auto'})
-
 
 ##############################################################################
 class WebSocketHandler(tornado.websocket.WebSocketHandler):
@@ -478,6 +526,7 @@ class DeleteDogHandler(TemplateHandler):
         dogs.bulk_write(requests)
 
         self.render_template('pages/deleted.html', {"dogs_list":dogs_list, "date_found":date_found, "end_date":end_date})
+
 class make_app(tornado.web.Application):
     def __init__(self):
         handlers = [
@@ -485,6 +534,7 @@ class make_app(tornado.web.Application):
             (r"/login", LoginHandler),
             (r"/logout", LogOutHandler),
             (r"/login-google", GAuthLoginHandler),
+            (r"/complete-profile", CompleteProfileHandler),
             (r"/profile", UserProfileHandler),
             (r"/admin", UsersHandler),
             (r"/dogs/new-dog", DogFormHandler),

@@ -1,0 +1,36 @@
+{% extends 'base.html' %}
+
+{% block title %}Index{% endblock %}
+{% block head %}
+    {{ super() }}
+{% endblock %}
+{% block body %}
+<form class="" action="/complete-profile" method="post">
+  <h3>Please Complete Your Profile.</h3>
+  <p>If you are posting lost dogs as a shelter, or searching for your dog as an owner?</p>
+  <div class="form-group">
+    <label for="email" data-error="must enter valid email">email</label>
+    <input class="form-control"  type="email" name="email_visible" value="{{user.email}}" disabled>
+  </div>
+  <input class="form-control"  type="hidden" name="email" value="{{user.email}}">
+  <div class="form-group">
+    <p>user type: {{user.user_type}}</p>
+    <div class="">
+      <div class="d-inline-flex flex-wrap">
+        <div class="">
+          <input class="form-control"  class="form-check-input radio-button" type="radio" name="user_type" id="owner" value="owner" required>
+          <label for="owner" class="radio-label">Owner</label>
+        </div>
+        <div class="">
+          <input class="form-control"  class="form-check-input radio-button" type="radio" name="user_type" id="shelter" value="shelter" required>
+          <label for="shelter" class="radio-label">Shelter</label>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="form-group">
+    <button type="submit" class="btn btn-primary">Complete Profile</button>
+    <a href="/logout" role="button" class="btn btn-danger">Log Out</a>
+  </div>
+</form>
+{% endblock %}
