@@ -13,7 +13,11 @@
       <div class="col-md-4">
         <div class="dog-profile__nav-box sticky-scroll-box mt-5">
           <a href="/edit/{{dog._id}}" class="btn btn-outline-primary">Edit</a>
-          <a href="/delete/{{dog._id}}" class="btn btn-outline-danger">Delete</a>
+          <form action="/delete" method="get">
+            <input type="hidden" name="singledelete" value="{{dog._id}}">
+            <button class="btn btn-danger">Delete</button>
+          </form>
+
           <a href="/" class="btn btn-warning">That's my dog!</a>
           <br><br>
           <h5>Located At</h5>

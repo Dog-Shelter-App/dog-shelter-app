@@ -47,7 +47,6 @@ shelters = db.shelters_collection
 ################ document
 
 # AWS S3
-
 from settings import aws_s3_access_key, aws_s3_secret_access_key
 
 # import boto3
@@ -545,21 +544,35 @@ def datetimeconverter(n):
     #front end date input(n) is always formated {%Y}-{%m}-{%d}
     #converts to datetime object
         return datetime.strptime(n, '%Y-%m-%d')
-
 class DeleteDogHandler(TemplateHandler):
     def post(self):
+        # singledelete = self.get_body_argument('singledelete')
+        # print(singledelete)
+
         date_found = self.get_body_argument('date_found')
         end_date = self.get_body_argument('end_date')
-
         #convert to timeobject
         date_found_obj = datetimeconverter(date_found)
         end_date_obj = datetimeconverter(end_date)
+        requests = [UpdateMany({'date_found':{'$gte': date_found_obj, '$lt': end_date_obj}}, {'$set':{'delete':datetime.today()}})]
 
-        requests = [UpdateMany({'date_found':{'$gte': date_found_obj, '$lt': end_date_obj}}, {'$set':{'delete':True}})]
         dogs_list = dogs.find({'date_found':{'$gte': date_found_obj, '$lt': end_date_obj}})
         dogs.bulk_write(requests)
 
         self.render_template('pages/deleted.html', {"dogs_list":dogs_list, "date_found":date_found, "end_date":end_date})
+
+class ExportHandler(TemplateHandler):
+    def get(self):
+        import csv
+        myquery = dogs.find({'delete':True})
+
+        with open('some.csv', 'w') as outfile:
+            fields = ['_id','dog_name', 'age', 'breed', 'date_found', 'location_found', 'ears', 'eyes', 'gender','fix', 'notes', 'thumbnail', 'sec_color', 'prim_color', 'weight', 'height', 'id_chip', 'collar', 'collar_color', 'delete' ,'user']
+            writer = csv.DictWriter(outfile, fieldnames = fields)
+            writer.writeheader()
+            for x in myquery:
+                writer.writerow(x)
+        outfile.close()
 
 class make_app(tornado.web.Application):
     def __init__(self):
@@ -577,6 +590,7 @@ class make_app(tornado.web.Application):
             (r"/update", UpdateDogHandler),
             (r"/delete", DeleteDogHandler),
             (r"/querybar", QueryHandler),
+            (r"/export", ExportHandler),
             (r"/shelters", SheltersHandler),
             (r"/dogs/(.*)",DogProfileHandler),
             (
