@@ -1,190 +1,102 @@
 {% extends "base.html" %}
 
 {% block body %}
-<div class="profile">
-<!--
-####################
+<div class="profile container">
+  <div class="profileNav row">
+    <div class="col-lg-4">
+    <img class="card-img-top" src="{{dog.thumbnail}}" alt="lost-dog">
+    <a href="/edit/{{dog._id}}" class="btn btn-outline-primary">Edit</a>
+    <a href="/delete/{{dog._id}}" class="btn btn-outline-danger">Delete</a>
+    <a href="/" class="btn btn-warning">That's my dog!</a>
+    <br><br>
+    <h5>Located At</h5>
+    <p>Puppers And Turtles</p>
+    <p>3302 Canal St</p>
+    <p>Houston TX</p>
+    <p>713-757-8484</p>
+    <p>www.slowpuppers.com</p>
+    </div>
+  </div>
 
-Option One
+  <table class="table table-striped">
+    <tbody>
+      <tr>
+        <td>Name</td>
+        <td>{{dog.dog_name}}</td>
+      </tr>
+      <tr>
+        <td>Gender</td>
+        <td>{{dog.gender}}</td>
+      </tr>
+      <tr>
+        <td>Neutered/Spayed</td>
+        <td>{{dog.fix}}</td>
+      </tr>
+      <tr>
+        <td>Breed</td>
+        <td>{{dog.breed}}</td>
+      </tr>
+      <tr>
+        <td>Age</td>
+        <td>{{dog.age}}</td>
+      </tr>
+      <tr>
+        <td>Location Found</td>
+        <td>{{dog.location_found}}</td>
+      </tr>
+      <tr>
+        <td>Collar</td>
+        <td>{{dog.collar}}</td>
+      </tr>
+      <tr>
+        <td>Collar Color</td>
+        <td>{{dog.collar_color}}</td>
+      </tr>
+      <tr>
+        <td>ID CHIP</td>
+        <td>{{dog.id_chip}}</td>
+      </tr>
+      <tr>
+        <td>Height</td>
+        <td>{{dog.height}}</td>
+      </tr>
+      <tr>
+        <td>Weight</td>
+        <td>{{dog.weight}}</td>
+      </tr>
+      <tr>
+        <td>Primary Color</td>
+        <td>{{dog.prim_color}}</td>
+      </tr>
+      <tr>
+        <td>Secondary Color</td>
+        <td>{{dog.sec_color}}</td>
+      </tr>
+      <tr>
+        <td>Eyes</td>
+        <td>{{dog.eyes}}</td>
+      </tr>
+      <tr>
+        <td>Ears</td>
+        <td>{{dog.ears}}</td>
+      </tr>
+      <tr>
+        <td>Notes</td>
+        <td>{{dog.notes}}</td>
+      </tr>
+    </tbody>
+  </table>
 
-####################
--->
 <!-- <div class="container">
 {% for key, value in dog.items()%}
 <div class="row">
-  <div class="col-lg-6">
+  <div class="col-lg-4">
     <h5>{{key}}</h5>
   </div>
-  <div class="col-lg-6">
+  <div class="col-lg-4">
     <h5>{{value}}</h5>
   </div>
 </div>
 {% endfor %}
 </div> -->
-
-<!--
-####################
-
-Option Two
-
-####################
--->
-
-<div class="container">
-  <div class="edit-buttons">
-    <a href="/edit/{{dog._id}}" class="btn btn-outline-primary">Edit</a>
-    <a href="/delete/{{dog._id}}" class="btn btn-outline-danger">Delete</a>
-  </div>
-<div class="row">
-  <div class="col-lg-12">
-    <img class="card-img-top" src="{{dog.thumbnail}}" alt="lost-dog">
-  </div>
-</div>
-  <div class="row">
-    <div class="col-lg-6">
-      <h5>Name</h5>
-    </div>
-    <div class="col-lg-6">
-      <h5>{{dog.dog_name}}</h5>
-    </div>
-</div>
-
-<div class="row">
-  <div class="col-lg-6">
-    <h5>Gender</h5>
-  </div>
-  <div class="col-lg-6">
-    <h5>{{dog.gender}}</h5>
-  </div>
-</div>
-
-<div class="row">
-  <div class="col-lg-6">
-    <h5>Neutered/Spayed</h5>
-  </div>
-  <div class="col-lg-6">
-    <h5>{{dog.fix}}</h5>
-  </div>
-</div>
-
-<div class="row">
-  <div class="col-lg-6">
-    <h5>Breed</h5>
-  </div>
-  <div class="col-lg-6">
-    <h5>{{dog.breed}}</h5>
-  </div>
-</div>
-
-
-<div class="row">
-  <div class="col-lg-6">
-    <h5>Age</h5>
-  </div>
-  <div class="col-lg-6">
-    <h5>{{dog.age}}</h5>
-  </div>
-</div>
-
-<div class="row">
-  <div class="col-lg-6">
-    <h5>Location Found</h5>
-  </div>
-  <div class="col-lg-6">
-    <h5>{{dog.location_found}}</h5>
-  </div>
-</div>
-
-<div class="row">
-  <div class="col-lg-6">
-    <h5>Collar</h5>
-  </div>
-  <div class="col-lg-6">
-    <h5>{{dog.collar}}</h5>
-  </div>
-</div>
-
-<div class="row">
-  <div class="col-lg-6">
-    <h5>Collar Color</h5>
-  </div>
-  <div class="col-lg-6">
-    <h5>{{dog.collar_color}}</h5>
-  </div>
-</div>
-
-<div class="row">
-  <div class="col-lg-6">
-    <h5>ID Chip</h5>
-  </div>
-  <div class="col-lg-6">
-    <h5>{{dog.id_chip}}</h5>
-  </div>
-</div>
-
-<div class="row">
-  <div class="col-lg-6">
-    <h5>height</h5>
-  </div>
-  <div class="col-lg-6">
-    <h5>{{dog.height}}</h5>
-  </div>
-</div>
-
-<div class="row">
-  <div class="col-lg-6">
-    <h5>Weight</h5>
-  </div>
-  <div class="col-lg-6">
-    <h5>{{dog.weight}}</h5>
-  </div>
-</div>
-
-<div class="row">
-  <div class="col-lg-6">
-    <h5>Primary Color</h5>
-  </div>
-  <div class="col-lg-6">
-    <h5>{{dog.prim_color}}</h5>
-  </div>
-</div>
-
-<div class="row">
-  <div class="col-lg-6">
-    <h5>Secondary Color</h5>
-  </div>
-  <div class="col-lg-6">
-    <h5>{{dog.sec_color}}</h5>
-  </div>
-</div>
-
-<div class="row">
-  <div class="col-lg-6">
-    <h5>Eyes</h5>
-  </div>
-  <div class="col-lg-6">
-    <h5>{{dog.eyes}}</h5>
-  </div>
-</div>
-
-
-<div class="row">
-  <div class="col-lg-6">
-    <h5>Ears</h5>
-  </div>
-  <div class="col-lg-6">
-    <h5>{{dog.ears}}</h5>
-  </div>
-</div>
-
-<div class="row">
-  <div class="col-lg-6">
-    <h5>Notes</h5>
-  </div>
-  <div class="col-lg-6">
-    <h5>{{dog.notes}}</h5>
-  </div>
-</div>
-</div>
-</div>
 {% endblock %}

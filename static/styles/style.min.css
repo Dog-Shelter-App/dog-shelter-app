@@ -34,12 +34,13 @@ DOG FORM HTML PAGE
 }
 .profile{
   margin:auto;
-  width: 70%;
+  max-width: 60%;
 }
-.profile img{
-  max-width: 80vh;
+.profileNav{
+  position: fixed;
+  top:20;
+  left:0;
 }
-
 .upload {
   margin-right: 1em;
 }
