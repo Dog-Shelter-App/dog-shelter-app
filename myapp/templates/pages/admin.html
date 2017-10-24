@@ -9,11 +9,13 @@
 {% for user in users %}
 <div class="">
   <ul>
-    <li>{{user.given_name}}</li>
-    <li>{{user.family_name}}</li>
-    <li>{{user.email}}</li>
-    <li>{{user.phone}}</li>
-    <li>{{user._id}}</li>
+    <li>first name: {{user.given_name}}</li>
+    <li>last name: {{user.family_name}}</li>
+    <li>email: {{user.email}}</li>
+    <li>phone: {{user.phone}}</li>
+    <li>id: {{user._id}}</li>
+    <li>type: {{user.user_type}}</li>
+    <li>shelter: {{user.shelter}}</li>
     <img src="{{user.avatar}}" alt="" width="50" height="auto">
   </ul>
 
