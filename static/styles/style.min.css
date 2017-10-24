@@ -155,6 +155,10 @@ FORM
   margin: 1em;
 }
 
+.login-form {
+  background: white;
+}
+
 /********************************************************
 
 STYLING DOG FORM BUTTONS
@@ -173,11 +177,7 @@ input[type='radio'] {
   font-weight: bold;
   letter-spacing: 1px;
   text-transform: uppercase;
-  display: flex;
-  width: 100%;
-  height: 100%;
 	padding: .6rem;
-	/*opacity: .7;*/
 	transition: all .1s ease-in-out;
   border: 1px solid #ddd;
 }
@@ -213,7 +213,14 @@ BOOTSTRAP
   .jumbotron-paygap {
     height: 150px; }
   .jumbotron-paygap > h3 {
-    font-size: 15px; } }
+    font-size: 15px; }
+
+  }
+
+  .button-row a , button {
+    margin-right: 5px;
+  }
+
 
 /********************************************************
 
@@ -281,18 +288,42 @@ DOG profile
 .dog-profile__head {
   background: #34495e;
   padding: 3rem 2rem;
-  color: white;
+}
+
+.dog-profile__polaroid {
+  background: white;
+  padding: 10px;
+  border: 10px solid white;
+  transform: rotate(2deg);
+  transition: 300ms;
+}
+
+.dog-profile__name {
+  text-align: center;
+  color: black;
+  font-family: 'Bad Script', cursive;
 }
 
 .dog-profile__img-thumbnail {
   background: white;
-  border-radius: 100%;
   width: 250px;
   height: 275px;
-  border: 3px solid white;
   margin-bottom: 20px;
   background-size: cover;
   background-position: center;
+}
+
+.dog-profile__polaroid:hover {
+  box-shadow: 0px 0px 13px 13px rgba(2,2,2,.2);
+  cursor: zoom-in;
+}
+
+.dog-profile__top-details {
+  color: white;
+}
+
+.dog-profile__top-details p {
+  border-bottom: 1px solid #ddd;
 }
 
 .dog-profile__img-fullsize {

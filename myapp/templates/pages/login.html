@@ -9,14 +9,10 @@
 {% endblock %}
 {% block body %}
 <div class="login-page">
-  <div class="container d-flex align-items-center login-form-container">
+  <div class="container">
     <div class="row">
-      <div class="col-sm-12 col-md-4">
-        <div class="card login-form">
-          <h3>Find My Pup</h3>
-          <p>Please login to access our comprehensive database of lost animals.</p>
-          <a href="/login-google" class="btn-default">Login with Google</a>
-        </div>
+      <div class="col">
+        {% include 'components/login-form.html'%}
       </div>
       <div class="col-sm12 col-md-8">
 

@@ -772,7 +772,8 @@ def bulk_add_dogs():
             "collar_color": get_color(),
             "ears": get_ears(),
             "eyes": get_color(),
-            "notes": get_note()
+            "notes": get_note(),
+            "delete": False
             }
         )
         dog = dogs.find({
