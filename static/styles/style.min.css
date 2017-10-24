@@ -244,10 +244,17 @@ DOG LIST
 *******************************************************/
 
 .dog-card {
-  margin: 1rem;
-  max-width: 250px;
+  height: 400px;
+  width: 250px;
+  overflow: hidden;
+  margin: 0.5rem;
 }
-
+.card-img-top{
+  display: block;
+  margin: 0 auto;
+  width: 150%;
+  height: 300px;
+}
 @media (max-width: 450px) {
   .dog-card {
     max-width: 500px;

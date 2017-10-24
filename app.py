@@ -181,7 +181,7 @@ class DogFormHandler(TemplateHandler):
 class DogListHandler(TemplateHandler):
     @tornado.web.authenticated
     def get(self):
-        dogs_list = dogs.find({})
+        dogs_list = dogs.find({'delete':False})
         self.set_header(
           'Cache-Control',
           'no-store, no-cache, must-revalidate, max-age=0')
@@ -382,7 +382,7 @@ class QueryHandler(TemplateHandler):
         breed = self.get_body_argument("breed")
         gender = self.get_body_argument("gender")
 
-        dogs_list = dogs.find({"breed": breed, "gender":gender})
+        dogs_list = dogs.find({"breed": breed, "gender":gender, "delete":False})
 
         self.set_header(
           'Cache-Control',
