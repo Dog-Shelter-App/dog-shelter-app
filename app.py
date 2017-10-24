@@ -218,6 +218,24 @@ class UserProfileHandler(TemplateHandler):
           'no-store, no-cache, must-revalidate, max-age=0')
         self.render_template("/pages/profile.html", {"user": user_data})
 
+    def post(self):
+        given_name= self.get_body_argument("given_name", None)
+        family_name= self.get_body_argument("family_name", None)
+        email= self.get_body_argument("email")
+        phone= self.get_body_argument("phone", None)
+        user_type = self.get_body_argument("user_type")
+
+        users.update_one({"email": email},
+        { "$set" :
+            {
+            "given_name": given_name,
+            "family_name": family_name,
+            "phone": phone,
+            "user_type": user_type
+            }
+        })
+        self.redirect("/profile")
+
 class UsersHandler(TemplateHandler):
     def get(self):
         users_list = users.find({})
@@ -295,8 +313,7 @@ class GAuthLoginHandler(BaseHandler, tornado.auth.GoogleOAuth2Mixin):
                     "given_name": given_name,
                     "family_name": family_name,
                     "email": email,
-                    "avatar": avatar,
-                    "user_type": user_type
+                    "avatar": avatar
                     }
                 )
             self.set_secure_cookie('user', email)
