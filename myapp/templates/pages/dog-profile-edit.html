@@ -8,97 +8,99 @@
   <input type="hidden" name="_id" value="{{dog._id}}">
 
 
-  <div class="profile container">
-    <div class="profileNav row">
-      <div class="col-lg-4">
-      <img class="card-img-top" src="{{dog.thumbnail}}" alt="lost-dog">
-      <a href="/edit/{{dog._id}}" class="btn btn-outline-primary">Edit</a>
-      <a href="/delete/{{dog._id}}" class="btn btn-outline-danger">Delete</a>
-      <a href="/" class="btn btn-warning">That's my dog!</a>
-      <br><br>
-      <h5>Located At</h5>
-      <p>Puppers And Turtles</p>
-      <p>3302 Canal St</p>
-      <p>Houston TX</p>
-      <p>713-757-8484</p>
-      <p>www.slowpuppers.com</p>
+  <div class="profile container-fluid">
+    <div class="row">
+      <div class="col-md-4">
+        <div class="dog-profile__nav-box sticky-scroll-box mt-5">
+          <a href="/edit/{{dog._id}}" class="btn btn-outline-primary">Edit</a>
+          <a href="/delete/{{dog._id}}" class="btn btn-outline-danger">Delete</a>
+          <a href="/" class="btn btn-warning">That's my dog!</a>
+          <br><br>
+          <h5>Located At</h5>
+          <p>Puppers And Turtles</p>
+          <p>3302 Canal St</p>
+          <p>Houston TX</p>
+          <p>713-757-8484</p>
+          <p>www.slowpuppers.com</p>
+          <button type="submit" class="btn btn-primary">Submit Changes</button>
+          </div>
+        </div>
+        <div class="col-md-8">
+          <table class="table table-striped">
+            <tbody>
+              <tr>
+                <td>Name</td>
+                <td><input type="text" name="dog_name" value="{{dog.dog_name}}"></td>
+              </tr>
+              <tr>
+                <td>Gender</td>
+                <td>{{dog.gender}}</td>
+              </tr>
+              <tr>
+                <td>Neutered/Spayed</td>
+                <td>{{dog.fix}}</td>
+              </tr>
+              <tr>
+                <td>Breed</td>
+                <td>{% include "components/breed.html" %}</td>
+              </tr>
+              <tr>
+                <td>Age</td>
+                <td><input type="number" name="age" value="{{dog.age}}"></td>
+              </tr>
+              <tr>
+                <td>Location Found</td>
+                <td><input type="text" name="location_found" value="{{dog.location_found}}"></td>
+              </tr>
+              <tr>
+                <td>Collar</td>
+                <td><input type="text" name="collar" value="{{dog.collar}}"></td>
+              </tr>
+              <tr>
+                <td>Collar Color</td>
+                <td><input type="text" name="collar_color" value="{{dog.collar_color}}"></td>
+              </tr>
+              <tr>
+                <td>ID CHIP</td>
+                <td><input type="text" name="id_chip" value="{{dog.id_chip}}"></td>
+              </tr>
+              <tr>
+                <td>Height</td>
+                <td><input type="number" name="height" value="{{dog.height}}"></td>
+              </tr>
+              <tr>
+                <td>Weight</td>
+                <td><input type="number" name="weight" value="{{dog.weight}}"></td>
+              </tr>
+              <tr>
+                <td>Primary Color</td>
+                <td><input type="text" name="prim_color" value="{{dog.prim_color}}"></td>
+              </tr>
+              <tr>
+                <td>Secondary Color</td>
+                <td><input type="text" name="sec_color" value="{{dog.sec_color}}"></td>
+              </tr>
+              <tr>
+                <td>Eyes</td>
+                <td><input type="text" name="eyes" value="{{dog.eyes}}"></td>
+              </tr>
+              <tr>
+                <td>Ears</td>
+                <td>  <select name="ears" id="ears">
+                    <option value="stand-up" >Stand-up</option>
+                    <option val="ID"value="cropped">Cropped</option>
+                    <option value="folded">Folded</option>
+                  </select></td>
+              </tr>
+              <tr>
+                <td>Notes</td>
+                <td><textarea type="text" name="notes"rows="4">{{dog.notes}}</textarea></td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
       </div>
-    </div>
 
-    <table class="table table-striped">
-      <tbody>
-        <tr>
-          <td>Name</td>
-          <td><input type="text" name="dog_name" value="{{dog.dog_name}}"></td>
-        </tr>
-        <tr>
-          <td>Gender</td>
-          <td>{{dog.gender}}</td>
-        </tr>
-        <tr>
-          <td>Neutered/Spayed</td>
-          <td>{{dog.fix}}</td>
-        </tr>
-        <tr>
-          <td>Breed</td>
-          <td>{% include "components/breed.html" %}</td>
-        </tr>
-        <tr>
-          <td>Age</td>
-          <td><input type="number" name="age" value="{{dog.age}}"></td>
-        </tr>
-        <tr>
-          <td>Location Found</td>
-          <td><input type="text" name="location_found" value="{{dog.location_found}}"></td>
-        </tr>
-        <tr>
-          <td>Collar</td>
-          <td><input type="text" name="collar" value="{{dog.collar}}"></td>
-        </tr>
-        <tr>
-          <td>Collar Color</td>
-          <td><input type="text" name="collar_color" value="{{dog.collar_color}}"></td>
-        </tr>
-        <tr>
-          <td>ID CHIP</td>
-          <td><input type="text" name="id_chip" value="{{dog.id_chip}}"></td>
-        </tr>
-        <tr>
-          <td>Height</td>
-          <td><input type="number" name="height" value="{{dog.height}}"></td>
-        </tr>
-        <tr>
-          <td>Weight</td>
-          <td><input type="number" name="weight" value="{{dog.weight}}"></td>
-        </tr>
-        <tr>
-          <td>Primary Color</td>
-          <td><input type="text" name="prim_color" value="{{dog.prim_color}}"></td>
-        </tr>
-        <tr>
-          <td>Secondary Color</td>
-          <td><input type="text" name="sec_color" value="{{dog.sec_color}}"></td>
-        </tr>
-        <tr>
-          <td>Eyes</td>
-          <td><input type="text" name="eyes" value="{{dog.eyes}}"></td>
-        </tr>
-        <tr>
-          <td>Ears</td>
-          <td>  <select name="ears" id="ears">
-              <option value="stand-up" >Stand-up</option>
-              <option val="ID"value="cropped">Cropped</option>
-              <option value="folded">Folded</option>
-            </select></td>
-        </tr>
-        <tr>
-          <td>Notes</td>
-          <td><textarea type="text" name="notes"rows="4">{{dog.notes}}</textarea></td>
-        </tr>
-      </tbody>
-    </table>
-
-    <button type="submit" class="btn btn-primary">Submit Changes</button>
 </div>
 </form>
 

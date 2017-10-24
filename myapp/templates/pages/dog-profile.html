@@ -1,91 +1,129 @@
 {% extends "base.html" %}
 
 {% block body %}
-<div class="profile container">
-  <div class="profileNav row">
-    <div class="col-lg-4">
-    <img class="card-img-top" src="{{dog.thumbnail}}" alt="lost-dog">
-    <a href="/edit/{{dog._id}}" class="btn btn-outline-primary">Edit</a>
-    <a href="/delete/{{dog._id}}" class="btn btn-outline-danger">Delete</a>
-    <a href="/" class="btn btn-warning">That's my dog!</a>
-    <br><br>
-    <h5>Located At</h5>
-    <p>Puppers And Turtles</p>
-    <p>3302 Canal St</p>
-    <p>Houston TX</p>
-    <p>713-757-8484</p>
-    <p>www.slowpuppers.com</p>
+<div class="dog-profile__head container-fluid">
+  <div class="d-flex justify-content-center align-items-center">
+    <div class="dog-profile__card d-flex flex-column justify-content-center align-items-center">
+      <div style="background-image:url('{{dog.thumbnail}}');'" class="dog-profile__img-thumbnail" data-toggle="modal" data-target="#dogImageFullSize"></div>
+      <h1>{{dog.dog_name}}</h1>
+      <h3>{{dog.breed}}</h3>
     </div>
   </div>
+</div>
+<!-- Modal -->
+<div class="modal fade bd-example-modal-lg" id="dogImageFullSize" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">{{dog.dog_name}}</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <img src="{{dog.thumbnail}}" alt="" class="dog-profile__img-fullsize">
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+        <a href="/" class="btn btn-warning">That's my dog!</a>
+      </div>
+    </div>
+  </div>
+</div>
+<div class="container">
+  <div class="row">
+    <div class="col-sm12 col-md-4">
+      <div class="dog-profile__nav-box sticky-scroll-box mt-5">
+        <a href="/edit/{{dog._id}}" class="btn btn-outline-primary">Edit</a>
+        <a href="/delete/{{dog._id}}" class="btn btn-outline-danger">Delete</a>
+        <a href="/" class="btn btn-warning">That's my dog!</a>
+        <br><br>
+        <h5>Located At</h5>
+        <p>Puppers And Turtles</p>
+        <p>3302 Canal St</p>
+        <p>Houston TX</p>
+        <p>713-757-8484</p>
+        <p>www.slowpuppers.com</p>
+        </div>
+      </div>
+    <div class="col-sm-12 col-md-8">
+      <table class="table table-striped mt-5">
+        <tbody>
+          <tr>
+            <td>Name</td>
+            <td>{{dog.dog_name}}</td>
+          </tr>
+          <tr>
+            <td>Gender</td>
+            <td>{{dog.gender}}</td>
+          </tr>
+          <tr>
+            <td>Neutered/Spayed</td>
+            <td>{{dog.fix}}</td>
+          </tr>
+          <tr>
+            <td>Breed</td>
+            <td>{{dog.breed}}</td>
+          </tr>
+          <tr>
+            <td>Age</td>
+            <td>{{dog.age}}</td>
+          </tr>
+          <tr>
+            <td>Location Found</td>
+            <td>{{dog.location_found}}</td>
+          </tr>
+          <tr>
+            <td>Collar</td>
+            <td>{{dog.collar}}</td>
+          </tr>
+          <tr>
+            <td>Collar Color</td>
+            <td>{{dog.collar_color}}</td>
+          </tr>
+          <tr>
+            <td>ID CHIP</td>
+            <td>{{dog.id_chip}}</td>
+          </tr>
+          <tr>
+            <td>Height</td>
+            <td>{{dog.height}}</td>
+          </tr>
+          <tr>
+            <td>Weight</td>
+            <td>{{dog.weight}}</td>
+          </tr>
+          <tr>
+            <td>Primary Color</td>
+            <td>{{dog.prim_color}}</td>
+          </tr>
+          <tr>
+            <td>Secondary Color</td>
+            <td>{{dog.sec_color}}</td>
+          </tr>
+          <tr>
+            <td>Eyes</td>
+            <td>{{dog.eyes}}</td>
+          </tr>
+          <tr>
+            <td>Ears</td>
+            <td>{{dog.ears}}</td>
+          </tr>
+          <tr>
+            <td>Notes</td>
+            <td>{{dog.notes}}</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</div>
 
-  <table class="table table-striped">
-    <tbody>
-      <tr>
-        <td>Name</td>
-        <td>{{dog.dog_name}}</td>
-      </tr>
-      <tr>
-        <td>Gender</td>
-        <td>{{dog.gender}}</td>
-      </tr>
-      <tr>
-        <td>Neutered/Spayed</td>
-        <td>{{dog.fix}}</td>
-      </tr>
-      <tr>
-        <td>Breed</td>
-        <td>{{dog.breed}}</td>
-      </tr>
-      <tr>
-        <td>Age</td>
-        <td>{{dog.age}}</td>
-      </tr>
-      <tr>
-        <td>Location Found</td>
-        <td>{{dog.location_found}}</td>
-      </tr>
-      <tr>
-        <td>Collar</td>
-        <td>{{dog.collar}}</td>
-      </tr>
-      <tr>
-        <td>Collar Color</td>
-        <td>{{dog.collar_color}}</td>
-      </tr>
-      <tr>
-        <td>ID CHIP</td>
-        <td>{{dog.id_chip}}</td>
-      </tr>
-      <tr>
-        <td>Height</td>
-        <td>{{dog.height}}</td>
-      </tr>
-      <tr>
-        <td>Weight</td>
-        <td>{{dog.weight}}</td>
-      </tr>
-      <tr>
-        <td>Primary Color</td>
-        <td>{{dog.prim_color}}</td>
-      </tr>
-      <tr>
-        <td>Secondary Color</td>
-        <td>{{dog.sec_color}}</td>
-      </tr>
-      <tr>
-        <td>Eyes</td>
-        <td>{{dog.eyes}}</td>
-      </tr>
-      <tr>
-        <td>Ears</td>
-        <td>{{dog.ears}}</td>
-      </tr>
-      <tr>
-        <td>Notes</td>
-        <td>{{dog.notes}}</td>
-      </tr>
-    </tbody>
-  </table>
+
+<div class="profile container">
+
+
+
 
 <!-- <div class="container">
 {% for key, value in dog.items()%}
