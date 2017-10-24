@@ -481,7 +481,6 @@ class QueryHandler(TemplateHandler):
                  {"age": age},
                  {"dog_name": name} 
             ]})
-        print(dogs_list)
 
         self.set_header(
           'Cache-Control',
