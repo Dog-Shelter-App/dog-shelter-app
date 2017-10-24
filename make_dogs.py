@@ -1,5 +1,5 @@
 import random as random
-
+from datetime import datetime
 # pull creds
 from settings import mongo_url
 # import driver
@@ -22,14 +22,14 @@ dogs = db.dogs_collection
 breeds = db.breeds_colletion
 
 dog_names = [
-    "Bella",
+    "Jason",
     "Lucy",
     "Daisy"
-    "Lola",
-    "Luna",
+    "Paul",
+    "Monis",
     "Molly",
-    "Sadie",
-    "Sophie",
+    "Lora",
+    "Justin",
     "Bailey",
     "Maggie",
     "Chloe",
@@ -43,12 +43,12 @@ dog_names = [
     "Ruby",
     "Mia",
     "Zoe",
-    "Ellie",
+    "Greg",
     "Nala",
     "Rosie",
     "Ginger",
     "Abby",
-    "Lilly",
+    "Josh",
     "Piper",
     "Sasha",
     "Riley",
@@ -73,7 +73,7 @@ dog_names = [
     "Honey",
     "Kona",
     "Charlie",
-    "Willow",
+    "Manny",
     "Marley",
     "Roxie",
     "Cookie",
@@ -95,10 +95,10 @@ dog_names = [
     "Ava",
     "Penelope",
     "Sandy",
-    "Trixie",
+    "Ahmer",
     "Gigi",
     "Fiona",
-    "Sydney",
+    "Chance",
     "Josie",
     "Cleo",
     "Mocha",
@@ -121,11 +121,12 @@ dog_names = [
     "Cocoa",
     "Nova",
     "Charlotte",
-    "Xena"
+    "Puppers"
 ]
 
 dog_breeds = [
   "Affenpinscher",
+  "Mixed",
   "Afghan Hound",
   "Afghan Shepherd",
   "Aidi",
@@ -663,7 +664,6 @@ dog_thumbnails = [
     "/static/img/sample_dogs/pexels-photo-356378.jpeg",
     "/static/img/sample_dogs/scroll000.jpg",
     "/static/img/sample_dogs/scroll0011.jpg",
-    "/static/img/sample_dogs/stock-photo-beagle-dog-in-front-of-a-white-background-76764031.jpg",
     "/static/img/sample_dogs/thul-571a0332-3d53-51bc-8189-e2a4771f3470.jpg",
     "/static/img/sample_dogs/wildlife-photography-pet-photography-dog-animal-159541.jpeg"
 ]
@@ -711,11 +711,17 @@ def get_color():
 def get_age():
     return random.randrange(0,15)
 
+def datetimeconverter(n):
+    #front end date input(n) is always formated {%Y}-{%m}-{%d}
+    #converts to datetime object
+    return datetime.strptime(n, '%Y-%m-%d')
+
 def get_date():
     day = random.randrange(1,31)
     month = random.randrange(1,12)
-    year = random.randrange(1,2017)
-    return "{}/{}/{}".format(month,day,year)
+    year = random.randrange(2016,2017)
+    date = "{}-{}-{}".format(year,month,day)
+    return datetimeconverter(date)
 
 def get_height_weight():
     return random.randrange(5,69)

@@ -1,7 +1,7 @@
 
 ###############################################################################
 import os
-import datetime
+from datetime import datetime
 import json
 # Needed to run server, event loop and basic server logging
 import tornado.ioloop
@@ -39,9 +39,6 @@ collection = db.test_collection
 users = db.user_collection
 dogs = db.dogs_collection
 shelters = db.shelters_collection
-
-
-
 ##########################
 #### cluster
 ######## database
@@ -134,6 +131,7 @@ class DogFormHandler(TemplateHandler):
     def post(self):
         # import io
         # from PIL import Image
+
         file_all = self.request.files['my_File'][0]
         file_name = file_all['filename']
         file_body = file_all['body']
@@ -184,7 +182,7 @@ class DogFormHandler(TemplateHandler):
             "breed": self.get_body_argument('breed').lower(),
             "id_chip": self.get_body_argument('id_chip'),
             "age": self.get_body_argument('age'),
-            "date_found": self.get_body_argument('date_found'),
+            "date_found":datetimeconverter( self.get_body_argument('date_found')),
             "location_found": self.get_body_argument('location_found'),
             "prim_color": self.get_body_argument('prim_color').lower(),
             "sec_color": self.get_body_argument('sec_color').lower(),
@@ -196,7 +194,8 @@ class DogFormHandler(TemplateHandler):
             "collar_color": self.get_body_argument('collar_color').lower(),
             "ears": self.get_body_argument('ears').lower(),
             "eyes": self.get_body_argument('eyes').lower(),
-            "notes": self.get_body_argument('notes')
+            "notes": self.get_body_argument('notes'),
+            "delete": False
             }
         )
         self.redirect('/dogs')
@@ -463,9 +462,20 @@ class UpdateDogHandler(TemplateHandler):
         dogs.update_one({"_id":_id}, {'$set': {'dog_name':dog_name, 'age':age, 'breed':breed, 'id_chip':id_chip, 'location_found':location_found, 'collar':collar, 'collar_color':collar_color, 'height':height, 'weight':weight,'prim_color':prim_color, 'sec_color':sec_color, 'eyes':eyes, 'ears':ears, 'notes':notes }})
 
         self.redirect('/dogs/' + _id)
+def datetimeconverter(n):
+    #front end date input(n) is always formated {%Y}-{%m}-{%d}
+    #converts to datetime object
+        return datetime.strptime(n, '%Y-%m-%d')
+
 class DeleteDogHandler(TemplateHandler):
-    def get():
-        self.redirect('/')
+    def post(self):
+        date_found = self.get_body_argument('date_found')
+        end_date = self.get_body_argument('end_date')
+        print(date_found)
+        dogs_list = dogs.find({'date_found':{'$gte': date_found, '$lt': end_date}}).count()
+        print(dogs_list)
+
+        # self.redirect('/')
 class make_app(tornado.web.Application):
     def __init__(self):
         handlers = [
@@ -477,7 +487,7 @@ class make_app(tornado.web.Application):
             (r"/dogs", DogListHandler),
             (r"/edit/(.*)",EditDogHandler),
             (r"/update", UpdateDogHandler),
-            (r"/delete/(.*)", DeleteDogHandler),
+            (r"/delete", DeleteDogHandler),
             (r"/querybar", QueryHandler),
             (r"/shelters/new-user", NewUserFormHandler),
             (r"/dogs/(.*)",DogProfileHandler),

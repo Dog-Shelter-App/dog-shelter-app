@@ -61,9 +61,12 @@ $(document).ready(function () {
 //Prefills the date
 var d = new Date();
 var n = d.toLocaleDateString();
+
 var dateInput = document.getElementById('date_found');
 dateInput.value = n;
 
+var dateInputdelete = document.getElementById('end_date');
+dateInputdelete.value = n;
 //DOG-FORM Button trigger if COLLAR_YES
 $('#collar_color').hide();
 $('#collarYes').click(function(event){
