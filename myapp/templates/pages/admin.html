@@ -1,0 +1,27 @@
+{% extends 'base.html' %}
+
+{% block title %}Index{% endblock %}
+{% block head %}
+    {{ super() }}
+{% endblock %}
+{% block body %}
+
+{% for user in users %}
+<div class="">
+  <ul>
+    <li>{{user.given_name}}</li>
+    <li>{{user.family_name}}</li>
+    <li>{{user.email}}</li>
+    <li>{{user.phone}}</li>
+    <li>{{user._id}}</li>
+    <img src="{{user.avatar}}" alt="" width="50" height="auto">
+  </ul>
+
+</div>
+
+
+
+{% endfor %}
+
+
+{% endblock %}

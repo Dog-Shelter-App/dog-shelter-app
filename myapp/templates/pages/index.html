@@ -16,13 +16,7 @@
           <p>Welcome</p>
           <a href="/dogs/new-dog" class="btn btn-outline-secondary btn-lg">Report a lost dog</a>
         {% else %}
-        <form action="/login-google">
-          <input class="form-check-input radio-button" type="radio" name="user_type" id="owner" value="owner" required>
-          <label for="owner" class="radio-label">Login As Owner</label>
-          <input class="form-check-input radio-button" type="radio" name="user_type" id="shelter" value="shelter" required>
-          <label for="shelter" class="radio-label">Login As Shelter</label>
-          <button type="submit" class="btn btn-outline-dark btn-lg"><i class=""></i>Login with Google</button>
-        </form>
+          {% include 'components/login-form.html'%}
         {% endif %}
       </div>
     </div>
