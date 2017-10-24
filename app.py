@@ -467,24 +467,20 @@ class DogProfileHandler(TemplateHandler):
 
 class QueryHandler(TemplateHandler):
     def post(self):
-        breed = self.get_body_argument("breed")
-        gender = self.get_body_argument("gender")
+        breed = self.get_body_argument("breed", None)
+        gender = self.get_body_argument("gender", None)
+        color = self.get_body_argument("color", None)
+        age = self.get_body_argument("age", None)
+        name = self.get_body_argument("name", None)
 
-        dogs_list = dogs.find({"breed": breed, "gender":gender, "delete":False})
-
+        dogs_list = dogs.find({"breed": breed, "gender": gender, "color": color, "age": age, "name": name})
+        print(dogs_list)
+        
         self.set_header(
           'Cache-Control',
           'no-store, no-cache, must-revalidate, max-age=0')
-        self.render_template("/pages/dog-list-results.html", {'dogs_list': dogs_list, 'breed':breed, 'gender': gender})
-# shelters.remove({})
-# shelters.insert_one(
-#     {
-#     "name": "Kevin's Place",
-#     "email":"kmeinhardt8@gmail.com",
-#     "phone": "1234567890",
-#     "address": "123 Fake Street"
-#     }
-# )
+        self.render_template("/pages/dog-list-results.html", {'dogs_list': dogs_list, 'breed':breed, 'gender': gender, "color": color, "age": age, "name": name})
+
 
 
 #################################################################################################################

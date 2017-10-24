@@ -86,6 +86,16 @@ $(window).on('scroll', function () {
 //////////////////////////
 //END JULIE
 
+//////////////////// Soft Query for Age and Name //////////////////////////
+// $(document).ready(function () {
+//   $("#age_list").hide();
+//   $('/querybar').load()
+
+
+
+// }
+
+//////////////////// End Soft Query ///////////////////////////////////////
 
 
 //define what we have ws = connection form = the form we use messageInput = where we input data

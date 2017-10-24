@@ -1,0 +1,8 @@
+<label for="name">Name</label>
+    <input id="name_list" list="name" name="name" class="form-control">
+    <datalist id="name">
+      {% for dog in dogs_list %}"
+      <option value="{{ dog.dog_name }}">
+      {% endfor %}
+    </datalist>
+
