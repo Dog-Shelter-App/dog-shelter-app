@@ -32,30 +32,25 @@
         </div>
         <div class="form-group">
           <p>user type: {{user.user_type}}</p>
-          <div class="">
-            <div class="d-inline-flex flex-wrap">
-              <div class="">
-                <input class="form-control"  class="form-check-input radio-button" type="radio" name="user_type" id="owner" value="owner" required>
-                <label for="owner" class="radio-label">Owner</label>
-              </div>
-              <div class="">
-                <input class="form-control"  class="form-check-input radio-button" type="radio" name="user_type" id="shelter" value="shelter" required>
-                <label for="shelter" class="radio-label">Shelter</label>
-              </div>
+          <div class="d-inline-flex flex-wrap">
+            <div class="">
+              <input class="form-control"  class="form-check-input radio-button" type="radio" name="user_type" id="owner" value="owner" required>
+              <label for="owner" class="radio-label">Owner</label>
+            </div>
+            <div class="">
+              <input class="form-control"  class="form-check-input radio-button" type="radio" name="user_type" id="shelter" value="shelter" required>
+              <label for="shelter" class="radio-label">Shelter</label>
             </div>
           </div>
         </div>
         <div class="form-group">
           {% if shelter %}
-            <form class="" action="index.html" method="post">
-              <select name="shelter">
-                {% for shelter in shelters %}
-                <option value="{{shelter.name}}">{{shelter.name}}</option>
-                {% endfor %}
-              </select>
-            </form>
-            {% include 'components/shelter-form.html'%}
-
+            <p>User Shelter: {{user.user_shelter}}</p>
+            <select name="shelter">
+              {% for shelter in shelters_list %}
+              <option value="{{shelter._uid}}">{{shelter.name}}</option>
+              {% endfor %}
+            </select>
           {% else %}
             <p>NO SHELTER FOR YOU!</p>
 
@@ -66,6 +61,10 @@
           <a class="btn btn-danger" href="/logout" role="button">Logout</a>
         </div>
       </form>
+      {% if shelter %}
+        {% include 'components/shelter-form.html'%}
+      {% else %}
+      {% endif %}
   </div>
 </div>
 {% endblock%}

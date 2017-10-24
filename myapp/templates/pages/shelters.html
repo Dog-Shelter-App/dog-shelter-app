@@ -1,0 +1,22 @@
+{% extends 'base.html' %}
+
+{% block title %}Index{% endblock %}
+{% block head %}
+    {{ super() }}
+{% endblock %}
+{% block body %}
+
+{% for shelter in shelters_list %}
+<div class="">
+  <ul>
+    <li>{{shelter.name}}</li>
+  </ul>
+
+</div>
+
+
+
+{% endfor %}
+
+
+{% endblock %}

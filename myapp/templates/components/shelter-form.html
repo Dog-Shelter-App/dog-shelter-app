@@ -6,7 +6,7 @@
 <div class="modal fade" id="shelterModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
   <div class="modal-dialog" role="document">
     <div class="modal-content">
-      <form class="" action="/add-shelter" method="post">
+
         <div class="modal-header">
           <h5 class="modal-title" id="exampleModalLabel">Add New Shelter</h5>
           <button type="button" class="close" data-dismiss="modal" aria-label="Close">
@@ -14,20 +14,22 @@
           </button>
         </div>
         <div class="modal-body">
+          <form class="" action="/shelters" method="post">
             <label for="shelter_name">Shelter Name</label><br>
-            <input class="form-control"  type="text" name="shelter_name" value=""><br>
+            <input class="form-control"  type="text" name="name" value=""><br>
             <label for="email">Email</label><br>
             <input class="form-control"  type="email" name="email" value=""><br>
             <label for="phone_number">Phone Number</label><br>
-            <input class="form-control"  type="text" name="phone_number" value=""><br>
+            <input class="form-control"  type="text" name="phone" value=""><br>
             <label for="address">Address</label><br>
             <input class="form-control"  type="text" name="address" value="">
+            <button type="submit" class="btn btn-primary">Add Shelter</button>
+          </form>
         </div>
         <div class="modal-footer">
           <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-          <a role="button" class="btn btn-primary" href="/add-shelter">Add Shelter</a>
         </div>
-      </form>
+
     </div>
   </div>
 </div>
