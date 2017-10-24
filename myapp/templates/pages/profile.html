@@ -14,11 +14,11 @@
     <form class="" action="/profile" method="post">
       <h4>{{header}}</h4>
         <div class="input-field">
-          <input type="text" name="first_name" value="{{user.first_name}}" autofocus="">
+          <input type="text" name="first_name" value="{{user.given_name}}" autofocus="">
           <label for="first_name" data-error="must enter valid email">first name</label>
         </div>
         <div class="input-field">
-          <input type="text" name="last_name" value="{{user.last_name}}">
+          <input type="text" name="last_name" value="{{user.family_name}}">
           <label for="last_name" data-error="must enter valid email">last name</label>
         </div>
         <div class="input-field">
@@ -30,9 +30,23 @@
           <input type="number" name="phone" value="{{user.phone}}">
           <label for="phone" data-error="must enter valid phone number">phone</label>
         </div>
+        <div class="form-group">
+          <p>user type: {{user.user_type}}</p>
+          <div class="">
+            <div class="d-inline-flex flex-wrap">
+              <div class="">
+                <input class="form-check-input radio-button" type="radio" name="user_type" id="owner" value="owner" required>
+                <label for="owner" class="radio-label">Owner</label>
+              </div>
+              <div class="">
+                <input class="form-check-input radio-button" type="radio" name="user_type" id="shelter" value="shelter" required>
+                <label for="shelter" class="radio-label">Shelter</label>
+              </div>
+            </div>
+          </div>
+        </div>
         <div class="input-field">
           <button type="submit" class="waves-effect waves-light btn"><i class="material-icons left">cloud</i>Update Profile</button>
-
         </div>
       </form>
     {% endif %}

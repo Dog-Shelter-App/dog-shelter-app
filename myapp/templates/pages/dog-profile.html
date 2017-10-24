@@ -1,12 +1,22 @@
 {% extends "base.html" %}
-
+{% block head %}
+    {{ super() }}
+    <link href="https://fonts.googleapis.com/css?family=Bad+Script" rel="stylesheet">
+{% endblock %}
 {% block body %}
 <div class="dog-profile__head container-fluid">
-  <div class="d-flex justify-content-center align-items-center">
+  <div class="d-flex justify-content-center flex-wrap align-items-center">
     <div class="dog-profile__card d-flex flex-column justify-content-center align-items-center">
-      <div style="background-image:url('{{dog.thumbnail}}');'" class="dog-profile__img-thumbnail" data-toggle="modal" data-target="#dogImageFullSize"></div>
-      <h1>{{dog.dog_name}}</h1>
-      <h3>{{dog.breed}}</h3>
+      <div class="dog-profile__polaroid">
+        <div style="background-image:url('{{dog.thumbnail}}');'" class="dog-profile__img-thumbnail" data-toggle="modal" data-target="#dogImageFullSize"></div>
+        <div class="dog-profile__name"><h1>{{dog.dog_name}}</h1></div>
+      </div>
+    </div>
+    <div class="dog-profile__top-details ml-5 mt-5">
+      <p>Age: {{dog.age}}</p>
+      <p>Breed: {{dog.breed}}</p>
+      <p>Location Found: {{dog.location}}</p>
+      <a href="/" class="btn btn-warning">That's My Dog</a>
     </div>
   </div>
 </div>
@@ -34,18 +44,25 @@
   <div class="row">
     <div class="col-sm12 col-md-4">
       <div class="dog-profile__nav-box sticky-scroll-box mt-5">
-        <a href="/edit/{{dog._id}}" class="btn btn-outline-primary">Edit</a>
-        <a href="/delete/{{dog._id}}" class="btn btn-outline-danger">Delete</a>
-        <a href="/" class="btn btn-warning">That's my dog!</a>
-        <br><br>
-        <h5>Located At</h5>
-        <p>Puppers And Turtles</p>
-        <p>3302 Canal St</p>
-        <p>Houston TX</p>
-        <p>713-757-8484</p>
-        <p>www.slowpuppers.com</p>
+        <div class="d-inline-flex button-row">
+          <a href="/dogs" class="btn btn-primary">Back to Dogs</a>
+          <a href="/" class="btn btn-warning">That's my dog!</a>
         </div>
+        <div class="pt-3">
+          <h5>Located At</h5>
+          <p>Puppers And Turtles</p>
+          <p>3302 Canal St</p>
+          <p>Houston TX</p>
+          <p>713-757-8484</p>
+          <p>www.slowpuppers.com</p>
+        </div>
+        <div class="d-inline-flex button-row">
+          <a href="/edit/{{dog._id}}" class="btn btn-outline-primary">Edit</a>
+          <a href="/delete/{{dog._id}}" class="btn btn-outline-danger">Delete</a>
+        </div>
+
       </div>
+    </div>
     <div class="col-sm-12 col-md-8">
       <table class="table table-striped mt-5">
         <tbody>
@@ -119,22 +136,4 @@
   </div>
 </div>
 
-
-<div class="profile container">
-
-
-
-
-<!-- <div class="container">
-{% for key, value in dog.items()%}
-<div class="row">
-  <div class="col-lg-4">
-    <h5>{{key}}</h5>
-  </div>
-  <div class="col-lg-4">
-    <h5>{{value}}</h5>
-  </div>
-</div>
-{% endfor %}
-</div> -->
 {% endblock %}

@@ -98,31 +98,6 @@ class MainHandler(TemplateHandler):
           'no-store, no-cache, must-revalidate, max-age=0')
         self.render_template("/pages/index.html", {"logged_in": logged_in})
 
-class SignupHandler(TemplateHandler):
-    def get(self):
-        self.set_header(
-          'Cache-Control',
-          'no-store, no-cache, must-revalidate, max-age=0')
-        self.render_template("pages/signup.html", {})
-    def post(self):
-        given_name = self.get_body_argument('given_name')
-        family_name = self.get_body_argument('family_name')
-        email = self.get_body_argument('email')
-        password = self.get_body_argument('password')
-        zip_code = self.get_body_argument("zip")
-        if User.select().where(User.email == email).count() == 0:
-            User.create(
-                first_name = given_name,
-                last_name = family_name,
-                email = email,
-                password = password,
-                zip = zip_code,
-                auth = "tornado"
-                )
-            self.redirect("/login")
-        else:
-            raise tornado.web.HTTPError(500,  "user already exists.")
-            self.redirect('/login?status=signup')
 
 class DogFormHandler(TemplateHandler):
     @tornado.web.authenticated
@@ -230,21 +205,27 @@ class LoginHandler(TemplateHandler):
               'no-store, no-cache, must-revalidate, max-age=0')
             self.render_template("/pages/login.html", {"data": data, "reason": reason})
 
-    def post(self):
-        email = self.get_argument('email')
-        password = self.get_argument('password')
-        if User.select().where(User.email == email).count() == 0:
-            print("no user found")
-            # raise tornado.web.HTTPError(404, 'No Account with that email address.')
-            self.redirect("/signup?user=null")
-        else:
-            user = User.select().where(User.email == email).get()
-        if user.password != password:
-            self.redirect('/login?status=fail')
-            raise tornado.web.HTTPError(403, "Incorrect username or password.")
-        else:
-            self.set_secure_cookie("user", email)
-        self.redirect('/profile')
+
+class UserProfileHandler(TemplateHandler):
+    @tornado.web.authenticated
+    def get(self):
+        user_email = self.current_user.decode('utf-8')
+        user_data = users.find_one({
+        "email": user_email
+        })
+        self.set_header(
+          'Cache-Control',
+          'no-store, no-cache, must-revalidate, max-age=0')
+        self.render_template("/pages/profile.html", {"user": user_data})
+
+class UsersHandler(TemplateHandler):
+    def get(self):
+        users_list = users.find({})
+        self.set_header(
+          'Cache-Control',
+          'no-store, no-cache, must-revalidate, max-age=0')
+        self.render_template("/pages/admin.html", {"users": users_list})
+
 
 class LogOutHandler(BaseHandler, tornado.auth.GoogleOAuth2Mixin):
     def get(self):
@@ -301,11 +282,13 @@ class GAuthLoginHandler(BaseHandler, tornado.auth.GoogleOAuth2Mixin):
             ###################################################################
             # If user does not exists by id in DB, create a user for them..
             # redirect to complete profile
-            db_user = users.find({
-            "email": email
-            })
-            # Check if user is in DB if not, add
-            if not db_user:
+            if users.find_one({"email": email}):
+                current_user = users.find_one({"email": email})
+                print(current_user)
+                for user in current_user:
+                    print("current user {} {} has an email of {}.".format(current_user['given_name'], current_user['family_name'], current_user['email']))
+                    pass
+            else:
                 users.insert_one(
                     {
                     "_id": str(uuid.uuid4()),
@@ -316,12 +299,9 @@ class GAuthLoginHandler(BaseHandler, tornado.auth.GoogleOAuth2Mixin):
                     "user_type": user_type
                     }
                 )
-            else:
-                pass
-            # set validated user cookie
-            self.set_secure_cookie('user', user['email'])
+            self.set_secure_cookie('user', email)
             # set user type cookie
-            self.redirect("/dogs")
+            self.redirect("/profile")
 
 
 ##################################
@@ -334,7 +314,7 @@ class GAuthLoginHandler(BaseHandler, tornado.auth.GoogleOAuth2Mixin):
             return
         # cookie exists, forward user to site
         elif self.get_secure_cookie('user'):
-            self.redirect('/dogs')
+            self.redirect('/profile')
             return
         # no code, no cookie, try to log them in... via google oauth
         else:
@@ -415,18 +395,18 @@ class NewUserFormHandler(TemplateHandler):
 #################################################################################################################
 #################################################################################################################
 
-class NewOwnerFormHandler (TemplateHandler):
-    def get(self):
-        owners_list = users.find({})
-        self.render_template("pages/new-owner-user.html", {"owners_list": owners_list})
-    def post(self):
-        users.insert_one ({
-            "first_name": self.get_body_argument("first_name"),
-            "last_name": self.get_body_argument("last_name"),
-            "email":self.get_body_argument("email"),
-            "phone_number": self.get_body_argument("phone_number")
-        })
-        self.redirect("/")
+# class NewOwnerFormHandler (TemplateHandler):
+#     def get(self):
+#         owners_list = users.find({})
+#         self.render_template("pages/new-owner-user.html", {"owners_list": owners_list})
+#     def post(self):
+#         users.insert_one ({
+#             "first_name": self.get_body_argument("first_name"),
+#             "last_name": self.get_body_argument("last_name"),
+#             "email":self.get_body_argument("email"),
+#             "phone_number": self.get_body_argument("phone_number")
+#         })
+#         self.redirect("/")
 
 #################################################################################################################
 #################################################################################################################
@@ -472,6 +452,8 @@ class make_app(tornado.web.Application):
             (r"/login", LoginHandler),
             (r"/logout", LogOutHandler),
             (r"/login-google", GAuthLoginHandler),
+            (r"/profile", UserProfileHandler),
+            (r"/admin", UsersHandler),
             (r"/dogs/new-dog", DogFormHandler),
             (r"/dogs", DogListHandler),
             (r"/edit/(.*)",EditDogHandler),
