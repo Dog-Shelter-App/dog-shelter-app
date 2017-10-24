@@ -12,19 +12,18 @@
       </div>
       <div class="col-lg-6">
         <h1 class="display-6">{% block jumbotrontext %}Get My Pup{% endblock %}</h1>
-        <h2>Welcome {{users.given_name}}!</h2>
+        {% if logged_in %}
+          <p>Welcome</p>
+          <a href="/dogs/new-dog" class="btn btn-outline-secondary btn-lg">Report a lost dog</a>
+        {% else %}
         <form action="/login-google">
-
-        <a href="/login-google" class="btn btn-outline-dark btn-lg"><i class=""></i>Login with Google</a>
-        <br>
-        <input class="form-check-input radio-button" type="radio" name="user_type" id="owner" value="owner">
-        <label for="owner" class="radio-label">Login As Owner</label>
-
-    <input class="form-check-input radio-button" type="radio" name="user_type" id="shelter" value="shelter"><label for="shelter" class="radio-label">Login As Shelter</label>
-
-
-      <button type="submit">Login</button>
+          <input class="form-check-input radio-button" type="radio" name="user_type" id="owner" value="owner" required>
+          <label for="owner" class="radio-label">Login As Owner</label>
+          <input class="form-check-input radio-button" type="radio" name="user_type" id="shelter" value="shelter" required>
+          <label for="shelter" class="radio-label">Login As Shelter</label>
+          <button type="submit" class="btn btn-outline-dark btn-lg"><i class=""></i>Login with Google</button>
         </form>
+        {% endif %}
       </div>
     </div>
 

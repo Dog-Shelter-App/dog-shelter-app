@@ -88,21 +88,15 @@ class TemplateHandler(BaseHandler):
 
 class MainHandler(TemplateHandler):
     def get(self):
-        login = self.get_argument('login', None)
-        user = self.get_current_user
-
-        users = "hello"
+        if self.get_secure_cookie('user'):
+            # do this
+            logged_in = True
+        else:
+            logged_in = False
         self.set_header(
           'Cache-Control',
           'no-store, no-cache, must-revalidate, max-age=0')
-        self.render_template("/pages/index.html", {"login": login, "users": users})
-
-    def post(self):
-        text = self.get_body_argument('text')
-        result = collection.insert_one(
-            {"text": text}
-        )
-        self.redirect('/')
+        self.render_template("/pages/index.html", {"logged_in": logged_in})
 
 class SignupHandler(TemplateHandler):
     def get(self):
@@ -259,9 +253,7 @@ class LogOutHandler(BaseHandler, tornado.auth.GoogleOAuth2Mixin):
 
 class GAuthLoginHandler(BaseHandler, tornado.auth.GoogleOAuth2Mixin):
     @tornado.gen.coroutine
-    def post(self):
-        user_type = self.get_body_argument("user_type", None)
-        print(user_type)
+    def get(self):
         # TRY: REMEMBER WHERE USER WANTED TO GO
         # request = self.request.headers.get("Referer")
         # question = request.find('=')
@@ -302,7 +294,6 @@ class GAuthLoginHandler(BaseHandler, tornado.auth.GoogleOAuth2Mixin):
 
             # google says they are cool, and we believe them
             # save user here, save to cookie or database
-            self.set_secure_cookie('user', user['email'])
             ###################################################################
             #   WRITE NEW USER TO DB                                          #
             ###################################################################
@@ -310,41 +301,40 @@ class GAuthLoginHandler(BaseHandler, tornado.auth.GoogleOAuth2Mixin):
             ###################################################################
             # If user does not exists by id in DB, create a user for them..
             # redirect to complete profile
-            if user not in users:
+            db_user = users.find({
+            "email": email
+            })
+            # Check if user is in DB if not, add
+            if not db_user:
                 users.insert_one(
                     {
+                    "_id": str(uuid.uuid4()),
                     "given_name": given_name,
                     "family_name": family_name,
                     "email": email,
                     "avatar": avatar,
-                    "user_id": user_id,
                     "user_type": user_type
                     }
                 )
-            ###################################################################
+            else:
+                pass
+            # set validated user cookie
+            self.set_secure_cookie('user', user['email'])
+            # set user type cookie
+            self.redirect("/dogs")
+
+
+##################################
             #        WRITE USER WITH MONGODB                                  #
             ###################################################################
             # CODE GOES HERE
             ###################################################################
 
-            if user not in users:
-                users.insert(
-                    {
-                    "given_name": given_name,
-                    "family_name": family_name,
-                    "email": email,
-                    "avatar": avatar,
-                    "user_id": user_id,
-                    "user_type": user_type
-                    }
-                )
-            # user exists, redirect to profile page.
-            self.redirect('/shelters/new-user')
 
             return
         # cookie exists, forward user to site
         elif self.get_secure_cookie('user'):
-            self.redirect('/profile')
+            self.redirect('/dogs')
             return
         # no code, no cookie, try to log them in... via google oauth
         else:
