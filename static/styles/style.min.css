@@ -34,7 +34,6 @@ DOG FORM HTML PAGE
 }
 .profile{
   margin:auto;
-  max-width: 60%;
 }
 .profileNav{
   position: fixed;
@@ -274,4 +273,33 @@ QUERY BAR
   display: inline;
 
   max-width: 20%;
+}
+
+/********************************************************
+DOG profile
+*******************************************************/
+.dog-profile__head {
+  background: #34495e;
+  padding: 3rem 2rem;
+  color: white;
+}
+
+.dog-profile__img-thumbnail {
+  background: white;
+  border-radius: 100%;
+  width: 250px;
+  height: 275px;
+  border: 3px solid white;
+  margin-bottom: 20px;
+  background-size: cover;
+  background-position: center;
+}
+
+.dog-profile__img-fullsize {
+  width: 100%;
+}
+
+.dog-profile__nav-box {
+  padding: 2rem;
+  border: 3px solid #ddd;
 }
