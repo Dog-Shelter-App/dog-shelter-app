@@ -379,15 +379,22 @@ class DogProfileHandler(TemplateHandler):
 
 class QueryHandler(TemplateHandler):
     def post(self):
-        breed = self.get_body_argument("breed", None)
         gender = self.get_body_argument("gender", None)
-        color = self.get_body_argument("color", None)
+        breed = self.get_body_argument("breed", None)
+        color = self.get_body_argument("color", None).lower()
         age = self.get_body_argument("age", None)
         name = self.get_body_argument("name", None)
 
-        dogs_list = dogs.find({"breed": breed, "gender": gender, "color": color, "age": age, "name": name})
+        # dogs_list = dogs.find({"gender": gender, "breed": breed, "prim_color": color, "age": age, "dog_name": name}).count()
+        dogs_list = dogs.find({ "$or": [
+                 {"gender": gender}, 
+                 {"breed": breed},
+                 {"prim_color": color},
+                 {"age": age},
+                 {"dog_name": name} 
+            ]})
         print(dogs_list)
-        
+
         self.set_header(
           'Cache-Control',
           'no-store, no-cache, must-revalidate, max-age=0')

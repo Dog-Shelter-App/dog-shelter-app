@@ -4,26 +4,25 @@
 {% block head %}
     {{ super() }}
 {% endblock %}
+
 {% block body %}
+<p>RESULTS</p>
 <div class="querybar">
   {% include 'components/search.html'%}
 </div>
-<p>RESULTS</p>
-<h2>Searched for "{{breed}}" and "{{gender}}"</h2>
-
-  <div class="dog_list d-flex pt-5 flex-wrap justify-content-start">
-    {% for dog in dogs_list%}
-      <article class="card dog-card" style="width:20em;">
-        <a href="dogs/{{dog._id}}">
-          <img class="card-img-top" src="{{dog.thumbnail}}" alt="lost-dog">
-          <div class="card-body">
-            <h4 class="card-title"> {{dog.dog_name}}</h4>
-            <p class="card-text">{{dog.dog_gender}} {{dog.breed}}</p>
-          </div>
-        </a>
-        </article>
-    {% endfor%}
-  </div>
-
+<h2>Searched for "{{breed}}" and "{{gender}} "</h2>
+<div class="dog_list d-flex pt-5 flex-wrap justify-content-start">
+  {% for dog in dogs_list%}
+    <article class="card dog-card" style="width:20em;">
+      <a href="dogs/{{dog._id}}">
+        <img class="card-img-top" src="{{dog.thumbnail}}" alt="lost-dog">
+        <div class="card-body">
+          <h4 class="card-title"> {{dog.dog_name}}</h4>
+          <p class="card-text">{{dog.dog_gender}} {{dog.breed}}</p>
+        </div>
+      </a>
+      </article>
+  {% endfor%}
+</div>
 
 {% endblock %}
