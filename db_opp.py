@@ -1,3 +1,5 @@
+from datetime import datetime
+
 # DATABASE SCHEMA
 
 # dogs
@@ -17,6 +19,7 @@
 #   #   ear_type
 #   #   age
 #   #   notes
+#   #   date_deleted
 #FK #   user_id
 #FK #   shelter_id
 
@@ -119,6 +122,15 @@ def update_dog_by_id(_id, data):
 
 def delete_dog_by_id(_id):
     return dogs.remove({"_id": _id})
+
+def delete_many_dogs_by_date_range(start, stop):
+    #convert to timeobject
+    date_found_obj = datetimeconverter(start)
+    end_date_obj = datetimeconverter(stop)
+
+    requests = [UpdateMany({'date_found':{'$gte': date_found_obj, '$lt': end_date_obj}}, {'$set':{'delete':datetime.today()}})]
+    dogs_list = dogs.find({'date_found':{'$gte': date_found_obj, '$lt': end_date_obj}})
+    return dogs.bulk_write(requests)
 
 # SHELTER FUNCTIONS
 
