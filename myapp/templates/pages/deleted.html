@@ -1,0 +1,43 @@
+
+<h2>Deleted Dogs from {{date_found}} to {{end_date}}</h2>
+
+<div class="container-fluid">
+  <div class="row">
+    <div class="col-md-9">
+      <div id="dog-list" class="d-flex flex-wrap justify-content-start">
+        <table class="table table-striped mt-5">
+          <thead>
+            <td>Name</td>
+            <td>Breed</td>
+            <td>Age</td>
+            <td>Gender</td>
+            <td>Weight</td>
+            <td>Location Found</td>
+            <td>Date Found</td>
+            <td>Delete</td>
+          </thead>
+          <tbody>
+            {% for dog in dogs_list%}
+            <tr>
+              <!-- <td>Name</td> -->
+              <td>{{dog.dog_name}}</td>
+              <td>{{dog.breed}}</td>
+              <td>{{dog.age}}</td>
+              <td>{{dog.gender}}</td>
+              <td>{{dog.weight}}</td>
+              <td>{{dog.location_found}}</td>
+              <td>{{dog.date_found}}</td>
+              <td>{{dog.delete}}</td>
+            </tr>
+            {% endfor %}
+          </tbody>
+        </table>
+      </div>
+    </div>
+    <div class="col-md-3">
+      <div class="d-flex">
+        <a href="#" class="btn btn-info">Export to .CSV</a>
+      </div>
+    </div>
+  </div>
+</div>

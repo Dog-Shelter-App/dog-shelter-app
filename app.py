@@ -23,6 +23,7 @@ import requests
 from settings import mongo_url
 # import driver
 import pymongo
+from pymongo import UpdateMany
 # import client function
 from pymongo import MongoClient
 # create client
@@ -467,11 +468,16 @@ class DeleteDogHandler(TemplateHandler):
     def post(self):
         date_found = self.get_body_argument('date_found')
         end_date = self.get_body_argument('end_date')
-        print(date_found)
-        dogs_list = dogs.find({'date_found':{'$gte': date_found, '$lt': end_date}}).count()
-        print(dogs_list)
 
-        # self.redirect('/')
+        #convert to timeobject
+        date_found_obj = datetimeconverter(date_found)
+        end_date_obj = datetimeconverter(end_date)
+
+        requests = [UpdateMany({'date_found':{'$gte': date_found_obj, '$lt': end_date_obj}}, {'$set':{'delete':True}})]
+        dogs_list = dogs.find({'date_found':{'$gte': date_found_obj, '$lt': end_date_obj}})
+        dogs.bulk_write(requests)
+
+        self.render_template('pages/deleted.html', {"dogs_list":dogs_list, "date_found":date_found, "end_date":end_date})
 class make_app(tornado.web.Application):
     def __init__(self):
         handlers = [
