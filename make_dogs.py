@@ -20,6 +20,14 @@ collection = db.test_collection
 users = db.user_collection
 dogs = db.dogs_collection
 breeds = db.breeds_colletion
+shelters = db.shelters_collection
+
+def get_user():
+    countusers = users.find({}).count()#gets users
+    users_list = users.find({})
+    rand = random.randrange(0,countusers)
+    x = users_list[rand]
+    return x['_id']
 
 dog_names = [
     "Jason",
@@ -80,15 +88,15 @@ dog_names = [
     "Scout",
     "Holly",
     "Minnie",
-    "Winnie",
+    "Eric",
     "Angel",
     "Dakota",
     "Callie",
     "Missy",
     "Phoebe",
     "Hazel",
-    "Athena",
-    "Shelby",
+    "Richard",
+    "Kevin",
     "Peanut",
     "Sugar",
     "Jasmine",
@@ -99,28 +107,22 @@ dog_names = [
     "Gigi",
     "Fiona",
     "Chance",
-    "Josie",
     "Cleo",
     "Mocha",
-    "Leia",
     "Delilah",
     "Baby",
     "Harper",
     "Shadow",
-    "Macy",
     "Pearl",
-    "Allie",
-    "Mila",
+    "Michael",
     "Heidi",
     "Bonnie",
-    "Nina",
-    "Grace",
     "Katie",
     "Lacey",
     "Gypsy",
     "Cocoa",
     "Nova",
-    "Charlotte",
+    "Gustavo",
     "Puppers"
 ]
 
@@ -773,7 +775,8 @@ def bulk_add_dogs():
             "ears": get_ears(),
             "eyes": get_color(),
             "notes": get_note(),
-            "delete": False
+            "delete": False,
+            "user": get_user()
             }
         )
         dog = dogs.find({
@@ -786,7 +789,7 @@ def bulk_add_dogs():
             if gender == "male":
                 gender = "He"
             else:
-                gneder = "She"
+                gender = "She"
             breed = dog['breed']
             age = dog['age']
             print("Added {} to the DB. {} is a {} year old {}.".format(name, gender, age, breed))

@@ -2,7 +2,7 @@
 
 // monitor user_type input value
 
-$
+
 
 
 // Dog Form Logic
@@ -58,15 +58,6 @@ $(document).ready(function () {
 
 
 $(document).ready(function () {
-//Prefills the date
-var d = new Date();
-var n = d.toLocaleDateString();
-
-var dateInput = document.getElementById('date_found');
-dateInput.value = n;
-
-var dateInputdelete = document.getElementById('end_date');
-dateInputdelete.value = n;
 //DOG-FORM Button trigger if COLLAR_YES
 $('#collar_color').hide();
 $('#collarYes').click(function(event){
@@ -75,13 +66,6 @@ $('#collarYes').click(function(event){
 $('#collarNo').click(function(event){
   $('#collar_color').hide();
 })
-});
-
-$('#shelterlist').hide();
-$('#shelter').click(function (event) {
-  $('#shelterlist').slideToggle();
-});
-
 
 var range = 100;
 
@@ -98,7 +82,7 @@ $(window).on('scroll', function () {
   }
 });
 
-
+});
 //////////////////////////
 //END JULIE
 
