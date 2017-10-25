@@ -73,6 +73,7 @@ class MainHandler(TemplateHandler):
             logged_in = True
         else:
             logged_in = False
+
         self.set_header(
           'Cache-Control',
           'no-store, no-cache, must-revalidate, max-age=0')
