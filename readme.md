@@ -1,13 +1,14 @@
-#GET MY PUP
+# GET MY PUP
 ## A ready-made operations tool for Animal shelters to store animals, query, and update.
 
-###[DigitalCrafts](http://www.DigitalCrafts.com)' group project week
+### [DigitalCrafts](https://www.DigitalCrafts.com)' group project week
 
-###[Juliana Mei](http://github.com/julianapeace)
+### [Juliana Mei](https://github.com/julianapeace)
 
-###[Kevin Meinhardt](https://github.com/KevinMind)
+### [Kevin Meinhardt](https://github.com/KevinMind)
 
-###[Gustavo Martinez](https://github.com/gmartinez31)
+### [Gustavo Martinez](https://github.com/gmartinez31)
+
 ---------
 
 ### Summary
