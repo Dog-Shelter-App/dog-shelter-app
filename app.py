@@ -17,34 +17,17 @@ from jinja2 import \
 
 import requests
 
-###############################################################################
+import db_opp as db_opp
 
-# pull creds
-from settings import mongo_url
-# import driver
-import pymongo
-from pymongo import UpdateMany
-# import client function
-from pymongo import MongoClient
-# create client
-client = pymongo.MongoClient(mongo_url, ssl=True)
-# imort UUID functionality
-import uuid
+client = db_opp.create_client()
 
-if client:
-    print("client working.")
-# define database
 db = client.test_database
 # define collections
-collection = db.test_collection
-users = db.user_collection
+users = db.users_collection
 dogs = db.dogs_collection
 shelters = db.shelters_collection
-##########################
-#### cluster
-######## database
-############ collection
-################ document
+breeds = db.breeds_collection
+
 
 # AWS S3
 from settings import aws_s3_access_key, aws_s3_secret_access_key
@@ -99,9 +82,9 @@ class MainHandler(TemplateHandler):
 class DogFormHandler(TemplateHandler):
     @tornado.web.authenticated
     def get(self):
-        user = users.find_one({
-        "email": self.current_user.decode('utf-8')
-        })
+
+        user = db_opp.find_user_by_email(self.current_user.decode('utf-8'))
+
         if user['user_type'] == "shelter":
             self.set_header(
               'Cache-Control',
@@ -153,17 +136,10 @@ class DogFormHandler(TemplateHandler):
         # image_64_encode = base64.encodestring(file_body)
         # print(image_64_encode)
         #
+        user = db_opp.find_user_by_email(self.current_user.decode('utf-8'))
 
-        user = users.find_one({
-        "email": self.current_user.decode('utf-8')
-        })
-
-        shelter = shelters.find_one({"_id": user['user_shelter']})
-
-        # call add dog function from db opperations
-        dogs.insert_one(
-            {
-            "_id": str(uuid.uuid4()),
+        data = {
+            "_id": db_opp.create_uuid(),
             "dog_name": self.get_body_argument('dog_name'),
             "thumbnail": file_path,
             "breed": self.get_body_argument('breed').lower(),
@@ -183,17 +159,18 @@ class DogFormHandler(TemplateHandler):
             "eyes": self.get_body_argument('eyes').lower(),
             "notes": self.get_body_argument('notes'),
             "delete": False,
-            "user": user_email,
-            "shelter": shelter['_id']
-            }
-        )
+            "user": user['email'],
+            "shelter": user['shelter']
+        }
+        db_opp.add_new_dog(data)
         self.redirect('/dogs')
 
         # ADD DOG
+
 class DogListHandler(TemplateHandler):
     @tornado.web.authenticated
     def get(self):
-        dogs_list = dogs.find({'delete':False})
+        dogs_list = db_opp.find_all_public_dogs()
         self.set_header(
           'Cache-Control',
           'no-store, no-cache, must-revalidate, max-age=0')
@@ -219,39 +196,39 @@ class LoginHandler(TemplateHandler):
 class UserProfileHandler(TemplateHandler):
     @tornado.web.authenticated
     def get(self):
-        user_email = self.current_user.decode('utf-8')
-        print("UserEmail: {}".format(user_email))
-        # print(user_email)
-        user_data = users.find_one({
-        "email": user_email
-        })
+        user_data = db_opp.find_user_by_email(self.current_user.decode('utf-8'))
         if user_data['user_type'] == "owner":
             shelter = False
         else:
             shelter = True
-        shelters_list = shelters.find({})
+        shelters_list = db_opp.find_all_shelters()
+
         self.set_header(
           'Cache-Control',
           'no-store, no-cache, must-revalidate, max-age=0')
         self.render_template("/pages/profile.html", {"user": user_data, "shelter": shelter, "shelters_list": shelters_list})
 
     def post(self):
+        _id = self.get_body_argument("id")
         given_name= self.get_body_argument("given_name", None)
         family_name= self.get_body_argument("family_name", None)
         email= self.get_body_argument("email")
         phone= self.get_body_argument("phone", None)
-        user_type = self.get_body_argument("user_type")
-        user_shelter = self.get_body_argument('user_shelter', None)
-        print(user_shelter)
+        type = self.get_body_argument("type")
+        shelter = self.get_body_argument('shelter', None)
+        print(shelter)
 
-        users.update_one({"email": email}, {'$set': {
+        data = {
         "given_name": given_name,
         "family_name": family_name,
         "email": email,
         "phone": phone,
-        "user_type": user_type,
-        "user_shelter": user_shelter
-        }})
+        "type": type,
+        "shelter": shelter
+        }
+
+        db_opp.update_user_by_id(_id, data)
+
         self.redirect('/profile')
 
 class SheltersHandler(TemplateHandler):
@@ -261,7 +238,7 @@ class SheltersHandler(TemplateHandler):
         user_data = users.find_one({
         "email": user_email
         })
-        shelters_list = shelters.find({})
+        shelters_list = db_opp.find_all_shelters()
         self.set_header(
           'Cache-Control',
           'no-store, no-cache, must-revalidate, max-age=0')
@@ -274,47 +251,39 @@ class SheltersHandler(TemplateHandler):
         address = self.get_body_argument('address', None)
         print("adding shelter")
 
-        if shelters.find_one({"name": name}):
+        if db_opp.find_shelter_by_name(name):
             pass
         else:
-            shelters.insert_one({
-                "_id": str(uuid.uuid4()),
+            data = {
+                "_id": db_opp.create_uuid(),
                 "name": name,
                 "email": email,
                 "phone": phone,
                 "address": address
-                }
-            )
+            }
+            db_opp.add_new_shelter(data)
 
         self.redirect("/profile")
 
 class CompleteProfileHandler(TemplateHandler):
     @tornado.web.authenticated
     def get(self):
-        user_email = self.current_user.decode('utf-8')
-        print(user_email)
-        user_data = users.find_one({
-        "email": user_email
-        })
+        user = db_opp.find_user_by_email(self.current_user.decode('utf-8'))
 
         self.set_header(
           'Cache-Control',
           'no-store, no-cache, must-revalidate, max-age=0')
-        self.render_template("/pages/complete-profile.html", {"user": user_data})
+        self.render_template("/pages/complete-profile.html", {"user": user})
 
     def post(self):
-        email = self.get_body_argument('email')
-        user_type = self.get_body_argument("user_type")
-        print("User Type: {}.".format(user_type))
-        users.update_one({"email": email}, {'$set': {
-        "user_type": user_type
-        }})
+        data = { "user_type": self.get_body_argument("user_type")}
+        db_opp.update_user_by_email(email, data)
 
         self.redirect("/profile")
 
 class UsersHandler(TemplateHandler):
     def get(self):
-        users_list = users.find({})
+        users_list = db_opp.find_all_users
         self.set_header(
           'Cache-Control',
           'no-store, no-cache, must-revalidate, max-age=0')
@@ -378,9 +347,8 @@ class GAuthLoginHandler(BaseHandler, tornado.auth.GoogleOAuth2Mixin):
             # If user does not exists by id in DB, create a user for them..
             # redirect to complete profile
 
-            if users.find_one({"email": email}):
-                print("user exists")
-                current_user = users.find_one({"email": email})
+            if db_opp.find_user_by_email(email):
+                current_user = db_opp.find_user_by_email(email)
                 print(current_user['email'])
                 self.set_secure_cookie('user', current_user['email'])
                 if current_user['user_type'] == "not_set":
@@ -388,30 +356,20 @@ class GAuthLoginHandler(BaseHandler, tornado.auth.GoogleOAuth2Mixin):
                 else:
                     self.redirect('/profile')
             else:
-                users.insert_one(
-                    {
-                    "_id": str(uuid.uuid4()),
-                    "given_name": given_name,
-                    "family_name": family_name,
-                    "email": email,
-                    "avatar": avatar,
-                    "user_type": "not_set",
-                    "user_shelter": "not_set"
-                    }
-                )
+                data = {
+                "_id": db_opp.create_uuid(),
+                "given_name": given_name,
+                "family_name": family_name,
+                "email": email,
+                "avatar": avatar,
+                "type": "not_set",
+                "shelter": "not_set"
+                }
+                db_opp.add_new_user(data)
+
                 self.set_secure_cookie('user', email)
                 self.redirect("/complete-profile")
                 print("added user to db")
-
-            # set user type cookie
-
-
-##################################
-            #        WRITE USER WITH MONGODB                                  #
-            ###################################################################
-            # CODE GOES HERE
-            ###################################################################
-
 
             return
         # cookie exists, forward user to site
@@ -427,19 +385,6 @@ class GAuthLoginHandler(BaseHandler, tornado.auth.GoogleOAuth2Mixin):
                 response_type='code',
                 extra_params={'approval_prompt': 'auto'})
 
-##############################################################################
-
-class WebSocketHandler(tornado.websocket.WebSocketHandler):
-    def open(self):
-        pass
-        # db.inventory.find({
-        #     "message" : (.*)
-        # })
-
-    def on_message(self, message):
-        # list.extend(message)
-        db.messages.insert_one({"message": message})
-        messages_list = db.messages.find({})
 
 # see settings.py for instructions on setting this up
 from settings import client_id, project_id, auth_uri, token_uri, auth_provider_x509_cert_url, client_secret, cookie_secret
@@ -457,9 +402,9 @@ settings = {
 
 class DogProfileHandler(TemplateHandler):
     def get(self, _id):
-        dog = dogs.find_one({"_id": _id})
+        dog = db_opp.find_dog_by_id(_id)
         shelter_name = dog["shelter"]
-        shelter = shelters.find_one({"shelter_name": shelter_name})
+        shelter = db_opp.find_shelter_by_name(shelter_name)
         self.set_header(
           'Cache-Control',
           'no-store, no-cache, must-revalidate, max-age=0')
@@ -474,49 +419,24 @@ class QueryHandler(TemplateHandler):
         name = self.get_body_argument("name", None)
 
         # dogs_list = dogs.find({"gender": gender, "breed": breed, "prim_color": color, "age": age, "dog_name": name}).count()
-        dogs_list = dogs.find({ "$or": [
-                 {"gender": gender}, 
-                 {"breed": breed},
-                 {"prim_color": color},
-                 {"age": age},
-                 {"dog_name": name} 
-            ]})
+        data = [
+        {"gender": gender},
+        {"breed": breed},
+        {"prim_color": color},
+        {"age": age},
+        {"dog_name": name}
+        ]
+
+        dogs_list = db_opp.find_many_dogs(data)
 
         self.set_header(
           'Cache-Control',
           'no-store, no-cache, must-revalidate, max-age=0')
         self.render_template("/pages/dog-list-results.html", {'dogs_list': dogs_list, 'breed':breed, 'gender': gender, "color": color, "age": age, "name": name})
 
-
-
-#################################################################################################################
-#################################################################################################################
-#######                         Goose Additions: New Owner Form Handler                                   #######
-#################################################################################################################
-#################################################################################################################
-
-# class NewOwnerFormHandler (TemplateHandler):
-#     def get(self):
-#         owners_list = users.find({})
-#         self.render_template("pages/new-owner-user.html", {"owners_list": owners_list})
-#     def post(self):
-#         users.insert_one ({
-#             "first_name": self.get_body_argument("first_name"),
-#             "last_name": self.get_body_argument("last_name"),
-#             "email":self.get_body_argument("email"),
-#             "phone_number": self.get_body_argument("phone_number")
-#         })
-#         self.redirect("/")
-
-#################################################################################################################
-#################################################################################################################
-#######                         End Goose changes                                                         #######
-#################################################################################################################
-#################################################################################################################
-
 class EditDogHandler(TemplateHandler):
     def get(self, _id):
-        dog = dogs.find_one({"_id": _id})
+        dog = db_opp.find_dog_by_id(_id)
         self.render_template("pages/dog-profile-edit.html", {"dog":dog})
 
 class UpdateDogHandler(TemplateHandler):
@@ -546,6 +466,7 @@ def datetimeconverter(n):
     #front end date input(n) is always formated {%Y}-{%m}-{%d}
     #converts to datetime object
         return datetime.strptime(n, '%Y-%m-%d')
+
 class DeleteDogHandler(TemplateHandler):
     def post(self):
         # singledelete = self.get_body_argument('singledelete')
@@ -566,7 +487,8 @@ class DeleteDogHandler(TemplateHandler):
 class ExportHandler(TemplateHandler):
     def get(self):
         import csv
-        myquery = dogs.find({'delete':True})
+
+        myquery = db_opp.find_deleted_dogs()
 
         with open('some.csv', 'w') as outfile:
             fields = ['_id','dog_name', 'age', 'breed', 'date_found', 'location_found', 'ears', 'eyes', 'gender','fix', 'notes', 'thumbnail', 'sec_color', 'prim_color', 'weight', 'height', 'id_chip', 'collar', 'collar_color', 'delete' ,'user']
@@ -599,8 +521,7 @@ class make_app(tornado.web.Application):
                 r"/static/(.*)",
                 tornado.web.StaticFileHandler,
                 {'path': 'static'}
-                ),
-            (r"/websocket", WebSocketHandler)
+                )
         ]
         # ui_modules = {'Menu': uimodule.Terminal}
         tornado.web.Application.__init__(self, handlers, autoreload=True, **settings)
