@@ -4,19 +4,13 @@
 
 
 {% block body %}
+
 <form action="/update" method="post">
   <input type="hidden" name="_id" value="{{dog._id}}">
-
-
   <div class="profile container-fluid">
     <div class="row">
       <div class="col-md-4">
         <div class="dog-profile__nav-box sticky-scroll-box mt-5">
-          <a href="/edit/{{dog._id}}" class="btn btn-outline-primary">Edit</a>
-          <form action="/delete" method="get">
-            <input type="hidden" name="singledelete" value="{{dog._id}}">
-            <button class="btn btn-danger">Delete</button>
-          </form>
 
           <a href="/" class="btn btn-warning">That's my dog!</a>
           <br><br>
@@ -34,7 +28,7 @@
             <tbody>
               <tr>
                 <td>Name</td>
-                <td><input type="text" name="dog_name" value="{{dog.dog_name}}"></td>
+                <td><input type="text" name="name" value="{{dog.name}}"></td>
               </tr>
               <tr>
                 <td>Gender</td>

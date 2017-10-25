@@ -96,7 +96,12 @@ breeds = db.breeds_collection
 ############ collection
 ################ document
 
+
+######################################################
+######################################################
 # USER FUNCTIONS
+######################################################
+######################################################
 
 def find_user_by_email(email):
     return users.find_one({"email": email})
@@ -121,9 +126,11 @@ def delete_user_by_id(_id):
 
 def count_users():
     return users.find({}).count
-
-
+######################################################
+######################################################
 # DOG FUNCTIONS
+######################################################
+######################################################
 
 def find_dog_by_id(_id):
     return dogs.find_one({"_id": _id})
@@ -159,7 +166,11 @@ def delete_many_dogs_by_date_range(start, stop):
     dogs_list = dogs.find({'date_found':{'$gte': date_found_obj, '$lt': end_date_obj}})
     return dogs.bulk_write(requests)
 
+######################################################
+######################################################
 # SHELTER FUNCTIONS
+######################################################
+######################################################
 
 def find_shelter_by_id(_id):
     return shelters.find_one({"_id": _id})
