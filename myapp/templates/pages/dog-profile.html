@@ -8,12 +8,13 @@
   <div class="d-flex justify-content-center flex-wrap align-items-center">
     <div class="dog-profile__card d-flex flex-column justify-content-center align-items-center">
       <div class="dog-profile__polaroid">
-        <div style="background-image:url('{{dog.image}}');'" class="dog-profile__img-thumbnail" data-toggle="modal" data-target="#dogImageFullSize"></div>
+        <img class="dog-profile__img-thumbnail" src="{{dog.image}}" alt="" data-toggle="modal" data-target="#dogImageFullSize">
         <div class="dog-profile__name"><h1>{{dog.name}}</h1></div>
       </div>
     </div>
     <div class="dog-profile__top-details ml-5 mt-5">
       <p>Age: {{dog.age}}</p>
+      <p>ID: {{dog.user_id}}</p>
       <p>Breed: {{dog.breed}}</p>
       <p>Location Found: {{dog.location}}</p>
       <a href="/" class="btn btn-warning">That's My Dog</a>
@@ -49,12 +50,12 @@
           <a href="/" class="btn btn-warning">That's my dog!</a>
         </div>
         <div class="pt-3">
-          <h5>Located At: {{shelter.name}}</h5>
-          <p>added by : {{dog.user}}</p>
-          <p>Puppers And Turtles</p>
-          <p>3302 Canal St</p>
-          <p>Houston TX</p>
-          <p>713-757-8484</p>
+          <p>added by: {{user.given_name}} {{user.family_name}}</p>
+          <p>shelter: {{shelter.name}}</p>
+          <p>phone: {{shelter.phone}}</p>
+          <p>email: {{shelter.email}}</p>
+          <p>address: {{shelter.address}}<br>{{shelter.city}} {{shelter.state}}</p>
+
           <p>www.slowpuppers.com</p>
         </div>
         <div class="d-inline-flex button-row">

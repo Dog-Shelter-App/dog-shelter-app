@@ -770,8 +770,8 @@ def bulk_add_dogs():
             "eye_color": get_color(),
             "notes": get_note(),
             "delete": False,
-            "user": get_user(),
-            "shelter": get_shelter()
+            "user_id": get_user(),
+            "shelter_id": get_shelter()
         }
 
         db_opp.add_new_dog(data)
@@ -811,7 +811,7 @@ def bulk_add_shelters():
         "state": "Tejas"
         }
         db_opp.add_new_shelter(data)
-
-bulk_add_shelters()
+#
+# bulk_add_shelters()
 
 # bulk_add_dogs()

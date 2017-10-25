@@ -4,14 +4,8 @@
 {% endblock %}
 {% block body %}
 <div class="section">
-  <div class="">
-    {% for user in users %}
-    <span>{{user.email}}</span>
-    {% endfor %}
-  </div>
   <div class="container">
     <form class="" action="/profile" method="post">
-      <h4>{{header}}</h4>
       <input type="hidden" name="id" value="{{user._id}}">
         <div class="form-group">
           <label for="first_name" data-error="must enter valid email">first name</label>
@@ -46,8 +40,8 @@
         </div>
         <div class="form-group">
           {% if shelter %}
-            <p>User Shelter: {{user.shelter}}</p>
-            <select name="shelter">
+            <p>User Shelter: {{user.shelter_id}}</p>
+            <select name="shelter_id">
               {% for shelter in shelters_list %}
               <option value="{{shelter._id}}">{{shelter.name}}</option>
               {% endfor %}

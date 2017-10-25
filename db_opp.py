@@ -20,19 +20,19 @@ from datetime import datetime
 #   #   age
 #   #   notes
 #   #   date_deleted
-#FK #   user
-#FK #   shelter
+#FK #   user_id
+#FK #   shelter_id
 
 # users
 #   #   _id
 #   #   given_name
 #   #   family_name
 #   #   email
-#   #   phone
+#   #   phones
 #   #   type
 #   #   avatar
 #   #   date_created
-#FK #   shelter
+#FK #   shelter_id
 
 
 # shelters
@@ -106,7 +106,7 @@ breeds = db.breeds_collection
 def find_user_by_email(email):
     return users.find_one({"email": email})
 
-def find_user_by_id(id):
+def find_user_by_id(_id):
     return users.find_one({"_id": _id})
 
 def find_all_users():

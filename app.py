@@ -102,9 +102,9 @@ class DogFormHandler(TemplateHandler):
 
         import os
 
-        file_path = os.path.join('static/img/dogs/', file_name)
-        if not os.path.exists('static/img/dogs/'):
-            os.makedirs('static/img/dogs/')
+        file_path = os.path.join('static/img/dog_images/', file_name)
+        if not os.path.exists('static/img/dog_images/'):
+            os.makedirs('static/img/dog_images/')
         print(file_path)
         with open(file_path, 'wb') as f:
             f.write(file_body)
@@ -138,10 +138,12 @@ class DogFormHandler(TemplateHandler):
         #
         user = db_opp.find_user_by_email(self.current_user.decode('utf-8'))
 
+        print(user)
+
         data = {
             "_id": db_opp.create_uuid(),
-            "dog_name": self.get_body_argument('dog_name'),
-            "thumbnail": file_path,
+            "name": self.get_body_argument('name'),
+            "image": file_path,
             "breed": self.get_body_argument('breed').lower(),
             "id_chip": self.get_body_argument('id_chip'),
             "age": self.get_body_argument('age'),
@@ -159,8 +161,8 @@ class DogFormHandler(TemplateHandler):
             "eyes": self.get_body_argument('eyes').lower(),
             "notes": self.get_body_argument('notes'),
             "delete": False,
-            "user": user['email'],
-            "shelter": user['shelter']
+            "user_id": user['_id'],
+            "shelter_id": user['shelter_id']
         }
         db_opp.add_new_dog(data)
         self.redirect('/dogs')
@@ -193,15 +195,13 @@ class DogListHandler(TemplateHandler):
             query['name'] = self.get_argument("name", None)
             data.append(query)
 
-
-
-
         if len(data) < 1:
             dogs_list = db_opp.find_all_public_dogs()
         else:
             dogs_list = db_opp.find_many_dogs(data)
             print("Dogs in Database: {}".format(db_opp.find_all_public_dogs().count()))
             print("Dogs queried: {}".format(db_opp.find_many_dogs(data).count()))
+
         self.set_header(
           'Cache-Control',
           'no-store, no-cache, must-revalidate, max-age=0')
@@ -235,6 +235,8 @@ class LoginHandler(TemplateHandler):
               'Cache-Control',
               'no-store, no-cache, must-revalidate, max-age=0')
             self.render_template("/pages/login.html", {"data": data, "reason": reason})
+
+
 class UserProfileHandler(TemplateHandler):
     @tornado.web.authenticated
     def get(self):
@@ -257,8 +259,7 @@ class UserProfileHandler(TemplateHandler):
         email= self.get_body_argument("email")
         phone= self.get_body_argument("phone", None)
         type = self.get_body_argument("type")
-        shelter = self.get_body_argument('shelter', None)
-        print(shelter)
+        shelter_id = self.get_body_argument('shelter_id', None)
 
         data = {
         "given_name": given_name,
@@ -266,7 +267,7 @@ class UserProfileHandler(TemplateHandler):
         "email": email,
         "phone": phone,
         "type": type,
-        "shelter": shelter
+        "shelter_id": shelter_id
         }
 
         db_opp.update_user_by_id(_id, data)
@@ -321,6 +322,7 @@ class CompleteProfileHandler(TemplateHandler):
         db_opp.update_user_by_email(self.current_user.decode('utf-8'), data)
 
         self.redirect("/profile")
+
 
 class UsersHandler(TemplateHandler):
     def get(self):
@@ -404,7 +406,7 @@ class GAuthLoginHandler(BaseHandler, tornado.auth.GoogleOAuth2Mixin):
                 "email": email,
                 "avatar": avatar,
                 "type": "not_set",
-                "shelter": "not_set"
+                "shelter_id": "not_set"
                 }
                 db_opp.add_new_user(data)
 
@@ -440,17 +442,19 @@ settings = {
     "google_redirect_url": "/login-google"
     }
 
-
 class DogProfileHandler(TemplateHandler):
     def get(self, _id):
+        print(_id)
+
         dog = db_opp.find_dog_by_id(_id)
-        shelter_name = dog["shelter"]
-        shelter = db_opp.find_shelter_by_name(shelter_name)
-        print(shelter)
+        added_by = db_opp.find_user_by_id(dog['user_id'])
+        shelter = db_opp.find_shelter_by_id(dog['shelter_id'])
+
         self.set_header(
           'Cache-Control',
           'no-store, no-cache, must-revalidate, max-age=0')
-        self.render_template("/pages/dog-profile.html", {'dog': dog, "shelter": shelter})
+        self.render_template("/pages/dog-profile.html", {'dog': dog, "user": added_by, "shelter": shelter})
+
 
 class QueryHandler(TemplateHandler):
     def post(self):
@@ -460,13 +464,12 @@ class QueryHandler(TemplateHandler):
         age = self.get_body_argument("age", None)
         name = self.get_body_argument("name", None)
 
-        # dogs_list = dogs.find({"gender": gender, "breed": breed, "prim_color": color, "age": age, "dog_name": name}).count()
         data = [
         {"gender": gender},
         {"breed": breed},
         {"prim_color": color},
         {"age": age},
-        {"dog_name": name}
+        {"name": name}
         ]
 
         dogs_list = db_opp.find_many_dogs(data)
@@ -485,7 +488,6 @@ class UpdateDogHandler(TemplateHandler):
     def post(self):
         _id = self.get_body_argument('_id')
         name = self.get_body_argument('name')
-        # "thumbnail": file_path
         breed= self.get_body_argument('breed').lower()
         id_chip= self.get_body_argument('id_chip')
         age= self.get_body_argument('age')
@@ -541,7 +543,7 @@ class ExportHandler(TemplateHandler):
         myquery = db_opp.find_deleted_dogs()
 
         with open('some.csv', 'w') as outfile:
-            fields = ['_id','dog_name', 'age', 'breed', 'date_found', 'location_found', 'ears', 'eyes', 'gender','fix', 'notes', 'thumbnail', 'sec_color', 'prim_color', 'weight', 'height', 'id_chip', 'collar', 'collar_color', 'delete' ,'user']
+            fields = ['_id','name', 'age', 'breed', 'date_found', 'location_found', 'ears', 'eyes', 'gender','fix', 'notes', 'image', 'sec_color', 'prim_color', 'weight', 'height', 'id_chip', 'collar', 'collar_color', 'delete' ,'user']
             writer = csv.DictWriter(outfile, fieldnames = fields)
             writer.writeheader()
             for x in myquery:
