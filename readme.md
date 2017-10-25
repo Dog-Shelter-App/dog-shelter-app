@@ -28,17 +28,16 @@ This project aims to unify Houston's animal database into one powerful tool that
 - [x] Users have full CRUD (Create, Read, Update, Delete) functionality
 - [x] Users can followup when they CLAIM a dog
 - [x] Users can filter animals
-- [x]
 - [ ] AWS S3 Boto3 Image storage
 
 
 ## KEY FEATURES
--Three User Types: 'Not Set', 'Owner', 'Shelter'
--A record of delete animals can be exported into a CSV
--A function to add 100 dogs to the database including AI sentence generation
--Notifications when dogs are found
--Secure authentication
--Multi-part form entry for simple usability
+-[x]Three User Types: 'Not Set', 'Owner', 'Shelter'
+-[x]A record of delete animals can be exported into a CSV
+-[x]A function to add 100 dogs to the database including AI sentence generation
+-[x]Notifications when dogs are found
+-[x]Secure authentication
+-[x]Multi-part form entry for simple usability
 
 --------
 ## Developer Notes
