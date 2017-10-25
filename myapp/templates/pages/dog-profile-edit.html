@@ -23,7 +23,7 @@
     </div>
   </div>
 </div>
-<form action="/update" method="post">
+<form enctype="multipart/form-data" action="/update" method="post">
   <input type="hidden" name="_id" value="{{dog._id}}">
   <div class="section pt-5">
     <div class="container-fluid">
@@ -56,11 +56,11 @@
               <input value="{{dog.name}}" type="text" name="name" class="form-control" id="dogname" placeholder="Enter dog's name">
               <small id="emailHelp" class="form-text text-muted">If unknown, leave empty</small>
             </fieldset>
+            <p>/{{dog.image}}</p>
             <fieldset class="form-group">
               <label class="custom-file">
-                <input value="../{{dog.image}}" type="file" name="my_File" id="file" class="custom-file-input">
+                <input type="file" name="my_File" id="file" class="custom-file-input">
                 <span class="custom-file-control">Upload a Photo</span>
-
               </label>
             </fieldset>
             {% if female %}
@@ -68,7 +68,7 @@
               <label>Gender</label>
               <div class="">
                 <div class="form-check form-check-inline">
-                  <input chekced class="form-check-input radio-button" type="radio" name="gender" id="female" value="female">
+                  <input checked class="form-check-input radio-button" type="radio" name="gender" id="female" value="female">
                   <label for="female" class="radio-label">Female</label>
                 </div>
                 <div class="form-check form-check-inline">
@@ -646,11 +646,6 @@
                 <label for="locationfound">Location Found </label>
                 <input value="{{dog.location_found}}" type="text" name="location_found" class="form-control" id="locationfound">
               </fieldset>
-              <!-- ISSUE: date not pulling from dog.date_found -->
-              <fieldset class="form-group">
-                <label for="date_found">Date Found</label>
-                <input type="date" name='date_found' class="form-control" id="date_found">
-              </fieldset>
             </div>
             <div class="d-flex justify-content-start">
               <fieldset class="form-group">
@@ -715,7 +710,7 @@
                 <label for="collarYes" class="radio-label">Yes</label>
               </div>
               <div class="form-check form-check-inline">
-                <input class="form-check-input radio-button" type="radio" name="collar" id="collarNo" value="no">
+                <input checked class="form-check-input radio-button" type="radio" name="collar" id="collarNo" value="no">
                 <label for="collarNo" class="radio-label">No</label>
               </div>
               {% endif %}
