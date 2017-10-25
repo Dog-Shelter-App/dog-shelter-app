@@ -139,7 +139,7 @@ def find_dog_by_name(name):
 def find_all_dogs():
     return dogs.find({})
 def find_deleted_dogs():
-    return dogs.find({'delete':True})
+    return dogs.find({'delete': {'$ne': False} })
 def find_all_public_dogs():
     return dogs.find({"delete":False})
 
@@ -158,13 +158,13 @@ def delete_dog_by_id(_id):
     return dogs.remove({"_id": _id})
 
 def delete_many_dogs_by_date_range(start, stop):
-    #convert to timeobject
-    date_found_obj = datetimeconverter(start)
-    end_date_obj = datetimeconverter(stop)
+    requests = [UpdateMany({'date_found':{'$gte': start, '$lt': stop}}, {'$set':{'delete':datetime.today()}})]
 
-    requests = [UpdateMany({'date_found':{'$gte': date_found_obj, '$lt': end_date_obj}}, {'$set':{'delete':datetime.today()}})]
-    dogs_list = dogs.find({'date_found':{'$gte': date_found_obj, '$lt': end_date_obj}})
-    return dogs.bulk_write(requests)
+    dogs.bulk_write(requests)
+
+    dogs_list = dogs.find({'date_found':{'$gte': start, '$lt': stop}})
+
+    return dogs_list
 
 ######################################################
 ######################################################
