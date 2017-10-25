@@ -85,7 +85,7 @@ class DogFormHandler(TemplateHandler):
 
         user = db_opp.find_user_by_email(self.current_user.decode('utf-8'))
 
-        if user['user_type'] == "shelter":
+        if user['type'] == "shelter":
             self.set_header(
               'Cache-Control',
               'no-store, no-cache, must-revalidate, max-age=0')
@@ -239,7 +239,7 @@ class UserProfileHandler(TemplateHandler):
     @tornado.web.authenticated
     def get(self):
         user_data = db_opp.find_user_by_email(self.current_user.decode('utf-8'))
-        if user_data['user_type'] == "owner":
+        if user_data['type'] == "owner":
             shelter = False
         else:
             shelter = True
@@ -318,8 +318,8 @@ class CompleteProfileHandler(TemplateHandler):
         self.render_template("/pages/complete-profile.html", {"user": user})
 
     def post(self):
-        data = { "user_type": self.get_body_argument("user_type")}
-        db_opp.update_user_by_email(email, data)
+        data = { "type": self.get_body_argument("type")}
+        db_opp.update_user_by_email(self.current_user.decode('utf-8'), data)
 
         self.redirect("/profile")
 
@@ -393,7 +393,7 @@ class GAuthLoginHandler(BaseHandler, tornado.auth.GoogleOAuth2Mixin):
                 current_user = db_opp.find_user_by_email(email)
                 print(current_user['email'])
                 self.set_secure_cookie('user', current_user['email'])
-                if current_user['user_type'] == "not_set":
+                if current_user['type'] == "not_set":
                     self.redirect('/complete-profile')
                 else:
                     self.redirect('/profile')
