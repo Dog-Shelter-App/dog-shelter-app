@@ -94,9 +94,10 @@
             {% endif %}
             <fieldset class="form-group">
               <label>Is the Dog Neutered?</label>
+              {% if neutered %}
               <div class="">
                 <div class="form-check form-check-inline">
-                  <input class="form-check-input radio-button" type="radio" name="fix" id="fixYes" value="yes">
+                  <input checked class="form-check-input radio-button" type="radio" name="fix" id="fixYes" value="yes">
                   <label for="fixYes" class="radio-label">Yes</label>
                 </div>
                 <div class="form-check form-check-inline">
@@ -104,6 +105,18 @@
                     <label for="fixNo" class="radio-label">No</label>
                 </div>
               </div>
+              {% else %}
+              <div class="">
+                <div class="form-check form-check-inline">
+                  <input class="form-check-input radio-button" type="radio" name="fix" id="fixYes" value="yes">
+                  <label for="fixYes" class="radio-label">Yes</label>
+                </div>
+                <div class="form-check form-check-inline">
+                  <input checked class="form-check-input radio-button" type="radio" name="fix" id="fixNo" value="no">
+                    <label for="fixNo" class="radio-label">No</label>
+                </div>
+              </div>
+              {% endif %}
             </fieldset>
           </div>
           <!-- Section 2 -->
