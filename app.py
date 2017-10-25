@@ -96,19 +96,21 @@ class DogFormHandler(TemplateHandler):
         # import io
         # from PIL import Image
 
-        file_all = self.request.files['my_File'][0]
-        file_name = file_all['filename']
-        file_body = file_all['body']
+        file_path = db_opp.upload_dog_image(self.request.files['my_File'][0])
 
-        import os
-
-        file_path = os.path.join('static/img/dog_images/', file_name)
-        if not os.path.exists('static/img/dog_images/'):
-            os.makedirs('static/img/dog_images/')
-        print(file_path)
-        with open(file_path, 'wb') as f:
-            f.write(file_body)
-        f.closed
+        # file_all =
+        # file_name = file_all['filename']
+        # file_body = file_all['body']
+        #
+        # import os
+        #
+        # file_path = os.path.join('static/img/dog_images/', file_name)
+        # if not os.path.exists('static/img/dog_images/'):
+        #     os.makedirs('static/img/dog_images/')
+        # print(file_path)
+        # with open(file_path, 'wb') as f:
+        #     f.write(file_body)
+        # f.closed
 
         # # File_Name = File_All.name
         #
@@ -481,38 +483,74 @@ class EditDogHandler(TemplateHandler):
     def get(self, _id):
         dog = db_opp.find_dog_by_id(_id)
 
-        if dog['collar']:
+        if dog['collar'] == "yes":
             collar = True
+        else:
+            collar = False
         if dog['gender'] == "female":
             female = True
+        else:
+            female = False
         if dog['fix'] == "yes":
             neutered = True
+        else:
+            neutered = False
 
         shelter = db_opp.find_shelter_by_id(dog['shelter_id'])
         user = db_opp.find_shelter_by_id(dog['user_id'])
-        self.render_template("pages/dog-profile-edit.html", {"dog":dog, "shelter": shelter, "user": user})
+        self.render_template("pages/dog-profile-edit.html", {"dog":dog, "shelter": shelter, "user": user, "collar": collar, "female": female, "neutered": neutered})
 
 class UpdateDogHandler(TemplateHandler):
     def post(self):
         _id = self.get_body_argument('_id')
-        name = self.get_body_argument('name')
-        breed= self.get_body_argument('breed').lower()
-        id_chip= self.get_body_argument('id_chip')
-        age= self.get_body_argument('age')
-        location_found= self.get_body_argument('location_found')
-        prim_color= self.get_body_argument('prim_color').lower()
-        sec_color= self.get_body_argument('sec_color').lower()
-        height= self.get_body_argument('height')
-        weight= self.get_body_argument('weight')
-        gender= self.get_body_argument('gender', None)
-        fix= self.get_body_argument('fix', None)
-        collar= self.get_body_argument('collar', None)
-        collar_color= self.get_body_argument('collar_color').lower()
-        ears= self.get_body_argument('ears').lower()
-        eyes= self.get_body_argument('eyes').lower()
-        notes= self.get_body_argument('notes')
+        #   #   _id
+        #   #   name
+        #   #   image
+        #   #   gender
+        #   #   collar
+        #   #   collar_color
+        #   #   fix
+        #   #   breed
+        #   #   location_found
+        #   #   date_found
+        #   #   prim_color
+        #   #   sec_color
+        #   #   height
+        #   #   weight
+        #   #   eyes
+        #   #   ears
+        #   #   age
+        #   #   notes
+        #   #   date_deleted
+        #FK #   user_id
+        #FK #   shelter_id
 
-        dogs.update_one({"_id":_id}, {'$set': {'name':name, 'age':age, 'breed':breed, 'id_chip':id_chip, 'location_found':location_found, 'collar':collar, 'collar_color':collar_color, 'height':height, 'weight':weight,'prim_color':prim_color, 'sec_color':sec_color, 'eyes':eyes, 'ears':ears, 'notes':notes }})
+        data = {}
+
+        if not self.request.files:
+            print("no files")
+            pass
+        else:
+            data['image'] = db_opp.upload_dog_image(self.request.files['my_File'][0])
+        print(self.get_body_argument("name"))
+        data["name"] = self.get_body_argument('name')
+        data["gender"] = self.get_body_argument('gender', None)
+        data["collar"] = self.get_body_argument('collar', None)
+        data["collar_color"] = self.get_body_argument('collar_color').lower()
+        data["fix"] = self.get_body_argument('fix', None)
+        data["breed"] = self.get_body_argument('breed').lower()
+        data["location_found"] = self.get_body_argument('location_found')
+        data["prim_color"] = self.get_body_argument('prim_color').lower()
+        data["sec_color"] = self.get_body_argument('sec_color').lower()
+        data["height"] = self.get_body_argument('height')
+        data["weight"] = self.get_body_argument('weight')
+        data["eyes"] = self.get_body_argument('eyes').lower()
+        data["ears"] = self.get_body_argument('ears').lower()
+        data["age"] = self.get_body_argument('age')
+        data["notes"] = self.get_body_argument('notes')
+        data["id_chip"] = self.get_body_argument('id_chip')
+
+        db_opp.update_dog_by_id(_id, data)
 
         self.redirect('/dogs/' + _id)
 def datetimeconverter(n):

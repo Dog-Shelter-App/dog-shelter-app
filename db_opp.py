@@ -167,11 +167,7 @@ def delete_many_dogs_by_date_range(start, stop):
 
     return dogs_list
 
-######################################################
-######################################################
-# SHELTER FUNCTIONS
-######################################################
-######################################################
+
 
 def find_shelter_by_id(_id):
     return shelters.find_one({"_id": _id})
@@ -188,3 +184,30 @@ def update_shelter_by_id(_id, data):
 
 def delete_shelter_by_id(_id):
     return shelters.remove({"_id": _id})
+
+
+######################################################
+######################################################
+# IMAGE FUNCTIONS
+######################################################
+######################################################
+
+
+# self.request.files['my_File'][0] is what you pass in as an argument
+
+def upload_dog_image(my_File):
+    file_all = my_File
+    file_name = file_all['filename']
+    file_body = file_all['body']
+
+    import os
+
+    file_path = os.path.join('static/img/dog_images/', file_name)
+    if not os.path.exists('static/img/dog_images/'):
+        os.makedirs('static/img/dog_images/')
+    print(file_path)
+    with open(file_path, 'wb') as f:
+        f.write(file_body)
+    f.closed
+
+    return file_path
