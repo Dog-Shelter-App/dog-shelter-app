@@ -1,16 +1,19 @@
 #GET MY PUP
 ## A ready-made operations tool for Animal shelters to store animals, query, and update.
 
-[DigitalCrafts](http://www.DigitalCrafts.com)' group project week
+###[DigitalCrafts](http://www.DigitalCrafts.com)' group project week
+
 ###[Juliana Mei](http://github.com/julianapeace)
+
 ###[Kevin Meinhardt](https://github.com/KevinMind)
+
 ###[Gustavo Martinez](https://github.com/gmartinez31)
 ---------
 
 ### Summary
 Houston's animal rescue organizations are overwhelmed by a large number of incoming lost/stray animals. All shelters triage their incoming animals into their own proprietary internal database.
 
-This project aims to unify Houston's animal database into one powerful tool that is easily accommodate high incoming rates and high kill rates. It answers the current cities fragmented query options so no owner would have to dedicate hours to comb through multiple outdated websites, call and be placed on hold, and spend hours walking through kennels.
+This project aims to unify Houston's animal database into one powerful tool that easily accommodates shelters with high incoming and high kill rates. It answers the currently fragmented options. Now owner don't have to dedicate hours combing through multiple outdated websites, call and be placed on hold, or spend hours walking through kennels.
 
 ---------
 
@@ -22,13 +25,20 @@ This project aims to unify Houston's animal database into one powerful tool that
 ---------
 
 ### Stretch Goals
-- [x] Users have full CRUD functionality
+- [x] Users have full CRUD (Create, Read, Update, Delete) functionality
 - [x] Users can followup when they CLAIM a dog
-- [x] Users can QUERY animals
+- [x] Users can filter animals
+- [x]
+- [ ] AWS S3 Boto3 Image storage
+
 
 ## KEY FEATURES
 -Three User Types: 'Not Set', 'Owner', 'Shelter'
 -A record of delete animals can be exported into a CSV
+-A function to add 100 dogs to the database including AI sentence generation
+-Notifications when dogs are found
+-Secure authentication
+-Multi-part form entry for simple usability
 
 --------
 ## Developer Notes
@@ -38,7 +48,7 @@ This project aims to unify Houston's animal database into one powerful tool that
 Our project is the solution to answer Houston's currently fragmented animal databases.
 
 ## The technology you used?
-We used MongoDB, PyMongo, Python, Javascript, JQuery, SCSS, HTML
+We used MongoDB, PyMongo, Python, Javascript, JQuery, CSS, HTML, Jinja, Tornado, AWS Lightsail
 
 ## Problems you encountered and how you solved them.
 
@@ -50,6 +60,7 @@ We're really impressed with how incredibly filled out their idea became. We star
 
 And we created a pretty expansive user level system! Users need to have certain credentials to be able to delete dogs or access admin pages (like export to csv/ view all users/ add a shelter)
 
+We can an entire database generators. We can populate the database with 100's of dogs and multiple shelters with one command.
 ------
 
 Tornado_Starter Template by
