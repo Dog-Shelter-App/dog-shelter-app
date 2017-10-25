@@ -1,5 +1,5 @@
 # GET MY PUP
-## A ready-made operations tool for Animal shelters to store animals, query, and update.
+## A full operations tool for animal rescue shelters to keep animal inventory up-to-date with extreme ease.
 
 ### [DigitalCrafts](https://www.DigitalCrafts.com)' group project week
 
