@@ -811,6 +811,10 @@ def bulk_add_shelters():
         "state": "Tejas"
         }
         db_opp.add_new_shelter(data)
+<<<<<<< HEAD
+=======
+
+>>>>>>> a8c9222b5a91182b1565126aec1f2870760d1ef3
 def run():
     dogs.remove({})
     shelters.remove({})
