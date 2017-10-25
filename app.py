@@ -30,7 +30,7 @@ breeds = db.breeds_collection
 
 
 # AWS S3
-from settings import aws_s3_access_key, aws_s3_secret_access_key
+# from settings import aws_s3_access_key, aws_s3_secret_access_key
 
 # import boto3
 #
@@ -96,19 +96,21 @@ class DogFormHandler(TemplateHandler):
         # import io
         # from PIL import Image
 
-        file_all = self.request.files['my_File'][0]
-        file_name = file_all['filename']
-        file_body = file_all['body']
+        file_path = db_opp.upload_dog_image(self.request.files['my_File'][0])
 
-        import os
-
-        file_path = os.path.join('static/img/dog_images/', file_name)
-        if not os.path.exists('static/img/dog_images/'):
-            os.makedirs('static/img/dog_images/')
-        print(file_path)
-        with open(file_path, 'wb') as f:
-            f.write(file_body)
-        f.closed
+        # file_all =
+        # file_name = file_all['filename']
+        # file_body = file_all['body']
+        #
+        # import os
+        #
+        # file_path = os.path.join('static/img/dog_images/', file_name)
+        # if not os.path.exists('static/img/dog_images/'):
+        #     os.makedirs('static/img/dog_images/')
+        # print(file_path)
+        # with open(file_path, 'wb') as f:
+        #     f.write(file_body)
+        # f.closed
 
         # # File_Name = File_All.name
         #
@@ -270,6 +272,9 @@ class UserProfileHandler(TemplateHandler):
         }
 
         db_opp.update_user_by_id(_id, data)
+        user = db_opp.find_user_by_id(_id)
+        if type == "owner":
+            user['type'] = "not_set"
 
         self.redirect('/profile')
 
@@ -459,15 +464,11 @@ class QueryHandler(TemplateHandler):
     def post(self):
         gender = self.get_body_argument("gender", None)
         breed = self.get_body_argument("breed", None)
-        color = self.get_body_argument("color", None).lower()
-        age = self.get_body_argument("age", None)
         name = self.get_body_argument("name", None)
 
         data = [
         {"gender": gender},
         {"breed": breed},
-        {"prim_color": color},
-        {"age": age},
         {"name": name}
         ]
 
@@ -476,34 +477,80 @@ class QueryHandler(TemplateHandler):
         self.set_header(
           'Cache-Control',
           'no-store, no-cache, must-revalidate, max-age=0')
-        self.render_template("/pages/dog-list-results.html", {'dogs_list': dogs_list, 'breed':breed, 'gender': gender, "color": color, "age": age, "name": name})
+        self.render_template("/pages/dog-list-results.html", {'dogs_list': dogs_list, 'breed': breed, 'gender': gender, "name": name})
 
 class EditDogHandler(TemplateHandler):
     def get(self, _id):
         dog = db_opp.find_dog_by_id(_id)
-        self.render_template("pages/dog-profile-edit.html", {"dog":dog})
+
+        if dog['collar'] == "yes":
+            collar = True
+        else:
+            collar = False
+        if dog['gender'] == "female":
+            female = True
+        else:
+            female = False
+        if dog['fix'] == "yes":
+            neutered = True
+        else:
+            neutered = False
+
+        shelter = db_opp.find_shelter_by_id(dog['shelter_id'])
+        user = db_opp.find_shelter_by_id(dog['user_id'])
+        self.render_template("pages/dog-profile-edit.html", {"dog":dog, "shelter": shelter, "user": user, "collar": collar, "female": female, "neutered": neutered})
 
 class UpdateDogHandler(TemplateHandler):
     def post(self):
         _id = self.get_body_argument('_id')
-        name = self.get_body_argument('name')
-        breed= self.get_body_argument('breed').lower()
-        id_chip= self.get_body_argument('id_chip')
-        age= self.get_body_argument('age')
-        location_found= self.get_body_argument('location_found')
-        prim_color= self.get_body_argument('prim_color').lower()
-        sec_color= self.get_body_argument('sec_color').lower()
-        height= self.get_body_argument('height')
-        weight= self.get_body_argument('weight')
-        gender= self.get_body_argument('gender', None)
-        fix= self.get_body_argument('fix', None)
-        collar= self.get_body_argument('collar', None)
-        collar_color= self.get_body_argument('collar_color').lower()
-        ears= self.get_body_argument('ears').lower()
-        eyes= self.get_body_argument('eyes').lower()
-        notes= self.get_body_argument('notes')
+        #   #   _id
+        #   #   name
+        #   #   image
+        #   #   gender
+        #   #   collar
+        #   #   collar_color
+        #   #   fix
+        #   #   breed
+        #   #   location_found
+        #   #   date_found
+        #   #   prim_color
+        #   #   sec_color
+        #   #   height
+        #   #   weight
+        #   #   eyes
+        #   #   ears
+        #   #   age
+        #   #   notes
+        #   #   date_deleted
+        #FK #   user_id
+        #FK #   shelter_id
 
-        dogs.update_one({"_id":_id}, {'$set': {'name':name, 'age':age, 'breed':breed, 'id_chip':id_chip, 'location_found':location_found, 'collar':collar, 'collar_color':collar_color, 'height':height, 'weight':weight,'prim_color':prim_color, 'sec_color':sec_color, 'eyes':eyes, 'ears':ears, 'notes':notes }})
+        data = {}
+
+        if not self.request.files:
+            print("no files")
+            pass
+        else:
+            data['image'] = db_opp.upload_dog_image(self.request.files['my_File'][0])
+        print(self.get_body_argument("name"))
+        data["name"] = self.get_body_argument('name')
+        data["gender"] = self.get_body_argument('gender', None)
+        data["collar"] = self.get_body_argument('collar', None)
+        data["collar_color"] = self.get_body_argument('collar_color').lower()
+        data["fix"] = self.get_body_argument('fix', None)
+        data["breed"] = self.get_body_argument('breed').lower()
+        data["location_found"] = self.get_body_argument('location_found')
+        data["prim_color"] = self.get_body_argument('prim_color').lower()
+        data["sec_color"] = self.get_body_argument('sec_color').lower()
+        data["height"] = self.get_body_argument('height')
+        data["weight"] = self.get_body_argument('weight')
+        data["eyes"] = self.get_body_argument('eyes').lower()
+        data["ears"] = self.get_body_argument('ears').lower()
+        data["age"] = self.get_body_argument('age')
+        data["notes"] = self.get_body_argument('notes')
+        data["id_chip"] = self.get_body_argument('id_chip')
+
+        db_opp.update_dog_by_id(_id, data)
 
         self.redirect('/dogs/' + _id)
 def datetimeconverter(n):
@@ -513,20 +560,39 @@ def datetimeconverter(n):
 
 class DeleteDogHandler(TemplateHandler):
     def post(self):
-        # singledelete = self.get_body_argument('singledelete')
-        # print(singledelete)
-
+        #############################################################
+        #                DELETES DOGS
+        #############################################################
         date_found = self.get_body_argument('date_found')
         end_date = self.get_body_argument('end_date')
-        #convert to timeobject
-        date_found_obj = datetimeconverter(date_found)
-        end_date_obj = datetimeconverter(end_date)
-        requests = [UpdateMany({'date_found':{'$gte': date_found_obj, '$lt': end_date_obj}}, {'$set':{'delete':datetime.today()}})]
+        #convert to time objects
+        start = datetimeconverter(date_found)
+        stop = datetimeconverter(end_date)
+        #db Opp deletes dogs and returns list of deleted dogs
+        dogs_list = db_opp.delete_many_dogs_by_date_range(start, stop)
+        #############################################################
+        #                EXPORTS TO CSV
+        #############################################################
+        import csv
+        myquery = db_opp.find_deleted_dogs()
 
-        dogs_list = dogs.find({'date_found':{'$gte': date_found_obj, '$lt': end_date_obj}})
-        dogs.bulk_write(requests)
+        file_name = datetime.strftime(datetime.today(),'%Y%m%d') + '.csv'
 
-        self.render_template('pages/deleted.html', {"dogs_list":dogs_list, "date_found":date_found, "end_date":end_date})
+        file_path = os.path.join('static/exports/', file_name)
+        if not os.path.exists('static/exports/'):
+            os.makedirs('static/exports/')
+        print(file_path)
+
+        with open(file_path, 'w') as outfile:
+            fields = ['_id','name', 'age', 'breed', 'date_found', 'location_found', 'ears', 'eyes', 'gender','fix', 'notes', 'image', 'sec_color', 'prim_color', 'weight', 'height', 'id_chip', 'collar', 'collar_color', 'delete' ,'user_id', 'shelter_id']
+            writer = csv.DictWriter(outfile, fieldnames = fields)
+            writer.writeheader()
+            for x in myquery:
+                writer.writerow(x)
+        outfile.close()
+
+        self.render_template('pages/deleted.html', {"dogs_list":dogs_list, "date_found":date_found, "end_date":end_date, "file_path": file_path})
+
 class DeleteSingleDogHandler(TemplateHandler):
     def post(self):
         dog_id = self.get_body_argument('singledelete')
@@ -534,20 +600,6 @@ class DeleteSingleDogHandler(TemplateHandler):
         data = {'delete': datetime.today()}
         db_opp.update_dog_by_id(dog_id, data)
         self.redirect('/dogs')
-
-class ExportHandler(TemplateHandler):
-    def get(self):
-        import csv
-
-        myquery = db_opp.find_deleted_dogs()
-
-        with open('some.csv', 'w') as outfile:
-            fields = ['_id','name', 'age', 'breed', 'date_found', 'location_found', 'ears', 'eyes', 'gender','fix', 'notes', 'image', 'sec_color', 'prim_color', 'weight', 'height', 'id_chip', 'collar', 'collar_color', 'delete' ,'user']
-            writer = csv.DictWriter(outfile, fieldnames = fields)
-            writer.writeheader()
-            for x in myquery:
-                writer.writerow(x)
-        outfile.close()
 
 class make_app(tornado.web.Application):
     def __init__(self):
@@ -566,7 +618,6 @@ class make_app(tornado.web.Application):
             (r"/delete", DeleteDogHandler),
             (r"/delete-single", DeleteSingleDogHandler),
             (r"/querybar", QueryHandler),
-            (r"/export", ExportHandler),
             (r"/shelters", SheltersHandler),
             (r"/dogs/(.*)",DogProfileHandler),
             (

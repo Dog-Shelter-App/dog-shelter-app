@@ -8,7 +8,7 @@
   <div class="d-flex justify-content-center flex-wrap align-items-center">
     <div class="dog-profile__card d-flex flex-column justify-content-center align-items-center">
       <div class="dog-profile__polaroid">
-        <img class="dog-profile__img-thumbnail" src="{{dog.image}}" alt="" data-toggle="modal" data-target="#dogImageFullSize">
+        <img class="dog-profile__img-thumbnail" src="../{{dog.image}}" alt="" data-toggle="modal" data-target="#dogImageFullSize">
         <div class="dog-profile__name"><h1>{{dog.name}}</h1></div>
       </div>
     </div>
@@ -32,7 +32,7 @@
         </button>
       </div>
       <div class="modal-body">
-        <img src="{{dog.image}}" alt="" class="dog-profile__img-fullsize">
+        <img src="../{{dog.image}}" alt="" class="dog-profile__img-fullsize">
       </div>
       <div class="modal-footer">
         <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
@@ -88,12 +88,44 @@
             <td>{{dog.breed}}</td>
           </tr>
           <tr>
+            <td>Location Found</td>
+            <td>{{dog.location_found}}</td>
+          </tr>
+          <tr>
+            <td>Date Found</td>
+            <td>{{dog.date_found}}</td>
+          </tr>
+          <tr>
+            <td>Primary Color</td>
+            <td>{{dog.prim_color}}</td>
+          </tr>
+          <tr>
+            <td>Secondary Color</td>
+            <td>{{dog.sec_color}}</td>
+          </tr>
+          <tr>
+            <td>Height</td>
+            <td>{{dog.height}}</td>
+          </tr>
+          <tr>
+            <td>Weight</td>
+            <td>{{dog.weight}}</td>
+          </tr>
+          <tr>
+            <td>Eye Collar</td>
+            <td>{{dog.eyes}}</td>
+          </tr>
+          <tr>
+            <td>Ears</td>
+            <td>{{dog.ears}}</td>
+          </tr>
+          <tr>
             <td>Age</td>
             <td>{{dog.age}}</td>
           </tr>
           <tr>
-            <td>Location Found</td>
-            <td>{{dog.location_found}}</td>
+            <td>Notes</td>
+            <td>{{dog.notes}}</td>
           </tr>
           <tr>
             <td>Collar</td>
@@ -106,34 +138,6 @@
           <tr>
             <td>ID CHIP</td>
             <td>{{dog.id_chip}}</td>
-          </tr>
-          <tr>
-            <td>Height</td>
-            <td>{{dog.height}}</td>
-          </tr>
-          <tr>
-            <td>Weight</td>
-            <td>{{dog.weight}}</td>
-          </tr>
-          <tr>
-            <td>Primary Color</td>
-            <td>{{dog.prim_color}}</td>
-          </tr>
-          <tr>
-            <td>Secondary Color</td>
-            <td>{{dog.sec_color}}</td>
-          </tr>
-          <tr>
-            <td>Eyes</td>
-            <td>{{dog.eyes}}</td>
-          </tr>
-          <tr>
-            <td>Ears</td>
-            <td>{{dog.ears}}</td>
-          </tr>
-          <tr>
-            <td>Notes</td>
-            <td>{{dog.notes}}</td>
           </tr>
         </tbody>
       </table>

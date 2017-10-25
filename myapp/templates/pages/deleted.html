@@ -14,19 +14,23 @@
             <td>Weight</td>
             <td>Location Found</td>
             <td>Date Found</td>
+            <td>User ID</td>
+            <td>Shelter ID</td>
             <td>Delete</td>
           </thead>
           <tbody>
             {% for dog in dogs_list%}
             <tr>
               <!-- <td>Name</td> -->
-              <td>{{dog.dog_name}}</td>
+              <td>{{dog.name}}</td>
               <td>{{dog.breed}}</td>
               <td>{{dog.age}}</td>
               <td>{{dog.gender}}</td>
               <td>{{dog.weight}}</td>
               <td>{{dog.location_found}}</td>
               <td>{{dog.date_found}}</td>
+              <td>{{dog.shelter_id}}</td>
+              <td>{{dog.user_id}}</td>
               <td>{{dog.delete}}</td>
             </tr>
             {% endfor %}
@@ -36,7 +40,7 @@
     </div>
     <div class="col-md-3">
       <div class="d-flex">
-        <a href="/export" class="btn btn-info">Export to .CSV</a>
+        <a href="{{file_path}}" class="btn btn-info">Export to .CSV</a>
       </div>
     </div>
   </div>
