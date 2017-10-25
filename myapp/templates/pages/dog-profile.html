@@ -17,7 +17,7 @@
       <p>ID: {{dog.user_id}}</p>
       <p>Breed: {{dog.breed}}</p>
       <p>Location Found: {{dog.location}}</p>
-      <a href="/" class="btn btn-warning">That's My Dog</a>
+      <a href="mailto:{{shelter.email}}?Subject=URGENT%3A%20Dog%20Claimed" class="btn btn-warning">That's My Dog</a>
     </div>
   </div>
 </div>
@@ -36,7 +36,7 @@
       </div>
       <div class="modal-footer">
         <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-        <a href="/" class="btn btn-warning">That's my dog!</a>
+        <a href="mailto:{{shelter.email}}?Subject=URGENT%3A%20Dog%20Claimed" class="btn btn-warning">That's my dog!</a>
       </div>
     </div>
   </div>

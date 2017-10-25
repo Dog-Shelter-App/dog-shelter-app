@@ -1,12 +1,12 @@
 import os
 
 # Google Oauth Credentials
-client_id = "1085158931211-rm9ugg4e6te9shrootb7sg22ahbi714l.apps.googleusercontent.com"
+client_id = "845583204100-mdr5iv0bgkurj3a1ibu6r9k0e4fj8jnh.apps.googleusercontent.com"
 project_id = os.environ.get("project_id")
 auth_uri = os.environ.get("auth_uri")
 token_uri = os.environ.get("token_uri")
 auth_provider_x509_cert_url = os.environ.get("auth_provider_x509_cert_url")
-client_secret = "OrorRXuRg2F0qLJPUqxPMJHW"
+client_secret = "HQINf3qMplZ9_5bpEKfI_0w-"
 
 # Application cookie secret (long random string)
 cookie_secret = "sdflkjweghwoegjwoekfjwoekfjweogkhwoekjwoeihrgowehfwjhglkdjdksjbvdfjksdahofdjkhdfjkhsdfbdf"

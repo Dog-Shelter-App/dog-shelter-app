@@ -168,7 +168,6 @@ class DogFormHandler(TemplateHandler):
         self.redirect('/dogs')
 
         # ADD DOG
-
 class DogListHandler(TemplateHandler):
     @tornado.web.authenticated
     def get(self):
