@@ -33,13 +33,13 @@ This project aims to unify Houston's animal database into one powerful tool that
 
 
 ## KEY FEATURES
--[x]Three User Types: 'Not Set', 'Owner', 'Shelter'
+- [x]Three User Types: 'Not Set', 'Owner', 'Shelter'
 Shelters have admin privileges like Add/Delete/Edit/Mass-delete dogs. Owners can only query. 'Not Set' can only view dog database.
--[x]A record of deleted animals can be exported into a CSV
--[x]A function to add 100 dogs to the database including AI sentence generation
--[x]Notifications when dogs are found
--[x]Secure authentication
--[x]Multi-part form entry for simple usability
+- [x]A record of deleted animals can be exported into a CSV
+- [x]A function to add 100 dogs to the database including AI sentence generation
+- [x]Notifications when dogs are found
+- [x]Secure authentication
+- [x]Multi-part form entry for simple usability
 
 --------
 ## Developer Notes
