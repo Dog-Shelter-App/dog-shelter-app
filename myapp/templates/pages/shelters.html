@@ -1,22 +1,46 @@
 {% extends 'base.html' %}
-
-{% block title %}Index{% endblock %}
 {% block head %}
-    {{ super() }}
+{{ super() }}
 {% endblock %}
 {% block body %}
+<div class="container-fluid">
+  <div class="row">
+    <div class="col-sm-12 col-md-3 p-3">
+      <div class="card">
+        <img class="card-img-top" src="{{user.avatar}}" alt="Card image cap">
+        <div class="card-block p-3">
+          <h4 class="card-title">Hi {{user.given_name}}</h4>
+          <p class="card-text">Here you can view all of the shelters listed in our database. If you work with one of these shelters you may request to join it by clicking "Join Shelter" next to the shelter.</p>
+        </div>
+      </div>
+    </div>
+    <div class="col-sm-12 col-md-9 p-3">
+      <table class="table">
+        <thead>
+          <tr>
+            <th>ID</th>
+            <th>Name</th>
+            <th>Phone</th>
+            <th>Email</th>
+            <th>Address</th>
+            <th>Join</th>
+          </tr>
+        </thead>
+        <tbody>
+          {% for shelter in shelters_list %}
+          <tr>
+            <td>{{shelter._id}}</td>
+            <td>{{shelter.name}}</td>
+            <td>{{shelter.phone}}</td>
+            <td>{{shelter.email}}</td>
+            <td>{{shelter.address}} {{shelter.city}}, {{shelter.state}}</td>
+            <td><a class="btn btn-default" href="shelters/join/{{shelter._id}}">Join Shelter</a></td>
+          </tr>
+          {% endfor %}
 
-{% for shelter in shelters_list %}
-<div class="">
-  <ul>
-    <li>{{shelter._id}}</li>
-  </ul>
-
+        </tbody>
+      </table>
+    </div>
+  </div>
 </div>
-
-
-
-{% endfor %}
-
-
-{% endblock %}
+{% endblock%}
