@@ -18,6 +18,7 @@ def get_user():
     x = users_list[rand]
     return x['_id']
 
+
 def get_shelter():
     shelters_list = db_opp.find_all_shelters()
     count = db_opp.find_all_shelters().count()
@@ -790,4 +791,27 @@ def bulk_add_dogs():
             age = dog['age']
             print("Added {} to the DB. {} is a {} year old {}.".format(name, gender, age, breed))
 
-bulk_add_dogs()
+shelter_names = [
+    "Julie's Place",
+    "Kevin's Pound",
+    "Goosey Ranch"
+]
+
+def bulk_add_shelters():
+
+    for name in shelter_names:
+
+        data = {
+        "name": name,
+        "_id": db_opp.create_uuid(),
+        "phone": "1234567890",
+        "email": "fake@company.com",
+        "address": "123 Fake Street",
+        "city": "Screwston",
+        "state": "Tejas"
+        }
+        db_opp.add_new_shelter(data)
+
+bulk_add_shelters()
+
+# bulk_add_dogs()

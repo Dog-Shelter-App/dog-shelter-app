@@ -276,15 +276,14 @@ class UserProfileHandler(TemplateHandler):
 class SheltersHandler(TemplateHandler):
     @tornado.web.authenticated
     def get(self):
-        user_email = self.current_user.decode('utf-8')
-        user_data = users.find_one({
-        "email": user_email
-        })
+        user = db_opp.find_user_by_email(self.current_user.decode('utf-8'))
+
         shelters_list = db_opp.find_all_shelters()
+
         self.set_header(
           'Cache-Control',
           'no-store, no-cache, must-revalidate, max-age=0')
-        self.render_template("/pages/shelters.html", {"user": user_data, "shelters_list": shelters_list})
+        self.render_template("/pages/shelters.html", {"user": user, "shelters_list": shelters_list})
 
     def post(self):
         name = self.get_body_argument('name', None)
@@ -447,6 +446,7 @@ class DogProfileHandler(TemplateHandler):
         dog = db_opp.find_dog_by_id(_id)
         shelter_name = dog["shelter"]
         shelter = db_opp.find_shelter_by_name(shelter_name)
+        print(shelter)
         self.set_header(
           'Cache-Control',
           'no-store, no-cache, must-revalidate, max-age=0')
