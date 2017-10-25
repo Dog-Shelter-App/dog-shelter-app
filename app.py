@@ -484,7 +484,7 @@ class EditDogHandler(TemplateHandler):
 class UpdateDogHandler(TemplateHandler):
     def post(self):
         _id = self.get_body_argument('_id')
-        dog_name = self.get_body_argument('dog_name')
+        name = self.get_body_argument('name')
         # "thumbnail": file_path
         breed= self.get_body_argument('breed').lower()
         id_chip= self.get_body_argument('id_chip')
@@ -501,7 +501,8 @@ class UpdateDogHandler(TemplateHandler):
         ears= self.get_body_argument('ears').lower()
         eyes= self.get_body_argument('eyes').lower()
         notes= self.get_body_argument('notes')
-        dogs.update_one({"_id":_id}, {'$set': {'dog_name':dog_name, 'age':age, 'breed':breed, 'id_chip':id_chip, 'location_found':location_found, 'collar':collar, 'collar_color':collar_color, 'height':height, 'weight':weight,'prim_color':prim_color, 'sec_color':sec_color, 'eyes':eyes, 'ears':ears, 'notes':notes }})
+
+        dogs.update_one({"_id":_id}, {'$set': {'name':name, 'age':age, 'breed':breed, 'id_chip':id_chip, 'location_found':location_found, 'collar':collar, 'collar_color':collar_color, 'height':height, 'weight':weight,'prim_color':prim_color, 'sec_color':sec_color, 'eyes':eyes, 'ears':ears, 'notes':notes }})
 
         self.redirect('/dogs/' + _id)
 def datetimeconverter(n):
@@ -525,6 +526,13 @@ class DeleteDogHandler(TemplateHandler):
         dogs.bulk_write(requests)
 
         self.render_template('pages/deleted.html', {"dogs_list":dogs_list, "date_found":date_found, "end_date":end_date})
+class DeleteSingleDogHandler(TemplateHandler):
+    def post(self):
+        dog_id = self.get_body_argument('singledelete')
+        print(dog_id)
+        data = {'delete': datetime.today()}
+        db_opp.update_dog_by_id(dog_id, data)
+        self.redirect('/dogs')
 
 class ExportHandler(TemplateHandler):
     def get(self):
@@ -555,6 +563,7 @@ class make_app(tornado.web.Application):
             (r"/edit/(.*)",EditDogHandler),
             (r"/update", UpdateDogHandler),
             (r"/delete", DeleteDogHandler),
+            (r"/delete-single", DeleteSingleDogHandler),
             (r"/querybar", QueryHandler),
             (r"/export", ExportHandler),
             (r"/shelters", SheltersHandler),
