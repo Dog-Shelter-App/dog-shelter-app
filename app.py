@@ -462,15 +462,11 @@ class QueryHandler(TemplateHandler):
     def post(self):
         gender = self.get_body_argument("gender", None)
         breed = self.get_body_argument("breed", None)
-        color = self.get_body_argument("color", None).lower()
-        age = self.get_body_argument("age", None)
         name = self.get_body_argument("name", None)
 
         data = [
         {"gender": gender},
         {"breed": breed},
-        {"prim_color": color},
-        {"age": age},
         {"name": name}
         ]
 
@@ -479,7 +475,7 @@ class QueryHandler(TemplateHandler):
         self.set_header(
           'Cache-Control',
           'no-store, no-cache, must-revalidate, max-age=0')
-        self.render_template("/pages/dog-list-results.html", {'dogs_list': dogs_list, 'breed':breed, 'gender': gender, "color": color, "age": age, "name": name})
+        self.render_template("/pages/dog-list-results.html", {'dogs_list': dogs_list, 'breed': breed, 'gender': gender, "name": name})
 
 class EditDogHandler(TemplateHandler):
     def get(self, _id):
