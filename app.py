@@ -71,13 +71,16 @@ class MainHandler(TemplateHandler):
         if self.get_secure_cookie('user'):
             # do this
             logged_in = True
+            user = db_opp.find_user_by_email(self.current_user.decode('utf-8'))
+            name = user['given_name']
         else:
             logged_in = False
+            name = "Guest"
 
         self.set_header(
           'Cache-Control',
           'no-store, no-cache, must-revalidate, max-age=0')
-        self.render_template("/pages/index.html", {"logged_in": logged_in})
+        self.render_template("/pages/index.html", {"logged_in": logged_in, "name":name})
 
 
 class DogFormHandler(TemplateHandler):
