@@ -340,6 +340,7 @@ DOG profile
   margin-bottom: 20px;
   background-size: cover;
   background-position: center;
+  max-width: 300px;
 }
 
 .dog-profile__polaroid:hover {

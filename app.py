@@ -481,7 +481,17 @@ class QueryHandler(TemplateHandler):
 class EditDogHandler(TemplateHandler):
     def get(self, _id):
         dog = db_opp.find_dog_by_id(_id)
-        self.render_template("pages/dog-profile-edit.html", {"dog":dog})
+
+        if dog['collar']:
+            collar = True
+        if dog['gender'] == "female":
+            female = True
+        if dog['fix'] == "yes":
+            neutered = True
+
+        shelter = db_opp.find_shelter_by_id(dog['shelter_id'])
+        user = db_opp.find_shelter_by_id(dog['user_id'])
+        self.render_template("pages/dog-profile-edit.html", {"dog":dog, "shelter": shelter, "user": user})
 
 class UpdateDogHandler(TemplateHandler):
     def post(self):
