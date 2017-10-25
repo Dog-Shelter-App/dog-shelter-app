@@ -63,20 +63,32 @@ from pymongo import UpdateMany
 # import client function
 from pymongo import MongoClient
 # create client
-client = pymongo.MongoClient(mongo_url, ssl=True)
+
+def create_client():
+    client = pymongo.MongoClient(mongo_url, ssl=True)
+    if client:
+        print("client working.")
+    return client
+
+client = create_client()
+
 # imort UUID functionality
+
 import uuid
 
-if client:
-    print("client working.")
-# define database
-db = client.test_database
+def create_uuid():
+    return str(uuid.uuid4())
 
+db = client.test_database
 # define collections
 users = db.users_collection
 dogs = db.dogs_collection
 shelters = db.shelters_collection
 breeds = db.breeds_collection
+
+
+
+
 
 ##########################
 #### cluster
@@ -101,6 +113,9 @@ def add_new_user(data):
 def update_user_by_id(_id, data):
     return users.update_one({"_id": _id}, {'$set': data})
 
+def update_user_by_email(email, data):
+    return users.update_one({"email": email}, {'$set': data})
+
 def delete_user_by_id(_id):
     return users.remove({"_id": _id})
 
@@ -113,6 +128,15 @@ def find_dog_by_name(name):
     return dogs.find_one({"name": name})
 def find_all_dogs():
     return dogs.find({})
+def find_deleted_dogs():
+    return dogs.find({'delete':True})
+def find_all_public_dogs():
+    return dogs.find({"delete":False})
+
+def find_many_dogs(data):
+    return dogs.find(
+    { "$or": data}
+    )
 
 def add_new_dog(data):
     return dogs.insert_one(data)

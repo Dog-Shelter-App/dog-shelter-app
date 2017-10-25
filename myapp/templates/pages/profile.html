@@ -12,6 +12,7 @@
   <div class="container">
     <form class="" action="/profile" method="post">
       <h4>{{header}}</h4>
+      <input type="hidden" name="id" value="{{user._id}}">
         <div class="form-group">
           <label for="first_name" data-error="must enter valid email">first name</label>
           <input class="form-control"  type="text" name="given_name" value="{{user.given_name}}" autofocus>
@@ -31,24 +32,24 @@
           <input class="form-control"  type="number" name="phone" value="{{user.phone}}">
         </div>
         <div class="form-group">
-          <p>user type: {{user.user_type}}</p>
+          <p>user type: {{user.type}}</p>
           <div class="d-inline-flex flex-wrap">
             <div class="">
-              <input class="form-control"  class="form-check-input radio-button" type="radio" name="user_type" id="owner" value="owner" required>
+              <input class="form-control"  class="form-check-input radio-button" type="radio" name="type" id="owner" value="owner" required>
               <label for="owner" class="radio-label">Owner</label>
             </div>
             <div class="">
-              <input class="form-control"  class="form-check-input radio-button" type="radio" name="user_type" id="shelter" value="shelter" required>
+              <input class="form-control"  class="form-check-input radio-button" type="radio" name="type" id="shelter" value="shelter" required>
               <label for="shelter" class="radio-label">Shelter</label>
             </div>
           </div>
         </div>
         <div class="form-group">
           {% if shelter %}
-            <p>User Shelter: {{user.user_shelter}}</p>
+            <p>User Shelter: {{user.shelter}}</p>
             <select name="shelter">
               {% for shelter in shelters_list %}
-              <option value="{{shelter._uid}}">{{shelter.name}}</option>
+              <option value="{{shelter._id}}">{{shelter.name}}</option>
               {% endfor %}
             </select>
           {% else %}
