@@ -2,26 +2,39 @@
 <div class="container">
   <div class="row">
     <div class="col-md-3">
-      <div class="d-flex mt-1">
-        <div class="sticky-scroll-box querybar">
+      <div class="d-flex">
+        <div class="querybar">
           {% include 'components/delete.html'%}
         </div>
       </div>
     </div>
-    {% for user in users %}
     <div class="col-md-9">
-      <ul>
-        <li>first name: {{user.given_name}}</li>
-        <li>last name: {{user.family_name}}</li>
-        <li>email: {{user.email}}</li>
-        <li>phone: {{user.phone}}</li>
-        <li>id: {{user._id}}</li>
-        <li>type: {{user.user_type}}</li>
-        <li>shelter: {{user.shelter}}</li>
-        <img src="{{user.avatar}}" alt="" width="50" height="auto">
-      </ul>
-    </div>
+    {% for user in users %}
+      <table class="table">
+        <tr>
+          <th>First Name</th>
+          <th>Last Name</th>
+          <th>Email</th>
+          <th>Phone</th>
+          <th>ID</th>
+          <th>User Type</th>
+          <th>Shelter</th>
+        </tr>
+        <tbody>
+          <tr>
+            <td>first name: {{user.given_name}}</td>
+            <td>last name: {{user.family_name}}</td>
+            <td>email: {{user.email}}</td>
+            <td>phone: {{user.phone}}</td>
+            <td>id: {{user._id}}</td>
+            <td>type: {{user.user_type}}</td>
+            <td>shelter: {{user.shelter}}</td>
+          </tr>
+        </tbody>
+      </table>
+
     {% endfor %}
+    </div>
 
   </div>
 </div>
