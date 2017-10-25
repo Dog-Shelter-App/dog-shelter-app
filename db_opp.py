@@ -144,9 +144,10 @@ def find_all_public_dogs():
     return dogs.find({"delete":False})
 
 def find_many_dogs(data):
-    return dogs.find(
-    { "$or": data}
-    )
+    return dogs.find({"$and": data})
+
+    # older version
+    # return dogs.find({ "$or": data})
 
 def add_new_dog(data):
     return dogs.insert_one(data)
