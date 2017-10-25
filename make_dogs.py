@@ -1,33 +1,30 @@
-import random as random
+import db_opp as db_opp
+import random
 from datetime import datetime
-# pull creds
-from settings import mongo_url
-# import driver
-import pymongo
-# import client function
-from pymongo import MongoClient
-# create client
-client = pymongo.MongoClient(mongo_url, ssl=True)
-# imort UUID functionality
-import uuid
 
-if client:
-    print("client working.")
-# define database
+client = db_opp.create_client()
+
 db = client.test_database
 # define collections
-collection = db.test_collection
-users = db.user_collection
+users = db.users_collection
 dogs = db.dogs_collection
-breeds = db.breeds_colletion
 shelters = db.shelters_collection
+breeds = db.breeds_collection
 
 def get_user():
-    countusers = users.find({}).count()#gets users
-    users_list = users.find({})
-    rand = random.randrange(0,countusers)
+    users_list = db_opp.find_all_users()
+    count = db_opp.find_all_users().count()
+    rand = random.randrange(0,count)
     x = users_list[rand]
     return x['_id']
+
+def get_shelter():
+    shelters_list = db_opp.find_all_shelters()
+    count = db_opp.find_all_shelters().count()
+    rand = random.randrange(0,count)
+    x = shelters_list[rand]
+    return x['_id']
+
 
 dog_names = [
     "Jason",
@@ -135,7 +132,7 @@ dog_breeds = [
   "Airedale Terrier",
   "Akbash",
   "Akita",
-  "Alano Español",
+  "Alano Espanol",
   "Alaskan Husky",
   "Alaskan Klee Kai",
   "Alaskan Malamute",
@@ -154,7 +151,7 @@ dog_breeds = [
   "American Water Spaniel",
   "Anatolian Shepherd Dog",
   "Andalusian Hound",
-  "Anglo-Français de Petite Vénerie",
+  "Anglo-Francais de Petite Venerie",
   "Appenzeller Sennenhund",
   "Ariege Pointer",
   "Ariegeois",
@@ -175,11 +172,11 @@ dog_breeds = [
   "Basenji",
   "Basque Ratter",
   "Basque Shepherd Dog",
-  "Basset Artésien Normand",
+  "Basset Artesien Normand",
   "Basset Bleu de Gascogne",
   "Basset Fauve de Bretagne",
-  "Basset Griffon Vendéen, Grand",
-  "Basset Griffon Vendéen, Petit",
+  "Basset Griffon Vendeen, Grand",
+  "Basset Griffon Vendeen, Petit",
   "Basset Hound",
   "Bavarian Mountain Hound",
   "Beagle",
@@ -195,7 +192,7 @@ dog_breeds = [
   "Berger Blanc Suisse",
   "Berger Picard",
   "Bernese Mountain Dog",
-  "Bichon Frisé",
+  "Bichon Frise",
   "Billy",
   "Black and Tan Coonhound",
   "Black and Tan Virginia Foxhound",
@@ -231,7 +228,7 @@ dog_breeds = [
   "Brazilian Dogo",
   "Brazilian Terrier",
   "Briard",
-  "Briquet Griffon Vendéen",
+  "Briquet Griffon Vendeen",
   "Brittany",
   "Broholmer",
   "Bruno Jura Hound",
@@ -249,10 +246,10 @@ dog_breeds = [
   "Canadian Eskimo Dog",
   "Cane Corso",
   "Cantabrian Water Dog",
-  "Cão da Serra de Aires",
-  "Cão de Castro Laboreiro",
-  "Cão de Gado Transmontano",
-  "Cão Fila de São Miguel",
+  "Cao da Serra de Aires",
+  "Cao de Castro Laboreiro",
+  "Cao de Gado Transmontano",
+  "Cao Fila de Sao Miguel",
   "Carolina Dog",
   "Carpathian Shepherd Dog",
   "Catahoula Leopard Dog",
@@ -263,9 +260,9 @@ dog_breeds = [
   "Cesky Fousek",
   "Cesky Terrier",
   "Chesapeake Bay Retriever",
-  "Chien Français Blanc et Noir",
-  "Chien Français Blanc et Orange",
-  "Chien Français Tricolore",
+  "Chien Francais Blanc et Noir",
+  "Chien Francais Blanc et Orange",
+  "Chien Francais Tricolore",
   "Chien-gris",
   "Chihuahua",
   "Chilean Fox Terrier",
@@ -332,7 +329,7 @@ dog_breeds = [
   "French Bulldog",
   "French Spaniel",
   "Gaddi Dog",
-  "Galgo Español",
+  "Galgo Espanol",
   "Galician Cattle Dog",
   "Garafian Shepherd",
   "Gascon Saintongeois",
@@ -349,11 +346,11 @@ dog_breeds = [
   "Glen of Imaal Terrier",
   "Golden Retriever",
   "Gordon Setter",
-  "Gran Mastín de Borínquen",
-  "Grand Anglo-Français Blanc et Noir",
-  "Grand Anglo-Français Blanc et Orange",
-  "Grand Anglo-Français Tricolore",
-  "Grand Griffon Vendéen",
+  "Gran Mastin de Borinquen",
+  "Grand Anglo-Francais Blanc et Noir",
+  "Grand Anglo-Francais Blanc et Orange",
+  "Grand Anglo-Francais Tricolore",
+  "Grand Griffon Vendeen",
   "Great Dane",
   "Great Pyrenees",
   "Greater Swiss Mountain Dog",
@@ -365,7 +362,7 @@ dog_breeds = [
   "Griffon Fauve de Bretagne",
   "Griffon Nivernais",
   "Guatemalan Dogo",
-  "Hamiltonstövare",
+  "Hamiltonstovare",
   "Hanover Hound",
   "Hare Indian Dog",
   "Harrier",
@@ -391,7 +388,7 @@ dog_breeds = [
   "Italian Greyhound",
   "Jack Russell Terrier",
   "Jagdterrier",
-  "Jämthund",
+  "Jamthund",
   "Japanese Chin",
   "Japanese Spitz",
   "Japanese Terrier",
@@ -413,10 +410,10 @@ dog_breeds = [
   "Kooikerhondje",
   "Koolie",
   "Korean Jindo",
-  "Kromfohrländer",
+  "Kromfohrlander",
   "Kumaon Mastiff",
   "Kunming Wolfdog",
-  "Kurī",
+  "Kurik",
   "Kuvasz",
   "Kyi-Leo",
   "Labrador Husky",
@@ -429,9 +426,9 @@ dog_breeds = [
   "Leonberger",
   "Lhasa Apso",
   "Lithuanian Hound",
-  "Löwchen",
+  "Lowchen",
   "Mackenzie River Husky",
-  "Magyar agár",
+  "Magyar agar",
   "Mahratta Greyhound",
   "Majorca Ratter",
   "Majorca Shepherd Dog",
@@ -456,8 +453,8 @@ dog_breeds = [
   "Mucuchies",
   "Mudhol Hound",
   "Mudi",
-  "Münsterländer, Large",
-  "Münsterländer, Small",
+  "MunsterLander, Large",
+  "MunsterLander, Small",
   "Murcian Ratter",
   "Neapolitan Mastiff",
   "Newfoundland",
@@ -490,7 +487,7 @@ dog_breeds = [
   "Perro de Presa Canario",
   "Perro de Presa Mallorquin",
   "Peruvian Hairless Dog",
-  "Phalène",
+  "Phalene",
   "Pharaoh Hound",
   "Phu Quoc Ridgeback",
   "Picardy Spaniel",
@@ -512,7 +509,7 @@ dog_breeds = [
   "Portuguese Pointer",
   "Portuguese Water Dog",
   "Posavac Hound",
-  "Pražský Krysařík",
+  "Prazsky Krysarik",
   "Pudelpointer",
   "Pug",
   "Puli",
@@ -536,16 +533,16 @@ dog_breeds = [
   "Russo-European Laika",
   "Russell Terrier",
   "Saarloos Wolfdog",
-  "Sabueso Español",
+  "Sabueso Espanol",
   "Sabueso fino Colombiano",
   "Saint-Usuge Spaniel",
   "Sakhalin Husky",
   "Saluki",
   "Samoyed",
   "Sapsali",
-  "Šarplaninac",
+  "Sarplaninac",
   "Schapendoes",
-  "Schillerstövare",
+  "Schillerstovare",
   "Schipperke",
   "Standard Schnauzer",
   "Schweizer Laufhund",
@@ -572,8 +569,8 @@ dog_breeds = [
   "Sloughi",
   "Slovak Cuvac",
   "Slovakian Rough-haired Pointer",
-  "Slovenský Kopov",
-  "Smålandsstövare",
+  "Slovensky Kopov",
+  "Smalandsstovare",
   "Small Greek Domestic Dog",
   "Soft-Coated Wheaten Terrier",
   "South Russian Ovcharka",
@@ -702,9 +699,6 @@ def get_breed():
     rand = random.randrange(0, stop)
     return dog_breeds[rand]
 
-def get_id():
-    return random.randrange(0,999999)
-
 def get_color():
     stop = len(dog_colors)
     rand = random.randrange(0, stop)
@@ -753,14 +747,13 @@ def get_note():
 
 def bulk_add_dogs():
     for name in dog_names:
-        _id = str(uuid.uuid4())
-        dogs.insert_one(
-            {
+        _id = db_opp.create_uuid()
+        data = {
             "_id": _id,
-            "dog_name": name,
-            "thumbnail": get_thumbnail(),
+            "name": name,
+            "image": get_thumbnail(),
             "breed": get_breed(),
-            "id_chip": get_id(),
+            "id_chip": "234234lkj234lkj234lkj",
             "age": get_age(),
             "date_found": get_date(),
             "location_found": "Houston",
@@ -772,19 +765,22 @@ def bulk_add_dogs():
             "fix": get_bool("bool"),
             "collar": get_bool("bool"),
             "collar_color": get_color(),
-            "ears": get_ears(),
-            "eyes": get_color(),
+            "ear_type": get_ears(),
+            "eye_color": get_color(),
             "notes": get_note(),
             "delete": False,
-            "user": get_user()
-            }
-        )
+            "user": get_user(),
+            "shelter": get_shelter()
+        }
+
+        db_opp.add_new_dog(data)
+
         dog = dogs.find({
         "_id": _id
         })
 
         for dog in dog:
-            name = dog['dog_name']
+            name = dog['name']
             gender = dog['gender']
             if gender == "male":
                 gender = "He"

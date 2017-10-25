@@ -20,8 +20,8 @@ from datetime import datetime
 #   #   age
 #   #   notes
 #   #   date_deleted
-#FK #   user_id
-#FK #   shelter_id
+#FK #   user
+#FK #   shelter
 
 # users
 #   #   _id
@@ -118,6 +118,9 @@ def update_user_by_email(email, data):
 
 def delete_user_by_id(_id):
     return users.remove({"_id": _id})
+
+def count_users():
+    return users.find({}).count
 
 
 # DOG FUNCTIONS
