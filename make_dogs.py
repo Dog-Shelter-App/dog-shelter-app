@@ -30,7 +30,7 @@ def get_shelter():
 dog_names = [
     "Jason",
     "Lucy",
-    "Daisy"
+    "Daisy",
     "Paul",
     "Monis",
     "Molly",
