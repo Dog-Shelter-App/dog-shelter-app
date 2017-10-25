@@ -8,7 +8,7 @@
   <div class="d-flex justify-content-center flex-wrap align-items-center">
     <div class="dog-profile__card d-flex flex-column justify-content-center align-items-center">
       <div class="dog-profile__polaroid">
-        <div style="background-image:url('{{dog.thumbnail}}');'" class="dog-profile__img-thumbnail" data-toggle="modal" data-target="#dogImageFullSize"></div>
+        <div style="background-image:url('{{dog.image}}');'" class="dog-profile__img-thumbnail" data-toggle="modal" data-target="#dogImageFullSize"></div>
         <div class="dog-profile__name"><h1>{{dog.dog_name}}</h1></div>
       </div>
     </div>
@@ -31,7 +31,7 @@
         </button>
       </div>
       <div class="modal-body">
-        <img src="{{dog.thumbnail}}" alt="" class="dog-profile__img-fullsize">
+        <img src="{{dog.image}}" alt="" class="dog-profile__img-fullsize">
       </div>
       <div class="modal-footer">
         <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>

@@ -46,8 +46,9 @@ $('#formCarousel').on('slid.bs.carousel', function (ev) {
 $(document).ready(function () {
   var top = $('.sticky-scroll-box').offset().top;
   $(window).scroll(function (event) {
+    let width = $( window ).width();
     var y = $(this).scrollTop();
-    if (y >= top)
+    if (y >= top && width > 800)
       $('.sticky-scroll-box').addClass('fixed');
     else
       $('.sticky-scroll-box').removeClass('fixed');
@@ -180,4 +181,4 @@ $(document).ready (function() {
   };
 
   // module.exports = tornadoPy;
-});  
+});

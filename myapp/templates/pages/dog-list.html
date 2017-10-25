@@ -5,33 +5,40 @@
     {{ super() }}
 {% endblock %}
 {% block body %}
-  <div class="container-fluid">
+  <div class="container-fluid dog-list__background">
     <div class="row">
       <div class="col-md-9">
-        <div id="dog-list" class="d-flex flex-wrap justify-content-start">
+        <div id="dog-list" class="dog-list mt-1">
           {% for dog in dogs_list%}
-            <article class="card dog-card"
+            <div class="card dog-card"
               data-breed="{{dog.breed}}"
               data-gender="{{dog.gender}}"
               data-age="{{dog.age}}"
               >
-              <a href="dogs/{{dog._id}}">
-                <img class="card-img-top" src="{{dog.thumbnail}}" alt="lost-dog">
-                <div class="card-body">
-                  <h4 class="card-title"> {{dog.dog_name}}</h4>
-                  <p class="card-text">{{dog.dog_gender}} {{dog.breed}}</p>
+
+              <a href="dogs/{{dog._id}}" class="naked-link">
+                <div class="dog-card__image-container">
+                  <img class="dog-profile__img-thumbnail" src="{{dog.image}}" alt="">
+                </div>
+                <div class="card-body dog-card__text">
+                  <h4 class="card-title">{{dog.name}}</h4>
+                  <ul>
+                    <li class="card-text">gender: {{dog.gender}}</li>
+                    <li class="card-text">breed: {{dog.breed}}</li>
+                    <li class="card-text">age: {{dog.age}}</li>
+
+                  </ul>
                 </div>
               </a>
-              </article>
+            </div>
           {% endfor%}
         </div>
       </div>
       <div class="col-md-3">
-        <div class="d-flex">
-          {% include 'components/search.html'%}
-        </div>
-        <div class="d-flex">
-          {% include 'components/delete.html'%}
+        <div class="d-flex mt-1">
+          <div class="sticky-scroll-box querybar">
+            {% include 'components/search.html'%}
+          </div>
         </div>
       </div>
     </div>

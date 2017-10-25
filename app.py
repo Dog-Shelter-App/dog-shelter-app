@@ -170,11 +170,53 @@ class DogFormHandler(TemplateHandler):
 class DogListHandler(TemplateHandler):
     @tornado.web.authenticated
     def get(self):
-        dogs_list = db_opp.find_all_public_dogs()
+        data = []
+        if self.get_argument("gender", None):
+            query = {}
+            query['gender'] = self.get_argument("gender", None)
+            data.append(query)
+        if self.get_argument("breed", None):
+            query = {}
+            query['breed'] = self.get_argument("breed", None)
+            data.append(query)
+        if self.get_argument("color", None):
+            query = {}
+            query['color'] = self.get_argument("color", None)
+            print(query['color'])
+            data.append(query)
+        if self.get_argument("age", None):
+            query = {}
+            query['age'] = int(self.get_argument("age", None))
+            data.append(query)
+        if self.get_argument("name", None):
+            query = {}
+            query['name'] = self.get_argument("name", None)
+            data.append(query)
+
+
+
+
+        if len(data) < 1:
+            dogs_list = db_opp.find_all_public_dogs()
+        else:
+            dogs_list = db_opp.find_many_dogs(data)
+            print("Dogs in Database: {}".format(db_opp.find_all_public_dogs().count()))
+            print("Dogs queried: {}".format(db_opp.find_many_dogs(data).count()))
         self.set_header(
           'Cache-Control',
           'no-store, no-cache, must-revalidate, max-age=0')
         self.render_template("/pages/dog-list.html", {"dogs_list": dogs_list})
+    # def post(self):
+    #     gender = self.get_body_argument("gender", None)
+    #     breed = self.get_body_argument("breed", None)
+    #     color = self.get_body_argument("color", None).lower()
+    #     age = self.get_body_argument("age", None)
+    #     name = self.get_body_argument("name", None)
+    #
+    #     pay
+    #
+    #     r = requests.post(url, data=json.dumps(payload))
+
 
 class LoginHandler(TemplateHandler):
     def get(self):
@@ -283,7 +325,7 @@ class CompleteProfileHandler(TemplateHandler):
 
 class UsersHandler(TemplateHandler):
     def get(self):
-        users_list = db_opp.find_all_users
+        users_list = db_opp.find_all_users()
         self.set_header(
           'Cache-Control',
           'no-store, no-cache, must-revalidate, max-age=0')
