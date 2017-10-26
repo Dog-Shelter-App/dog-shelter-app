@@ -1,8 +1,26 @@
 // user type
 
 // monitor user_type input value
+$( "#dogForm" ).submit(function( event ) {
+  var date = $("#date_found");
+  var files = $("my_File");
 
+  $("input").removeClass("invalid")
 
+  if(date.val() == "") {
+    let slide = date.data("section");
+    $("#date_found").addClass("invalid")
+    $("#formCarousel").carousel(1);
+    return false
+  }
+
+  if(document.getElementById("my_File").files.length == 0 ){
+    let slide = files.data("section");
+    $("#file_label").addClass("invalid")
+    $("#formCarousel").carousel(0);
+    return false
+}
+});
 
 
 // Dog Form Logic
@@ -13,7 +31,6 @@ $('#formCarousel').on('slid.bs.carousel', function (ev) {
     case "1":
       $('#buttonLeft').hide();
       $("#buttonRight").show();
-      $("#buttonSubmit").hide();
       $("#slide1").addClass("active");
       $("#slide2").removeClass("active");
       $("#slide3").removeClass("active");
@@ -22,7 +39,6 @@ $('#formCarousel').on('slid.bs.carousel', function (ev) {
       // do something the id is 2
       $('#buttonLeft').show();
       $('#buttonRight').show();
-      $("#buttonSubmit").hide();
       $("#slide1").removeClass("active");
       $("#slide2").addClass("active");
       $("#slide3").removeClass("active");
@@ -31,7 +47,6 @@ $('#formCarousel').on('slid.bs.carousel', function (ev) {
       // do something the id is 3
       $("#buttonRight").hide();
       $("#buttonLeft").show();
-      $("#buttonSubmit").show();
       $("#slide1").removeClass("active");
       $("#slide2").removeClass("active");
       $("#slide3").addClass("active");
@@ -40,6 +55,8 @@ $('#formCarousel').on('slid.bs.carousel', function (ev) {
       //the id is none of the above
   }
 })
+
+// date, image,
 
 // Sticky Plugin
 
