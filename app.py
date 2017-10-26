@@ -253,7 +253,6 @@ class UserProfileHandler(TemplateHandler):
                 break
             except:
                 print("FAAAAAK")
-                # self.clear_cookie("user")
                 self.redirect('/complete-profile?error=name')
 
         print(user_data)
