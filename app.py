@@ -23,10 +23,10 @@ client = db_opp.create_client()
 
 db = client.test_database
 # define collections
-users = db.users_collection
-dogs = db.dogs_collection
-shelters = db.shelters_collection
-breeds = db.breeds_collection
+users = db.users
+dogs = db.dogs
+shelters = db.shelters
+breeds = db.breeds
 
 
 # AWS S3
@@ -62,16 +62,16 @@ class BaseHandler(tornado.web.RequestHandler):
 
 # handler defines how a page handler will get template files and context information
 class TemplateHandler(BaseHandler):
-  def render_template (self, tpl, context):
-    template = ENV.get_template(tpl)
-    self.write(template.render(**context))
+    def render_template (self, tpl, context):
+        template = ENV.get_template(tpl)
+        self.write(template.render(**context))
 
 class MainHandler(TemplateHandler):
     def get(self):
         if self.get_secure_cookie('user'):
             # do this
             logged_in = True
-            # user = db_opp.find_user_by_email(self.current_user.decode('utf-8'))
+            user = db_opp.find_user_by_email(self.current_user.decode('utf-8'))
             # name = user['given_name']
         else:
             logged_in = False
@@ -90,6 +90,8 @@ class DogFormHandler(TemplateHandler):
         self.set_header(
           'Cache-Control',
           'no-store, no-cache, must-revalidate, max-age=0')
+        
+        
         self.render_template("/pages/dog-form.html", {})
     def post(self):
         # import io
@@ -236,7 +238,7 @@ class LoginHandler(TemplateHandler):
               'Cache-Control',
               'no-store, no-cache, must-revalidate, max-age=0')
             self.render_template("/pages/login.html", {"data": data, "reason": reason})
-
+# users.remove({})
 class UserProfileHandler(TemplateHandler):
     @tornado.web.authenticated
     def get(self):
@@ -259,11 +261,14 @@ class UserProfileHandler(TemplateHandler):
             "shelter": shelter
         })
 
+
+        self.render_template("/pages/profile.html", {"user": user, "shelters_list": shelters_list})
+class UpdateUserProfileHandler (BaseHandler):
     def post(self):
         _id = self.get_body_argument("_id")
         given_name= self.get_body_argument("given_name", None)
         family_name= self.get_body_argument("family_name", None)
-        email= self.get_body_argument("email")
+        email= self.current_user.decode('utf-8')
         phone= self.get_body_argument("phone", None)
         type = self.get_body_argument("type")
         shelter_id = self.get_body_argument('shelter_id', None)
@@ -276,12 +281,10 @@ class UserProfileHandler(TemplateHandler):
         "type": type,
         "shelter_id": shelter_id
         }
-
+        
         print(data)
 
         print(db_opp.update_user_by_id(_id, data))
-
-
 
         self.redirect('/profile?status=update')
 
@@ -457,31 +460,12 @@ class DogProfileHandler(TemplateHandler):
         dog = db_opp.find_dog_by_id(_id)
         added_by = db_opp.find_user_by_id(dog['user_id'])
         shelter = db_opp.find_shelter_by_id(dog['shelter_id'])
-
+        
         self.set_header(
           'Cache-Control',
           'no-store, no-cache, must-revalidate, max-age=0')
         self.render_template("/pages/dog-profile.html", {'dog': dog, "user": added_by, "shelter": shelter})
-
-class QueryHandler(TemplateHandler):
-    def post(self):
-        gender = self.get_body_argument("gender", None)
-        breed = self.get_body_argument("breed", None)
-        name = self.get_body_argument("name", None)
-
-        data = [
-        {"gender": gender},
-        {"breed": breed},
-        {"name": name}
-        ]
-
-        dogs_list = db_opp.find_many_dogs(data)
-
-        self.set_header(
-          'Cache-Control',
-          'no-store, no-cache, must-revalidate, max-age=0')
-        self.render_template("/pages/dog-list-results.html", {'dogs_list': dogs_list, 'breed': breed, 'gender': gender, "name": name})
-
+    
 class EditDogHandler(TemplateHandler):
     def get(self, _id):
         dog = db_opp.find_dog_by_id(_id)
@@ -506,6 +490,7 @@ class EditDogHandler(TemplateHandler):
 class UpdateDogHandler(TemplateHandler):
     def post(self):
         user = db_opp.find_user_by_email(self.current_user.decode("utf-8"))
+
         _id = self.get_body_argument('_id')
         data = {}
 
@@ -592,6 +577,7 @@ class make_app(tornado.web.Application):
             (r"/login-google", GAuthLoginHandler),
             (r"/complete-profile", CompleteProfileHandler),
             (r"/profile", UserProfileHandler),
+            (r"/profileupdate", UpdateUserProfileHandler),
             (r"/admin", UsersHandler),
             (r"/dogs/new-dog", DogFormHandler),
             (r"/dogs", DogListHandler),
@@ -599,7 +585,6 @@ class make_app(tornado.web.Application):
             (r"/update", UpdateDogHandler),
             (r"/delete", DeleteDogHandler),
             (r"/delete-single", DeleteSingleDogHandler),
-            (r"/querybar", QueryHandler),
             (r"/shelters", SheltersHandler),
             (r"/dogs/(.*)",DogProfileHandler),
             (

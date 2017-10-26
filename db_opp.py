@@ -81,10 +81,10 @@ def create_uuid():
 
 db = client.test_database
 # define collections
-users = db.users_collection
-dogs = db.dogs_collection
-shelters = db.shelters_collection
-breeds = db.breeds_collection
+users = db.users
+dogs = db.dogs
+shelters = db.shelters
+breeds = db.breeds
 
 
 
