@@ -11,6 +11,10 @@ dogs = db.dogs_collection
 shelters = db.shelters_collection
 breeds = db.breeds_collection
 
+def make_shelter():
+    
+
+
 def get_user():
     users_list = db_opp.find_all_users()
     count = db_opp.find_all_users().count()
@@ -801,7 +805,6 @@ def bulk_add_shelters():
         "state": "Tejas"
         }
         db_opp.add_new_shelter(data)
-
 def run():
     dogs.remove({})
     # shelters.remove({})

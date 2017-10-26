@@ -5,8 +5,9 @@
 {% block body %}
 <div class="section">
   <div class="container">
-    <form class="" action="/profile" method="post">
-      <input type="hidden" name="id" value="{{user._id}}">
+    <p>{{user._id}}</p>
+    <form class="" action="/profileupdate" method="post">
+      <input type="text" name="_id" value="{{user._id}}">
         <div class="form-group">
           <label for="first_name" data-error="must enter valid email">first name</label>
           <input class="form-control"  type="text" name="given_name" value="{{user.given_name}}" autofocus>
@@ -27,7 +28,6 @@
         </div>
         <div class="form-group">
           <label for="">Please select if you are signing in as a shelter representative or an animal owner:</label>
-          {% if shelter %}
             <div class="form-group">
               <div class="d-inline-flex flex-wrap">
                 <div class="">
@@ -35,7 +35,7 @@
                   <label for="owner" class="radio-label">Owner</label>
                 </div>
                 <div class="">
-                  <input checked class="form-control"  class="form-check-input radio-button" type="radio" name="type" id="shelter" value="shelter" required>
+                  <input class="form-control"  class="form-check-input radio-button" type="radio" name="type" id="shelter" value="shelter" required>
                   <label for="shelter" class="radio-label">Shelter</label>
                 </div>
               </div>
@@ -45,25 +45,10 @@
               <option value="{{shelter._id}}">{{shelter.name}}</option>
               {% endfor %}
             </select>
-          {% else %}
-          <div class="d-inline-flex flex-wrap">
-            <div class="">
-              <input checked class="form-control"  class="form-check-input radio-button" type="radio" name="type" id="owner" value="owner" required>
-              <label for="owner" class="radio-label">Owner</label>
-            </div>
-            <div class="">
-              <input  class="form-control"  class="form-check-input radio-button" type="radio" name="type" id="shelter" value="shelter" required>
-              <label for="shelter" class="radio-label">Shelter</label>
-            </div>
-          </div>
 
-          {% endif %}
         </div>
         <div class="form-group">
-          {% if shelter %}
             {% include 'components/shelter-form.html'%}
-          {% else %}
-          {% endif %}
           <button type="submit" class="btn btn-primary">Update Profile</button>
           <a class="btn btn-danger" href="/logout" role="button">Logout</a>
         </div>
