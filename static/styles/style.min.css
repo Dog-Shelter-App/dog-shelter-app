@@ -31,6 +31,10 @@ li {
   border: 3px solid red;
 }
 
+.sticky-scroll-box {
+  position: fixed;
+}
+
 
 /************************************************************
 
