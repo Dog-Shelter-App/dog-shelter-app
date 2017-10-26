@@ -30,14 +30,12 @@ def get_shelter():
 dog_names = [
     "Jason",
     "Lucy",
-    "Daisy"
+    "Daisy",
     "Paul",
     "Monis",
     "Molly",
     "Lora",
     "Justin",
-    "Bailey",
-    "Maggie",
     "Chloe",
     "Lily",
     "Stella",
@@ -47,23 +45,19 @@ dog_names = [
     "Coco",
     "Gracie",
     "Ruby",
-    "Mia",
+    "Popcorn",
     "Zoe",
     "Greg",
-    "Nala",
     "Rosie",
     "Ginger",
     "Abby",
     "Josh",
     "Piper",
-    "Sasha",
     "Riley",
     "Pepper",
     "Lulu",
-    "Emma",
     "Lady",
     "Layla",
-    "Lexi",
     "Olive",
     "Annie",
     "Izzy",
@@ -107,17 +101,13 @@ dog_names = [
     "Chance",
     "Cleo",
     "Mocha",
-    "Delilah",
+    "Aspen",
     "Baby",
-    "Harper",
     "Shadow",
-    "Pearl",
     "Michael",
     "Heidi",
     "Bonnie",
     "Katie",
-    "Lacey",
-    "Gypsy",
     "Cocoa",
     "Nova",
     "Gustavo",
@@ -811,13 +801,10 @@ def bulk_add_shelters():
         "state": "Tejas"
         }
         db_opp.add_new_shelter(data)
-<<<<<<< HEAD
-=======
 
->>>>>>> a8c9222b5a91182b1565126aec1f2870760d1ef3
 def run():
     dogs.remove({})
-    shelters.remove({})
-    bulk_add_shelters()
+    # shelters.remove({})
+    # bulk_add_shelters()
     bulk_add_dogs()
-# run()
+run()
