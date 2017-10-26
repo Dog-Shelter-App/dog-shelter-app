@@ -87,12 +87,15 @@ class DogFormHandler(TemplateHandler):
     @tornado.web.authenticated
     def get(self):
         user = db_opp.find_user_by_email(self.current_user.decode('utf-8'))
-        self.set_header(
-          'Cache-Control',
-          'no-store, no-cache, must-revalidate, max-age=0')
+        print(user)
+        if user['type'] == "shelter":
+            self.set_header(
+              'Cache-Control',
+              'no-store, no-cache, must-revalidate, max-age=0')
+            self.render_template("/pages/dog-form.html", {})
+        else:
+            self.redirect("/dogs")
 
-
-        self.render_template("/pages/dog-form.html", {})
     def post(self):
         # import io
         # from PIL import Image
@@ -140,9 +143,6 @@ class DogFormHandler(TemplateHandler):
         # print(image_64_encode)
         #
         user = db_opp.find_user_by_email(self.current_user.decode('utf-8'))
-
-        print(user)
-
         data = {
             "_id": db_opp.create_uuid(),
             "name": self.get_body_argument('name'),
@@ -167,6 +167,7 @@ class DogFormHandler(TemplateHandler):
             "user_id": user['_id'],
             "shelter_id": user['shelter_id']
         }
+        print(data)
         db_opp.add_new_dog(data)
         self.redirect('/dogs')
 
@@ -186,7 +187,6 @@ class DogListHandler(TemplateHandler):
         if self.get_argument("color", None):
             query = {}
             query['color'] = self.get_argument("color", None)
-            print(query['color'])
             data.append(query)
         if self.get_argument("age", None):
             query = {}
@@ -201,8 +201,6 @@ class DogListHandler(TemplateHandler):
             dogs_list = db_opp.find_all_public_dogs()
         else:
             dogs_list = db_opp.find_many_dogs(data)
-            print("Dogs in Database: {}".format(db_opp.find_all_public_dogs().count()))
-            print("Dogs queried: {}".format(db_opp.find_many_dogs(data).count()))
 
         self.set_header(
           'Cache-Control',
@@ -231,7 +229,6 @@ class LoginHandler(TemplateHandler):
         else:
             path = self.request
             destination = self.get_argument('next', None)
-            # print("next is {}".format(request_path))
             data = 4
             self.set_header(
               'Cache-Control',
@@ -277,9 +274,7 @@ class UserProfileHandler(TemplateHandler):
         "shelter_id": shelter_id
         }
 
-        print(data)
-
-        print(db_opp.update_user_by_id(_id, data))
+        db_opp.update_user_by_id(_id, data)
 
         self.redirect('/profile?status=update')
 
@@ -300,7 +295,6 @@ class SheltersHandler(TemplateHandler):
         email = self.get_body_argument('email', None)
         phone = self.get_body_argument('phone', None)
         address = self.get_body_argument('address', None)
-        print("adding shelter")
 
         data = {
             "_id": db_opp.create_uuid(),
@@ -325,7 +319,6 @@ class CompleteProfileHandler(TemplateHandler):
 
     def post(self):
         data = { "type": self.get_body_argument("type")}
-        print(data)
         db_opp.update_user_by_email(self.current_user.decode('utf-8'), data)
 
         self.redirect("/profile")
@@ -400,7 +393,6 @@ class GAuthLoginHandler(BaseHandler, tornado.auth.GoogleOAuth2Mixin):
 
             if db_opp.find_user_by_email(email):
                 current_user = db_opp.find_user_by_email(email)
-                print(current_user['email'])
                 self.set_secure_cookie('user', current_user['email'])
                 self.redirect("/profile")
 
@@ -499,7 +491,9 @@ class UpdateDogHandler(TemplateHandler):
             pass
         else:
             data['image'] = db_opp.upload_dog_image(self.request.files['my_File'][0])
-        print(self.get_body_argument("name"))
+
+        ######################################################################
+
         data["name"] = self.get_body_argument('name')
         data["gender"] = self.get_body_argument('gender', None)
         data["collar"] = self.get_body_argument('collar', None)
@@ -548,7 +542,6 @@ class DeleteDogHandler(TemplateHandler):
         file_path = os.path.join('static/exports/', file_name)
         if not os.path.exists('static/exports/'):
             os.makedirs('static/exports/')
-        print(file_path)
 
         with open(file_path, 'w') as outfile:
             fields = ['_id','name', 'age', 'breed', 'date_found', 'location_found', 'ears', 'eyes', 'gender','fix', 'notes', 'image', 'sec_color', 'prim_color', 'weight', 'height', 'id_chip', 'collar', 'collar_color', 'delete' ,'user_id', 'shelter_id']
@@ -563,7 +556,6 @@ class DeleteDogHandler(TemplateHandler):
 class DeleteSingleDogHandler(TemplateHandler):
     def post(self):
         dog_id = self.get_body_argument('singledelete')
-        print(dog_id)
         data = {'delete': datetime.today()}
         db_opp.update_dog_by_id(dog_id, data)
         self.redirect('/dogs')
