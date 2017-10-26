@@ -58,13 +58,16 @@
 
           <p>www.slowpuppers.com</p>
         </div>
-          <div class="d-inline-flex button-row">
-            <a href="/edit/{{dog._id}}" class="btn btn-outline-primary">Edit</a>
-            <form action="/delete-single" method="post">
-              <input type="hidden" name="singledelete" value="{{dog._id}}">
-              <button type="submit" class="btn btn-danger">Delete</button>
-            </form>
-          </div>
+        {% if edit %}
+        <div class="d-inline-flex button-row">
+          <a href="/edit/{{dog._id}}" class="btn btn-outline-primary">Edit</a>
+          <form action="/delete-single" method="post">
+            <input type="hidden" name="singledelete" value="{{dog._id}}">
+            <button type="submit" class="btn btn-danger">Delete</button>
+          </form>
+        </div>
+        {% else %}
+        {% endif %}
 
       </div>
     </div>

@@ -6,13 +6,10 @@ client = db_opp.create_client()
 
 db = client.test_database
 # define collections
-users = db.users_collection
-dogs = db.dogs_collection
-shelters = db.shelters_collection
-breeds = db.breeds_collection
-
-def make_shelter():
-    
+users = db.users
+dogs = db.dogs
+shelters = db.shelters
+breeds = db.breeds
 
 
 def get_user():
@@ -637,7 +634,7 @@ dog_breeds = [
 def add_dog_breeds():
     for breed in dog_breeds:
         breeds.insert_one ({
-            "id": str(uuid.uuid4()),
+            "id": db_opp.create_uuid(),
             "value": breed
         })
 
@@ -740,6 +737,7 @@ def get_note():
     num = random.randrange(0,5)
     return "My {} {} {} {}.".format(adj[num],nouns[num],verbs[num],adv[num])
 
+
 def bulk_add_dogs():
     for name in dog_names:
         _id = db_opp.create_uuid()
@@ -792,9 +790,7 @@ shelter_names = [
 ]
 
 def bulk_add_shelters():
-
     for name in shelter_names:
-
         data = {
         "name": name,
         "_id": db_opp.create_uuid(),
@@ -808,6 +804,6 @@ def bulk_add_shelters():
 def run():
     dogs.remove({})
     # shelters.remove({})
-    # bulk_add_shelters()
+    bulk_add_shelters()
     bulk_add_dogs()
 run()
