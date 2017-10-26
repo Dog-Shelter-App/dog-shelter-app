@@ -633,7 +633,7 @@ dog_breeds = [
 def add_dog_breeds():
     for breed in dog_breeds:
         breeds.insert_one ({
-            "id": str(uuid.uuid4()),
+            "id": db_opp.create_uuid(),
             "value": breed
         })
 
@@ -736,6 +736,7 @@ def get_note():
     num = random.randrange(0,5)
     return "My {} {} {} {}.".format(adj[num],nouns[num],verbs[num],adv[num])
 
+
 def bulk_add_dogs():
     for name in dog_names:
         _id = db_opp.create_uuid()
@@ -788,9 +789,7 @@ shelter_names = [
 ]
 
 def bulk_add_shelters():
-
     for name in shelter_names:
-
         data = {
         "name": name,
         "_id": db_opp.create_uuid(),

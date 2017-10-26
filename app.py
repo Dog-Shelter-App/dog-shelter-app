@@ -90,8 +90,8 @@ class DogFormHandler(TemplateHandler):
         self.set_header(
           'Cache-Control',
           'no-store, no-cache, must-revalidate, max-age=0')
-        
-        
+
+
         self.render_template("/pages/dog-form.html", {})
     def post(self):
         # import io
@@ -174,7 +174,6 @@ class DogFormHandler(TemplateHandler):
 class DogListHandler(TemplateHandler):
     @tornado.web.authenticated
     def get(self):
-
         data = []
         if self.get_argument("gender", None):
             query = {}
@@ -242,9 +241,9 @@ class LoginHandler(TemplateHandler):
 class UserProfileHandler(TemplateHandler):
     @tornado.web.authenticated
     def get(self):
-        user_data = db_opp.find_user_by_email(self.current_user.decode('utf-8'))
+        user = db_opp.find_user_by_email(self.current_user.decode('utf-8'))
         shelter = False
-        type = user_data['type']
+        type = user['type']
         if type == "not_set":
             self.redirect("/complete-profile")
         elif type == "shelter":
@@ -256,14 +255,10 @@ class UserProfileHandler(TemplateHandler):
           'Cache-Control',
           'no-store, no-cache, must-revalidate, max-age=0')
         self.render_template("/pages/profile.html", {
-            "user": user_data,
+            "user": user,
             "shelters_list": shelters_list,
             "shelter": shelter
         })
-
-
-        self.render_template("/pages/profile.html", {"user": user, "shelters_list": shelters_list})
-class UpdateUserProfileHandler (BaseHandler):
     def post(self):
         _id = self.get_body_argument("_id")
         given_name= self.get_body_argument("given_name", None)
@@ -281,7 +276,7 @@ class UpdateUserProfileHandler (BaseHandler):
         "type": type,
         "shelter_id": shelter_id
         }
-        
+
         print(data)
 
         print(db_opp.update_user_by_id(_id, data))
@@ -460,12 +455,17 @@ class DogProfileHandler(TemplateHandler):
         dog = db_opp.find_dog_by_id(_id)
         added_by = db_opp.find_user_by_id(dog['user_id'])
         shelter = db_opp.find_shelter_by_id(dog['shelter_id'])
-        
+
+        if user['shelter_id'] == dog['shelter_id']:
+            edit = True
+        else:
+            edit = False
+
         self.set_header(
           'Cache-Control',
           'no-store, no-cache, must-revalidate, max-age=0')
-        self.render_template("/pages/dog-profile.html", {'dog': dog, "user": added_by, "shelter": shelter})
-    
+        self.render_template("/pages/dog-profile.html", {'dog': dog, "user": added_by, "shelter": shelter, "edit": edit})
+
 class EditDogHandler(TemplateHandler):
     def get(self, _id):
         dog = db_opp.find_dog_by_id(_id)
@@ -577,7 +577,6 @@ class make_app(tornado.web.Application):
             (r"/login-google", GAuthLoginHandler),
             (r"/complete-profile", CompleteProfileHandler),
             (r"/profile", UserProfileHandler),
-            (r"/profileupdate", UpdateUserProfileHandler),
             (r"/admin", UsersHandler),
             (r"/dogs/new-dog", DogFormHandler),
             (r"/dogs", DogListHandler),

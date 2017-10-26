@@ -1,1 +1,2 @@
 _id,name,age,breed,date_found,location_found,ears,eyes,gender,fix,notes,image,sec_color,prim_color,weight,height,id_chip,collar,collar_color,delete,user_id,shelter_id
+cd15642c-04cf-4ebc-bdb8-47a4c9b843de,New Dog,,,2017-10-20 00:00:00,,stand-up,,,,,static/img/dog_images/face_pic.png,,,,,,,,2017-10-26 11:06:49.892000,553b26ef-83a8-44ca-8500-2897225836ff,96dd9776-2055-406b-a476-a65e8d36ceff
