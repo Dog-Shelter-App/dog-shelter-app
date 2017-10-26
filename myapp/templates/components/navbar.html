@@ -7,6 +7,12 @@
 
   <div class="collapse navbar-collapse navbar-content justify-content-end" id="navbarSupportedContent">
     <ul class="navbar-nav">
+      {% if shelter%}
+      <li class="nav-item">
+        <a class="nav-link" href="/admin">Admin</a>
+      </li>
+      {% else %}
+      {% endif %}
       <li class="nav-item">
         <a class="nav-link" href="/dogs">Search</a>
       </li>
