@@ -11,40 +11,43 @@
       <div id='1' class="carousel-item active">
         <!-- Section 1 -->
         <div class="">
+          <!-- dog.name -->
           <fieldset class="form-group">
             <label>Name of Dog</label>
-            <input type="text" name="name" class="form-control" id="dogname" placeholder="Enter dog's name">
+            <input type="text" data-section="1" name="name" class="form-control" id="dogname" placeholder="Enter dog's name">
             <small id="emailHelp" class="form-text text-muted">If unknown, leave empty</small>
           </fieldset>
+          <!-- dog.image -->
           <fieldset class="form-group">
-            <label class="custom-file">
-              <input type="file" name="my_File" id="file" required class="custom-file-input">
+            <label id="file_label" class="custom-file">
+              <input type="file" data-section="1" name="my_File" id="my_File" class="custom-file-input">
               <span class="custom-file-control">Upload a Photo</span>
-
             </label>
           </fieldset>
+          <!-- dog.gender -->
           <fieldset class="form-group">
             <label>Gender</label>
             <div class="">
               <div class="form-check form-check-inline">
-                <input class="form-check-input radio-button" type="radio" name="gender" id="female" value="female">
+                <input data-section="1" class="form-check-input radio-button" type="radio" name="gender" id="female" value="female">
                 <label for="female" class="radio-label">Female</label>
               </div>
               <div class="form-check form-check-inline">
-                <input class="form-check-input radio-button" type="radio" name="gender" id="male" value="male">
+                <input data-section="1" class="form-check-input radio-button" type="radio" name="gender" id="male" value="male">
                 <label for="male" class="radio-label">Male</label>
               </div>
             </div>
           </fieldset>
+          <!-- dog.fixed -->
           <fieldset class="form-group">
-            <label>Is the Dog Neutered?</label>
+            <label>Is the Dog Fixed?</label>
             <div class="">
               <div class="form-check form-check-inline">
-                <input class="form-check-input radio-button" type="radio" name="fix" id="fixYes" value="yes">
+                <input data-section="1" class="form-check-input radio-button" type="radio" name="fix" id="fixYes" value="yes">
                 <label for="fixYes" class="radio-label">Yes</label>
               </div>
               <div class="form-check form-check-inline">
-                <input class="form-check-input radio-button" type="radio" name="fix" id="fixNo" value="no">
+                <input data-section="1" class="form-check-input radio-button" type="radio" name="fix" id="fixNo" value="no">
                   <label for="fixNo" class="radio-label">No</label>
               </div>
             </div>
@@ -54,23 +57,25 @@
       <div id='2' class="carousel-item">
         <!-- Section 2 -->
         <div class="">
+          <!-- dog.breed -->
           <fieldset class="form-group">
             {% include "components/breed.html" %}
           </fieldset>
           <div class="d-flex justify-content-start flex-wrap">
+            <!-- dog.location_found -->
             <fieldset class="form-group">
               <label for="locationfound">Location Found </label>
-              <input type="text" name="location_found" class="form-control" id="locationfound">
+              <input data-section="2" type="text" name="location_found" class="form-control" id="locationfound">
             </fieldset>
             <fieldset class="form-group">
-              <label for="date_found">Date Found</label>
-              <input type="date" name='date_found' class="form-control" id="date_found">
+              <label>Date Found</label>
+              <input data-section="2" type="date" name='date_found' class="form-control" id="date_found">
             </fieldset>
           </div>
           <div class="d-flex justify-content-start">
             <fieldset class="form-group">
               <label for="primcolor">Primary Color</label>
-              <input type="text" name="prim_color" class="form-control" id="primcolor">
+              <input data-section="2" type="text" name="prim_color" class="form-control" id="primcolor">
             </fieldset>
             <fieldset class="form-group">
               <label for="sec_color">Secondary Color</label>
@@ -140,7 +145,7 @@
       <div id="carousel-controller" class="carousel-controller">
         <button id="buttonLeft" class="btn btn-outline-secondary form-craousel-button" style="display:none" href="#formCarousel" role="button" data-slide="prev">Back</button>
         <button id="buttonRight" class="btn btn-outline-secondary form-craousel-button" href="#formCarousel" role="button" data-slide="next">Next</button>
-        <button id="buttonSubmit" style="display:none" type="submit" class="btn btn-primary">Submit</button>
+        <button id="buttonSubmit" type="submit" class="btn btn-primary">Submit</button>
       </div>
     </div>
   </div>
