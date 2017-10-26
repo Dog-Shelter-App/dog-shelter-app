@@ -94,7 +94,7 @@ class DogFormHandler(TemplateHandler):
               'no-store, no-cache, must-revalidate, max-age=0')
             self.render_template("/pages/dog-form.html", {})
         else:
-            self.redirect("/dogs")
+            self.redirect("/dogs?user=owner")
 
     def post(self):
         # import io
@@ -175,6 +175,7 @@ class DogFormHandler(TemplateHandler):
 class DogListHandler(TemplateHandler):
     @tornado.web.authenticated
     def get(self):
+        status = self.get_argument('user', None)
         data = []
         if self.get_argument("gender", None):
             query = {}
@@ -205,7 +206,7 @@ class DogListHandler(TemplateHandler):
         self.set_header(
           'Cache-Control',
           'no-store, no-cache, must-revalidate, max-age=0')
-        self.render_template("/pages/dog-list.html", {"dogs_list": dogs_list})
+        self.render_template("/pages/dog-list.html", {"dogs_list": dogs_list, "status": status})
     # def post(self):
     #     gender = self.get_body_argument("gender", None)
     #     breed = self.get_body_argument("breed", None)

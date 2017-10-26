@@ -7,8 +7,15 @@
 {% block body %}
   <div class="container-fluid dog-list__background">
     <div class="row">
-      <div class="col-md-9">
-        <div id="dog-list" class="dog-list mt-1">
+      <div class="col-md-9 mt-4">
+        {% if status == "owner" %}
+        <div class="alert alert-warning alert-dismissable">
+          <a href="#" class="close" data-dismiss="alert" aria-label="close">×</a>
+          In order to add a dog, please <a href="/complete-profile" class="alert-link"> set your default Shelter</a>.
+        </div>
+        {% else %}
+        {% endif %}
+        <div id="dog-list" class="dog-list">
           {% for dog in dogs_list %}
             <div class="card dog-card"
               data-breed="{{dog.breed}}"
@@ -34,8 +41,8 @@
           {% endfor%}
         </div>
       </div>
-      <div class="col-md-3">
-        <div class="d-flex mt-1">
+      <div class="col-md-3 mt-4">
+        <div class="d-flex">
           <div class="sticky-scroll-box querybar">
             {% include 'components/search.html'%}
           </div>
