@@ -639,23 +639,23 @@ def add_dog_breeds():
 
 
 dog_thumbnails = [
-    "/static/img/sample_dogs/01f3e1c841cf3b864ea024d8eb0c7251--dog-pictures-animal-pictures.jpg",
-    "/static/img/sample_dogs/630f0ef3f6f3126ca11f19f4a9b85243--dachshund-puppies-weenie-dogs.jpg",
-    "/static/img/sample_dogs/23695_pets_vertical_store_dogs_small_tile_8._CB312176604_.jpg",
-    "/static/img/sample_dogs/bordercollie1.jpg",
-    "/static/img/sample_dogs/Common-dog-behaviors-explained.jpg",
-    "/static/img/sample_dogs/dog-1210559_960_720.jpg",
-    "/static/img/sample_dogs/dog-bone.png",
-    "/static/img/sample_dogs/dog-breed-selector-australian-shepherd.jpg",
-    "/static/img/sample_dogs/file_23252_dogue-de-bordeaux-dog-breed.jpg",
-    "/static/img/sample_dogs/German-Shepherd-Dog-1.jpg",
-    "/static/img/sample_dogs/labrador-retriever1istock.jpg",
-    "/static/img/sample_dogs/Natural-Dog-Law-2-To-dogs,-energy-is-everything.jpg",
-    "/static/img/sample_dogs/pexels-photo-356378.jpeg",
-    "/static/img/sample_dogs/scroll000.jpg",
-    "/static/img/sample_dogs/scroll0011.jpg",
-    "/static/img/sample_dogs/thul-571a0332-3d53-51bc-8189-e2a4771f3470.jpg",
-    "/static/img/sample_dogs/wildlife-photography-pet-photography-dog-animal-159541.jpeg"
+    "static/img/sample_dogs/01f3e1c841cf3b864ea024d8eb0c7251--dog-pictures-animal-pictures.jpg",
+    "static/img/sample_dogs/630f0ef3f6f3126ca11f19f4a9b85243--dachshund-puppies-weenie-dogs.jpg",
+    "static/img/sample_dogs/23695_pets_vertical_store_dogs_small_tile_8._CB312176604_.jpg",
+    "static/img/sample_dogs/bordercollie1.jpg",
+    "static/img/sample_dogs/Common-dog-behaviors-explained.jpg",
+    "static/img/sample_dogs/dog-1210559_960_720.jpg",
+    "static/img/sample_dogs/dog-bone.png",
+    "static/img/sample_dogs/dog-breed-selector-australian-shepherd.jpg",
+    "static/img/sample_dogs/file_23252_dogue-de-bordeaux-dog-breed.jpg",
+    "static/img/sample_dogs/German-Shepherd-Dog-1.jpg",
+    "static/img/sample_dogs/labrador-retriever1istock.jpg",
+    "static/img/sample_dogs/Natural-Dog-Law-2-To-dogs,-energy-is-everything.jpg",
+    "static/img/sample_dogs/pexels-photo-356378.jpeg",
+    "static/img/sample_dogs/scroll000.jpg",
+    "static/img/sample_dogs/scroll0011.jpg",
+    "static/img/sample_dogs/thul-571a0332-3d53-51bc-8189-e2a4771f3470.jpg",
+    "static/img/sample_dogs/wildlife-photography-pet-photography-dog-animal-159541.jpeg"
 ]
 
 
