@@ -129,7 +129,10 @@ def count_users():
 
 
 def reset_kev():
-    return users.update_one({"email": "houstonseosolutions@gmail.com"},{"$set": {"type": "not_set"}})
+    return users.update_one({"email": "houstonseosolutions@gmail.com"},{"$set": {
+        "type": "not_set",
+        "shelter_id": "not_set"
+        }})
 
 ######################################################
 ######################################################

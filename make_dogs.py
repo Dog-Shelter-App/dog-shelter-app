@@ -805,4 +805,6 @@ def run():
     shelters.remove({})
     bulk_add_shelters()
     bulk_add_dogs()
-run()
+# run()
+
+db_opp.reset_kev()

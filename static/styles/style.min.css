@@ -32,7 +32,6 @@ li {
 }
 
 .sticky-scroll-box {
-  position: fixed;
 }
 
 
@@ -59,7 +58,7 @@ DOG FORM HTML PAGE
 }
 .profileNav{
   position: fixed;
-  top:20;
+  top: 1.5rem;
   left:0;
 }
 .upload {
@@ -294,7 +293,7 @@ QUERY BAR
 *******************************************************/
 .fixed {
   position:fixed;
-  top: 0;
+  top: 15px;
 }
 
 
@@ -306,7 +305,6 @@ QUERY BAR
   background: white;
   border: 3px solid #eee;
   padding: 1rem;
-  margin: 1rem;*/
 }
 
 .radio{
