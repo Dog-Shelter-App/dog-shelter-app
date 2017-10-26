@@ -245,9 +245,9 @@ class LoginHandler(TemplateHandler):
 class UserProfileHandler(TemplateHandler):
     @tornado.web.authenticated
     def get(self):
-        user = db_opp.find_user_by_email(self.current_user.decode('utf-8'))
-        print(user)
-        if user['type'] == "owner":
+        user_data = db_opp.find_user_by_email(self.current_user.decode('utf-8'))
+
+        if user_data['type'] == "owner":
             shelter = False
         else:
             shelter = True
