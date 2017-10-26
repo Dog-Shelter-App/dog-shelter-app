@@ -87,8 +87,11 @@ class DogFormHandler(TemplateHandler):
     @tornado.web.authenticated
     def get(self):
         user = db_opp.find_user_by_email(self.current_user.decode('utf-8'))
-
-        self.set_header('Cache-Control','no-store, no-cache, must-revalidate, max-age=0')
+        self.set_header(
+          'Cache-Control',
+          'no-store, no-cache, must-revalidate, max-age=0')
+        
+        
         self.render_template("/pages/dog-form.html", {})
     def post(self):
         # import io
@@ -239,25 +242,29 @@ class LoginHandler(TemplateHandler):
 class UserProfileHandler(TemplateHandler):
     @tornado.web.authenticated
     def get(self):
-##############################
-#THIS IS THE PROBLEM LINE
-##############################
-        # user = db_opp.find_user_by_email(self.current_user.decode('utf-8'))
-        user = users.find_one({'email': self.current_user.decode('utf-8')})
-##############################
-#THIS IS THE PROBLEM LINE
-##############################
-        print(self.current_user.decode('utf-8'))
-        print(user)
+        user_data = db_opp.find_user_by_email(self.current_user.decode('utf-8'))
+        shelter = False
+        type = user_data['type']
+        if type == "not_set":
+            self.redirect("/complete-profile")
+        elif type == "shelter":
+            shelter = True
 
         shelters_list = db_opp.find_all_shelters()
+
+        self.set_header(
+          'Cache-Control',
+          'no-store, no-cache, must-revalidate, max-age=0')
+        self.render_template("/pages/profile.html", {
+            "user": user_data,
+            "shelters_list": shelters_list,
+            "shelter": shelter
+        })
+
 
         self.render_template("/pages/profile.html", {"user": user, "shelters_list": shelters_list})
 class UpdateUserProfileHandler (BaseHandler):
     def post(self):
-
-        print(self.request)
-
         _id = self.get_body_argument("_id")
         given_name= self.get_body_argument("given_name", None)
         family_name= self.get_body_argument("family_name", None)
@@ -274,16 +281,12 @@ class UpdateUserProfileHandler (BaseHandler):
         "type": type,
         "shelter_id": shelter_id
         }
-
-        print("User ID: {}".format(_id))
-
+        
         print(data)
 
-        users.update_one({"email": email}, {'$set': data})
+        print(db_opp.update_user_by_id(_id, data))
 
-        # db_opp.update_user_by_id(_id, data)
-
-        self.redirect('/profile')
+        self.redirect('/profile?status=update')
 
 class SheltersHandler(TemplateHandler):
     @tornado.web.authenticated
@@ -304,17 +307,14 @@ class SheltersHandler(TemplateHandler):
         address = self.get_body_argument('address', None)
         print("adding shelter")
 
-        if db_opp.find_shelter_by_name(name):
-            pass
-        else:
-            data = {
-                "_id": db_opp.create_uuid(),
-                "name": name,
-                "email": email,
-                "phone": phone,
-                "address": address
-            }
-            db_opp.add_new_shelter(data)
+        data = {
+            "_id": db_opp.create_uuid(),
+            "name": name,
+            "email": email,
+            "phone": phone,
+            "address": address
+        }
+        db_opp.add_new_shelter(data)
 
         self.redirect("/profile")
 
@@ -330,6 +330,7 @@ class CompleteProfileHandler(TemplateHandler):
 
     def post(self):
         data = { "type": self.get_body_argument("type")}
+        print(data)
         db_opp.update_user_by_email(self.current_user.decode('utf-8'), data)
 
         self.redirect("/profile")
@@ -361,6 +362,7 @@ class GAuthLoginHandler(BaseHandler, tornado.auth.GoogleOAuth2Mixin):
         host = self.request.host
         # if there is a code in the url
         if self.get_argument('code', False):
+            print("code does not exist")
             # check if user is already authenticated
             user = yield self.get_authenticated_user(redirect_uri="http://{}/login-google".format(host),
                 code= self.get_argument('code'))
@@ -405,10 +407,8 @@ class GAuthLoginHandler(BaseHandler, tornado.auth.GoogleOAuth2Mixin):
                 current_user = db_opp.find_user_by_email(email)
                 print(current_user['email'])
                 self.set_secure_cookie('user', current_user['email'])
-                if current_user['type'] == "not_set":
-                    self.redirect('/complete-profile')
-                else:
-                    self.redirect('/profile')
+                self.redirect("/profile")
+
             else:
                 data = {
                 "_id": db_opp.create_uuid(),
@@ -428,10 +428,12 @@ class GAuthLoginHandler(BaseHandler, tornado.auth.GoogleOAuth2Mixin):
             return
         # cookie exists, forward user to site
         elif self.get_secure_cookie('user'):
-            self.redirect('/complete-profile')
+            print("secure cookie exists.")
+            self.redirect('/profile')
             return
         # no code, no cookie, try to log them in... via google oauth
         else:
+            print("redirect to google")
             yield self.authorize_redirect(
                 redirect_uri="http://{}/login-google".format(host),
                 client_id= self.settings['google_oauth']['key'],
@@ -442,7 +444,6 @@ class GAuthLoginHandler(BaseHandler, tornado.auth.GoogleOAuth2Mixin):
 
 # see settings.py for instructions on setting this up
 from settings import client_id, project_id, auth_uri, token_uri, auth_provider_x509_cert_url, client_secret, cookie_secret
-
 
 settings = {
     "debug": True,
@@ -459,12 +460,12 @@ class DogProfileHandler(TemplateHandler):
         dog = db_opp.find_dog_by_id(_id)
         added_by = db_opp.find_user_by_id(dog['user_id'])
         shelter = db_opp.find_shelter_by_id(dog['shelter_id'])
-
+        
         self.set_header(
           'Cache-Control',
           'no-store, no-cache, must-revalidate, max-age=0')
         self.render_template("/pages/dog-profile.html", {'dog': dog, "user": added_by, "shelter": shelter})
-
+    
 class EditDogHandler(TemplateHandler):
     def get(self, _id):
         dog = db_opp.find_dog_by_id(_id)
@@ -488,9 +489,9 @@ class EditDogHandler(TemplateHandler):
 
 class UpdateDogHandler(TemplateHandler):
     def post(self):
+        user = db_opp.find_user_by_email(self.current_user.decode("utf-8"))
 
         _id = self.get_body_argument('_id')
-
         data = {}
 
         if not self.request.files:
@@ -517,8 +518,8 @@ class UpdateDogHandler(TemplateHandler):
         data["id_chip"] = self.get_body_argument('id_chip')
 
         db_opp.update_dog_by_id(_id, data)
-
         self.redirect('/dogs/' + _id)
+
 def datetimeconverter(n):
     #front end date input(n) is always formated {%Y}-{%m}-{%d}
     #converts to datetime object

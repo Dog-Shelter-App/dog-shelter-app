@@ -10,7 +10,7 @@
   <div class="d-flex justify-content-center flex-wrap align-items-center">
     <div class="dog-profile__card d-flex flex-column justify-content-center align-items-center">
       <div class="dog-profile__polaroid">
-        <img class="dog-profile__img-thumbnail" src="..{{dog.image}}" alt="" data-toggle="modal" data-target="#dogImageFullSize">
+        <img class="dog-profile__img-thumbnail" src="../{{dog.image}}" alt="" data-toggle="modal" data-target="#dogImageFullSize">
         <div class="dog-profile__name"><h1>{{dog.name}}</h1></div>
       </div>
     </div>
@@ -62,21 +62,6 @@
                 <span class="custom-file-control">Upload a Photo</span>
               </label>
             </fieldset>
-            {% if female %}
-            <fieldset class="form-group">
-              <label>Gender</label>
-              <div class="">
-                <div class="form-check form-check-inline">
-                  <input checked class="form-check-input radio-button" type="radio" name="gender" id="female" value="female">
-                  <label for="female" class="radio-label">Female</label>
-                </div>
-                <div class="form-check form-check-inline">
-                  <input class="form-check-input radio-button" type="radio" name="gender" id="male" value="male">
-                  <label for="male" class="radio-label">Male</label>
-                </div>
-              </div>
-            </fieldset>
-            {% else %}
             <fieldset class="form-group">
               <label>Gender</label>
               <div class="">
@@ -85,15 +70,13 @@
                   <label for="female" class="radio-label">Female</label>
                 </div>
                 <div class="form-check form-check-inline">
-                  <input checked class="form-check-input radio-button" type="radio" name="gender" id="male" value="male">
+                  <input class="form-check-input radio-button" type="radio" name="gender" id="male" value="male">
                   <label for="male" class="radio-label">Male</label>
                 </div>
               </div>
             </fieldset>
-            {% endif %}
             <fieldset class="form-group">
               <label>Is the Dog Neutered?</label>
-              {% if neutered %}
               <div class="">
                 <div class="form-check form-check-inline">
                   <input checked class="form-check-input radio-button" type="radio" name="fix" id="fixYes" value="yes">
@@ -104,18 +87,6 @@
                     <label for="fixNo" class="radio-label">No</label>
                 </div>
               </div>
-              {% else %}
-              <div class="">
-                <div class="form-check form-check-inline">
-                  <input class="form-check-input radio-button" type="radio" name="fix" id="fixYes" value="yes">
-                  <label for="fixYes" class="radio-label">Yes</label>
-                </div>
-                <div class="form-check form-check-inline">
-                  <input checked class="form-check-input radio-button" type="radio" name="fix" id="fixNo" value="no">
-                    <label for="fixNo" class="radio-label">No</label>
-                </div>
-              </div>
-              {% endif %}
             </fieldset>
           </div>
           <!-- Section 2 -->
@@ -694,7 +665,6 @@
             </fieldset>
             <fieldset class="form-group">
               <label>Does the dog have a collar?</label>
-              {% if collar %}
               <div class="form-check form-check-inline">
                 <input checked class="form-check-input radio-button" type="radio" id="collarYes" name="collar"  value="yes">
                 <label for="collarYes" class="radio-label">Yes</label>
@@ -703,16 +673,6 @@
                 <input class="form-check-input radio-button" type="radio" name="collar" id="collarNo" value="no">
                 <label for="collarNo" class="radio-label">No</label>
               </div>
-              {% else %}
-              <div class="form-check form-check-inline">
-                <input class="form-check-input radio-button" type="radio" id="collarYes" name="collar"  value="yes">
-                <label for="collarYes" class="radio-label">Yes</label>
-              </div>
-              <div class="form-check form-check-inline">
-                <input checked class="form-check-input radio-button" type="radio" name="collar" id="collarNo" value="no">
-                <label for="collarNo" class="radio-label">No</label>
-              </div>
-              {% endif %}
             </fieldset>
             <fieldset class="form-group" id="collar_color">
               <input value="{{dog.collar_color}}" type="text" name="collar_color" class="form-control" placeholder="color/ material">

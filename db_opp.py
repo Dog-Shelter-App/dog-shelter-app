@@ -126,6 +126,11 @@ def delete_user_by_id(_id):
 
 def count_users():
     return users.find({}).count
+
+
+def reset_kev():
+    return users.update_one({"email": "houstonseosolutions@gmail.com"},{"$set": {"type": "not_set"}})
+
 ######################################################
 ######################################################
 # DOG FUNCTIONS
