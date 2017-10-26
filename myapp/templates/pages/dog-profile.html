@@ -8,7 +8,7 @@
   <div class="d-flex justify-content-center flex-wrap align-items-center">
     <div class="dog-profile__card d-flex flex-column justify-content-center align-items-center">
       <div class="dog-profile__polaroid">
-        <img class="dog-profile__img-thumbnail" src="..{{dog.image}}" alt="" data-toggle="modal" data-target="#dogImageFullSize">
+        <img class="dog-profile__img-thumbnail" src="../{{dog.image}}" alt="" data-toggle="modal" data-target="#dogImageFullSize">
         <div class="dog-profile__name"><h1>{{dog.name}}</h1></div>
       </div>
     </div>
@@ -58,13 +58,19 @@
 
           <p>www.slowpuppers.com</p>
         </div>
-        <div class="d-inline-flex button-row">
-          <a href="/edit/{{dog._id}}" class="btn btn-outline-primary">Edit</a>
-          <form action="/delete-single" method="post">
-            <input type="hidden" name="singledelete" value="{{dog._id}}">
-            <button type="submit" class="btn btn-danger">Delete</button>
-          </form>
-        </div>
+
+          {% if edit %}
+          <div class="d-inline-flex button-row">
+            <a href="/edit/{{dog._id}}" class="btn btn-outline-primary">Edit</a>
+            <form action="/delete-single" method="post">
+              <input type="hidden" name="singledelete" value="{{dog._id}}">
+              <button type="submit" class="btn btn-danger">Delete</button>
+            </form>
+          </div>
+          {% else %}
+          {% endif %}
+
+
 
       </div>
     </div>

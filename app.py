@@ -82,9 +82,9 @@ class MainHandler(TemplateHandler):
 class DogFormHandler(TemplateHandler):
     @tornado.web.authenticated
     def get(self):
-
         user = db_opp.find_user_by_email(self.current_user.decode('utf-8'))
-
+        if user['type'] == "not_set":
+            self.redirect("/complete-profile?error=name")
         if user['type'] == "shelter":
             self.set_header(
               'Cache-Control',
@@ -173,6 +173,7 @@ class DogFormHandler(TemplateHandler):
 class DogListHandler(TemplateHandler):
     @tornado.web.authenticated
     def get(self):
+
         data = []
         if self.get_argument("gender", None):
             query = {}
@@ -237,13 +238,27 @@ class LoginHandler(TemplateHandler):
               'no-store, no-cache, must-revalidate, max-age=0')
             self.render_template("/pages/login.html", {"data": data, "reason": reason})
 
-
 class UserProfileHandler(TemplateHandler):
     @tornado.web.authenticated
     def get(self):
         user_data = db_opp.find_user_by_email(self.current_user.decode('utf-8'))
-        if user_data['type'] == "owner":
+        while True:
+            try:
+                type = user_data['type']
+                print(type)
+                break
+            except:
+                print("FAAAAAK")
+                # self.clear_cookie("user")
+                self.redirect('/complete-profile?error=name')
+
+        print(user_data)
+        if user_data['type'] == "not_set":
+            self.redirect('/complete-profile?error=name')
+            print("None")
+        elif user_data['type'] == "owner":
             shelter = False
+            print("Owner")
         else:
             shelter = True
         shelters_list = db_opp.find_all_shelters()
@@ -314,12 +329,17 @@ class SheltersHandler(TemplateHandler):
 class CompleteProfileHandler(TemplateHandler):
     @tornado.web.authenticated
     def get(self):
+        error = self.get_argument("error", None)
+        message = ""
+        if error =="name":
+            message = "Please select a user type"
+
         user = db_opp.find_user_by_email(self.current_user.decode('utf-8'))
 
         self.set_header(
           'Cache-Control',
           'no-store, no-cache, must-revalidate, max-age=0')
-        self.render_template("/pages/complete-profile.html", {"user": user})
+        self.render_template("/pages/complete-profile.html", {"user": user, "message": message})
 
     def post(self):
         data = { "type": self.get_body_argument("type")}
@@ -448,16 +468,28 @@ settings = {
 
 class DogProfileHandler(TemplateHandler):
     def get(self, _id):
-        print(_id)
-
+        user = db_opp.find_user_by_email(self.current_user.decode("utf-8"))
         dog = db_opp.find_dog_by_id(_id)
         added_by = db_opp.find_user_by_id(dog['user_id'])
         shelter = db_opp.find_shelter_by_id(dog['shelter_id'])
 
+        if user['type'] == "not_set":
+            self.redirect('/complete-profile')
+        elif user['type'] == "owner":
+            edit = False
+        else:
+            edit = True
+
+        if user['shelter_id'] == dog['shelter_id']:
+            edit = True
+        else:
+            edit = False
+
+
         self.set_header(
           'Cache-Control',
           'no-store, no-cache, must-revalidate, max-age=0')
-        self.render_template("/pages/dog-profile.html", {'dog': dog, "user": added_by, "shelter": shelter})
+        self.render_template("/pages/dog-profile.html", {'dog': dog, "user": added_by, "shelter": shelter, "edit": edit})
 
 
 class QueryHandler(TemplateHandler):
@@ -502,28 +534,11 @@ class EditDogHandler(TemplateHandler):
 
 class UpdateDogHandler(TemplateHandler):
     def post(self):
+        user = db_opp.find_user_by_email(self.current_user.decode("utf-8"))
+        if user['type'] == "not_set":
+            self.redirect('/complete-profile')
+
         _id = self.get_body_argument('_id')
-        #   #   _id
-        #   #   name
-        #   #   image
-        #   #   gender
-        #   #   collar
-        #   #   collar_color
-        #   #   fix
-        #   #   breed
-        #   #   location_found
-        #   #   date_found
-        #   #   prim_color
-        #   #   sec_color
-        #   #   height
-        #   #   weight
-        #   #   eyes
-        #   #   ears
-        #   #   age
-        #   #   notes
-        #   #   date_deleted
-        #FK #   user_id
-        #FK #   shelter_id
 
         data = {}
 
