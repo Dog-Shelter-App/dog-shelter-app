@@ -12,12 +12,7 @@
       </div>
       <div class="col-lg-6">
         <h1 class="display-6">{% block jumbotrontext %}Get My Pup{% endblock %}</h1>
-        {% if logged_in %}
-          <p>Welcome {{name}}</p>
-          <a href="/dogs/new-dog" class="btn btn-outline-secondary btn-lg">Report a lost dog</a>
-        {% else %}
           {% include 'components/login-form.html'%}
-        {% endif %}
       </div>
     </div>
 

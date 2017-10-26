@@ -9,7 +9,6 @@
       </div>
     </div>
     <div class="col-md-9">
-    {% for user in users %}
       <table class="table">
         <tr>
           <th>First Name</th>
@@ -21,6 +20,7 @@
           <th>Shelter</th>
         </tr>
         <tbody>
+          {% for user in users %}
           <tr>
             <td>first name: {{user.given_name}}</td>
             <td>last name: {{user.family_name}}</td>
@@ -30,10 +30,11 @@
             <td>type: {{user.user_type}}</td>
             <td>shelter: {{user.shelter}}</td>
           </tr>
+          {% endfor %}
         </tbody>
       </table>
 
-    {% endfor %}
+
     </div>
 
   </div>
