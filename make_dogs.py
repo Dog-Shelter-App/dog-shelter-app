@@ -6,14 +6,10 @@ client = db_opp.create_client()
 
 db = client.test_database
 # define collections
-users = db.users_collection
-dogs = db.dogs_collection
-shelters = db.shelters_collection
-breeds = db.breeds_collection
-
-def make_shelter():
-    
-
+users = db.users
+dogs = db.dogs
+shelters = db.shelters
+breeds = db.breeds
 
 def get_user():
     users_list = db_opp.find_all_users()
@@ -807,7 +803,7 @@ def bulk_add_shelters():
         db_opp.add_new_shelter(data)
 def run():
     dogs.remove({})
-    # shelters.remove({})
-    # bulk_add_shelters()
+    shelters.remove({})
+    bulk_add_shelters()
     bulk_add_dogs()
 run()
