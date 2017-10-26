@@ -241,15 +241,26 @@ class UserProfileHandler(TemplateHandler):
     @tornado.web.authenticated
     def get(self):
         user_data = db_opp.find_user_by_email(self.current_user.decode('utf-8'))
+        shelter = False
+        type = user_data['type']
+        if type == "not_set":
+            self.redirect("/complete-profile")
+        elif type == "shelter":
+            shelter = True
+
         shelters_list = db_opp.find_all_shelters()
 
         self.set_header(
           'Cache-Control',
           'no-store, no-cache, must-revalidate, max-age=0')
-        self.render_template("/pages/profile.html", {"user": user_data, "shelters_list": shelters_list})
+        self.render_template("/pages/profile.html", {
+            "user": user_data,
+            "shelters_list": shelters_list,
+            "shelter": shelter
+        })
 
     def post(self):
-        _id = self.get_body_argument("id")
+        _id = self.get_body_argument("_id")
         given_name= self.get_body_argument("given_name", None)
         family_name= self.get_body_argument("family_name", None)
         email= self.get_body_argument("email")
@@ -312,10 +323,11 @@ class CompleteProfileHandler(TemplateHandler):
         self.set_header(
           'Cache-Control',
           'no-store, no-cache, must-revalidate, max-age=0')
-        self.render_template("/pages/complete-profile.html", {"user": user, "message": message})
+        self.render_template("/pages/complete-profile.html", {"user": user})
 
     def post(self):
         data = { "type": self.get_body_argument("type")}
+        print(data)
         db_opp.update_user_by_email(self.current_user.decode('utf-8'), data)
 
         self.redirect("/profile")
@@ -407,7 +419,7 @@ class GAuthLoginHandler(BaseHandler, tornado.auth.GoogleOAuth2Mixin):
                 db_opp.add_new_user(data)
 
                 self.set_secure_cookie('user', email)
-                self.redirect("/profile")
+                self.redirect("/complete-profile")
                 print("added user to db")
 
             return
@@ -450,7 +462,6 @@ class DogProfileHandler(TemplateHandler):
           'Cache-Control',
           'no-store, no-cache, must-revalidate, max-age=0')
         self.render_template("/pages/dog-profile.html", {'dog': dog, "user": added_by, "shelter": shelter})
-
 
 class QueryHandler(TemplateHandler):
     def post(self):

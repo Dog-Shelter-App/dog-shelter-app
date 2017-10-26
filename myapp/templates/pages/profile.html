@@ -18,53 +18,68 @@
       <!-- family_name -->
       <div class="form-group">
         <label for="">Last Name</label>
-        <input type="text" class="form-control" name="" value="{{user.family_name}}">
+        <input type="text" class="form-control" name="family_name" value="{{user.family_name}}">
       </div>
       <!-- email -->
       <div class="form-group">
         <label for="">Email</label>
-        <input disabled type="text" class="form-control" name="" value="{{user.email}}">
+        <input disabled type="text" class="form-control" name="email_visible" value="{{user.email}}">
       </div>
       <!-- email hidden -->
       <div class="form-group">
-        <input type="hidden" class="form-control" name="" value="{{user.email}}">
+        <input type="hidden" class="form-control" name="phone" value="{{user.email}}">
       </div>
       <!-- phone -->
       <div class="form-group">
         <label for="">Phone</label>
-        <input type="text" class="form-control" name="" value="{{user.email}}">
+        <input type="text" class="form-control" name="email" value="{{user.email}}">
       </div>
       <!-- type -->
       <div class="form-group">
         <!-- dog.gender -->
         <fieldset class="form-group">
           <label>User Type: ({{user.type}})</label>
+          {% if shelter %}
+          <!-- Owner -->
           <div class="">
             <div class="form-check form-check-inline">
-              <input data-section="1" class="form-check-input radio-button" type="radio" name="type" id="female" value="owner">
-              <label for="female" class="radio-label">Owner</label>
+              <input required data-section="1" class="form-check-input radio-button" type="radio" name="type" id="owner" value="owner">
+              <label for="owner" class="radio-label">Owner</label>
             </div>
             <div class="form-check form-check-inline">
-              <input data-section="1" class="form-check-input radio-button" type="radio" name="type" id="male" value="shelter">
-              <label for="male" class="radio-label">Shelter</label>
+              <input checked required data-section="1" class="form-check-input radio-button" type="radio" name="type" id="shelter" value="shelter">
+              <label for="shelter" class="radio-label">Shelter</label>
             </div>
           </div>
+          <select class="" name="shelter_id">
+            {% for shelter in shelters_list%}
+            <option value="{{shelter._id}}">{{shelter.name}}</option>
+            {% endfor %}
+          </select>
+          {% else %}
+          <!-- Shelter -->
+          <div class="">
+            <div class="form-check form-check-inline">
+              <input checked required data-section="1" class="form-check-input radio-button" type="radio" name="type" id="owner" value="owner">
+              <label for="owner" class="radio-label">Owner</label>
+            </div>
+            <div class="form-check form-check-inline">
+              <input required data-section="1" class="form-check-input radio-button" type="radio" name="type" id="shelter" value="shelter">
+              <label for="shelter" class="radio-label">Shelter</label>
+            </div>
+          </div>
+          {% endif %}
         </fieldset>
-      </div>
-      <!-- shelter -->
-      <div class="form-group">
-        {% include 'components/shelter-form.html'%}
       </div>
       <div class="form-group">
         <button type="submit" class="btn btn-primary">Update Profile</button>
       </div>
     </form>
-
-  </div>
-  <div class="form-group">
+    <!-- shelter -->
+    <div class="form-group">
       {% include 'components/shelter-form.html'%}
-
-    <a class="btn btn-danger" href="/logout" role="button">Logout</a>
+      <a class="btn btn-danger" href="/logout" role="button">Logout</a>
+    </div>
   </div>
 </div>
 {% endblock%}
